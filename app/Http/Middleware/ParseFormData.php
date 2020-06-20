@@ -31,7 +31,7 @@ class ParseFormData
             $data = $request->toArray();
 
             // convert to empty array string to empty array.
-            $data = ParseInputStream::convertEmptyArrayStringToArray($data)
+            $data = ParseInputStream::convertEmptyArrayStringToArray($data);
             $request->request->add($data);
             return $next($request);
 

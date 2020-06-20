@@ -11,5 +11,48 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.setPublicPath('public');
+
+
+mix.js('resources/js/app.js', 'js')
+    .sass('resources/sass/app.scss', 'css')
+    .extract([
+        'axios',
+        'lodash',
+        'moment',
+        'sweetalert2'
+    ]);
+
+if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
+    mix.version();
+}
+
+mix.options({
+    hmrOptions: {
+        host: 'laravel-boilerplate.dev.local',
+    }
+});
+
+// // fix css files 404 issue
+mix.webpackConfig({
+    devServer: {
+
+        // https: {
+        //     key: '/etc/ssl/private/default.key',
+        //     cert: '/etc/ssl/private/default.crt',
+        //     ca: '/etc/ssl/private/dhparam.pem',
+        // },
+        proxy: {
+            host: '0.0.0.0',
+            port: 8080,
+
+        },
+        watchOptions:{
+            aggregateTimeout:200,
+            poll:500
+        },
+        // plugins: [
+        //     new webpack.EnvironmentPlugin(['MIX_PUBLISH_APP_URL']),
+        // ],
+    }
+});
