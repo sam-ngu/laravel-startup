@@ -36,9 +36,9 @@
 </template>
 
 <script>
-    import {MessageBus} from "../../../../utils/message-bus";
+    import {MessageBus} from "../../../../utils/MessageBus";
     import {EventBus} from "../../../../utils/event-bus";
-    import ButtonTooltip from "../../../../utils/ButtonTooltip";
+    import ButtonTooltip from "../../../../partials/ButtonTooltip";
     import {swalConfirm, swalLoader, swalMessage} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 

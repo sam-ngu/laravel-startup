@@ -42,8 +42,7 @@
 </template>
 
 <script>
-    import {EventBus} from "../../../../utils/event-bus";
-    import LoadingEclipse from "../../../../utils/LoadingEclipse";
+    import LoadingEclipse from "../../../../partials/LoadingEclipse";
     import StringHelperMixin from "../../../../utils/mixins/StringHelperMixin";
     import PermissionMixin from "../common-role-mixin/PermissionMixin";
     import {swalMessage, swalTimer} from "../../../../utils/swal/SwalHelper";

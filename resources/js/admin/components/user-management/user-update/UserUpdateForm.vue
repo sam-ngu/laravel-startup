@@ -140,7 +140,7 @@
 
 <script>
     import {EventBus} from "../../../../utils/event-bus";
-    import BaseAvatar from "../../../../utils/BaseAvatar";
+    import BaseAvatar from "../../../../partials/BaseAvatar";
     import {emailValidator} from "../../../../utils/ValidationHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
     import {swalTimer} from "../../../../utils/swal/SwalHelper";

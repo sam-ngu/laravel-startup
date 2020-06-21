@@ -86,7 +86,7 @@
 
 <script>
     import {EventBus} from "../../../../utils/event-bus";
-    import {MessageBus} from "../../../../utils/message-bus";
+    import {MessageBus} from "../../../../utils/MessageBus";
     import SidebarListTile from "./SidebarListTile";
 
     export default {

@@ -1,7 +1,7 @@
 <template>
     <collapsible-sidebar v-model="show" @dismiss-sidebar="back">
         <template slot="header">
-            {{titleCase(data.name)}}
+            {{ roleName }}
         </template>
 
         <template slot="content">
@@ -12,19 +12,25 @@
 </template>
 
 <script>
-    import CollapsibleSidebar from "../../../../utils/CollapsibleSidebar";
-    import StringHelperMixin from "../../../../utils/mixins/StringHelperMixin"
+    import CollapsibleSidebar from "../../../../partials/CollapsibleSidebar";
     import RoleUpdateForm from "./RoleUpdateForm";
+
+    import StringHelper from "../../../../utils/StringHelper";
+
 
     export default {
         name: "BaseRoleUpdate",
         components: {RoleUpdateForm, CollapsibleSidebar},
-        mixins: [ StringHelperMixin],
         data() {
             return {
 
                 show: false,
 
+            }
+        },
+        computed: {
+            roleName(){
+                return StringHelper.titleCase(this.data.name)
             }
         },
         props: {

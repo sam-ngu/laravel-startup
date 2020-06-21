@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import CollapsibleSidebar from "../../../../utils/CollapsibleSidebar";
+    import CollapsibleSidebar from "../../../../partials/CollapsibleSidebar";
     import RoleCreateForm from "./RoleCreateForm";
     export default {
         name: "BaseRoleCreate",

@@ -94,7 +94,7 @@
     import {EventBus} from "../../../../utils/event-bus";
     import UserTable from "./UserTable";
     import StringHelperMixin from "../../../../utils/mixins/StringHelperMixin";
-    import ButtonTooltip from "../../../../utils/ButtonTooltip";
+    import ButtonTooltip from "../../../../partials/ButtonTooltip";
     import {swalLoader} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 

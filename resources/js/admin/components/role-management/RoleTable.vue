@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-row >
+        <v-row>
             <v-col>
                 <v-toolbar flat>
                     <v-toolbar-title>Role Management</v-toolbar-title>
@@ -10,15 +10,13 @@
                     <button-tooltip
                         icon="add"
                         tooltip="Add new role"
-                        :to="{
-                                    name: 'role-create',
-                                }"
+                        :to="{name: 'role-create'}"
                     />
                 </v-toolbar>
             </v-col>
         </v-row>
 
-        <v-row >
+        <v-row>
             <v-col>
                 <v-data-table
                     :headers="headers"
@@ -30,7 +28,7 @@
                 >
                     <template v-slot:item="props">
                         <tr>
-                            <td class="px-2 text-left" >
+                            <td class="px-2 text-left">
                                 <router-link
                                     v-if="props.item.name!=='administrator'"
                                     :to="{
@@ -47,7 +45,7 @@
                             </td>
                             <td class="px-2 text-left">
                                 <!--if permission not empty-->
-                                    <!--for each permissions, list the name-->
+                                <!--for each permissions, list the name-->
                                 <div v-if="!isEmpty(props.item.permission)">
                                     <span v-for="(item, index) in props.item.permission" :key="index">
                                         {{titleCase(item.name)}}
@@ -57,7 +55,7 @@
                             </td>
                             <td class="px-2 text-left">{{ String(props.item.user_num) }}</td>
                             <td class="px-2 justify-center layout px-0">
-                                <v-row  align-center justify-center fill-height>
+                                <v-row align-center justify-center fill-height>
 
                                     <button-tooltip
                                         v-if="props.item.name!=='administrator'"
@@ -66,17 +64,6 @@
                                         small
                                         @click="deleteItem(props.item)"
                                     />
-
-<!--                                    <v-tooltip bottom v-if="props.item.name!=='administrator'">-->
-<!--                                        <v-icon-->
-<!--                                            slot="activator"-->
-<!--                                            small-->
-<!--                                            @click="deleteItem(props.item)"-->
-<!--                                        >-->
-<!--                                            delete-->
-<!--                                        </v-icon>-->
-<!--                                        <span>Delete</span>-->
-<!--                                    </v-tooltip>-->
                                     <div v-else>N/A</div>
                                 </v-row>
                             </td>
@@ -126,26 +113,24 @@
 </template>
 
 <script>
-    import {EventBus} from "../../../utils/event-bus";
-    import StringHelperMixin from "../../../utils/mixins/StringHelperMixin";
-    import ButtonTooltip from "../../../utils/ButtonTooltip";
+    import StringHelper from "../../../utils/StringHelper";
+    import ButtonTooltip from "../../../partials/ButtonTooltip";
     import {swalLoader} from "../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
 
     export default {
         name: "RoleTable",
         components: {ButtonTooltip},
-        mixins: [StringHelperMixin],
         data() {
             return {
                 states: {
-                    isLoading : false,  // if true then show loader
+                    isLoading: false,  // if true then show loader
                 },
-                apiMeta:{},
+                apiMeta: {},
                 pageSize: 200,
 
                 data: {
-                    roles : [],  // hold roles info from api call
+                    roles: [],  // hold roles info from api call
                 },
 
                 headers: [
@@ -156,15 +141,18 @@
                         value: 'role',
                         class: "px-2"
                     },
-                    { text: 'Permissions', value: 'permissions', sortable: false, class: "px-2" },
-                    { text: 'Number of Users', value: 'user_num', sortable: false, class: "px-2" },
-                    { text: 'Actions', value: 'action', sortable: false, align: "center", class: "px-2" },
+                    {text: 'Permissions', value: 'permissions', sortable: false, class: "px-2"},
+                    {text: 'Number of Users', value: 'user_num', sortable: false, class: "px-2"},
+                    {text: 'Actions', value: 'action', sortable: false, align: "center", class: "px-2"},
                 ],
 
             }
         },
         methods: {
-            deleteItem(item){
+            titleCase(string){
+                return StringHelper(string);
+            },
+            deleteItem(item) {
                 swalLoader();
                 this.states.isLoading = true;
                 let uri = '/api/v1/roles/' + String(item.id);
@@ -177,7 +165,7 @@
                     }.bind(this))
                     .catch(axiosErrorCallback);
             },
-            async fetchRoles(){
+            async fetchRoles() {
                 await this.$nextTick();
                 swalLoader();
                 this.states.isLoading = true;
@@ -195,10 +183,10 @@
                     }.bind(this))
                     .catch(axiosErrorCallback);
             },
-            isEmpty(array){
+            isEmpty(array) {
                 return _.isEmpty(array);
             },
-            reloadTable(){
+            reloadTable() {
                 this.fetchRoles()
             }
         },

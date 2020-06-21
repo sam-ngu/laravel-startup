@@ -22,9 +22,9 @@
     import Sidebar from "./sidebar/BaseSidebar";
     import Navbar from "./NavBar";
     import {EventBus} from "../../../utils/event-bus";
-    import {MessageBus} from "../../../utils/message-bus";
-    import LoggedInAsAlert from "../../../utils/LoggedInAsAlert";
-    import LoadingEclipse from "../../../utils/LoadingEclipse";
+    import {MessageBus} from "../../../utils/MessageBus";
+    import LoggedInAsAlert from "../../../partials/LoggedInAsAlert";
+    import LoadingEclipse from "../../../partials/LoadingEclipse";
 
 
     export default {

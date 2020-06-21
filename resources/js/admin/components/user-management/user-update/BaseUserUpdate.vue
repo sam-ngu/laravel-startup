@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import CollapsibleSidebar from "../../../../utils/CollapsibleSidebar";
+    import CollapsibleSidebar from "../../../../partials/CollapsibleSidebar";
     import UserUpdateForm from "./UserUpdateForm";
 
     export default {

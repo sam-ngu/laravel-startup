@@ -6,8 +6,7 @@
 </template>
 
 <script>
-    import LayoutMaster from "./components/layout/Master";
-    import {EventBus} from "../../utils/event-bus";
+    import LayoutMaster from "./components/layout/LayoutMaster";
     import {MessageBus} from "../../utils/message-bus";
     import LoadingEclipse from "../../utils/LoadingEclipse";
 
@@ -41,10 +40,8 @@
             '$route'(){ // make sure only the last breadcrumb link is enabled
                 _.forEach(this.$route.meta.breadcrumb, function (value, index) {
                     let length = this.$route.meta.breadcrumb.length;
-                    if(length -1 !== index) // if not the last item
-                        this.$route.meta.breadcrumb[index].disabled = false;
-                    else
-                        this.$route.meta.breadcrumb[index].disabled = true;
+                    // if not the last item
+                    this.$route.meta.breadcrumb[index].disabled = length - 1 === index;
                 }.bind(this));
                 this.$route.meta.breadcrumb[this.$route.meta.breadcrumb.length-1].disabled = true;
                 this.breadcrumbItems = this.$route.meta.breadcrumb;
@@ -55,9 +52,7 @@
 
         },
         mounted(){
-
             MessageBus.setSession(this.session);
-
             // to route to the correct page if required
             let url = new URL(window.location.href);
             let routeName = url.searchParams.get("to");

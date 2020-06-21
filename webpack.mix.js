@@ -29,7 +29,7 @@ if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
 
 mix.options({
     hmrOptions: {
-        host: 'laravel-boilerplate.dev.local',
+        host: 'laravel-startup.dev.local',
     }
 });
 
