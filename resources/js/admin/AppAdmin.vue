@@ -11,7 +11,7 @@
     import LoadingEclipse from "../../utils/LoadingEclipse";
 
     export default {
-        name: 'app',
+        name: 'AppAdmin',
         components: {
             LoadingEclipse,
             LayoutMaster,

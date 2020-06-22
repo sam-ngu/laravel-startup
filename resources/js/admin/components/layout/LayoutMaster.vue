@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app :dark="dark" v-if="messageBus.isReady()">
+        <v-app :dark="dark">
 
             <logged-in-as-alert/>
 
@@ -13,7 +13,6 @@
             </v-content>
         </v-app>
 
-        <loading-eclipse v-else></loading-eclipse>
     </div>
 
 </template>
@@ -21,8 +20,6 @@
 <script>
     import Sidebar from "./sidebar/BaseSidebar";
     import Navbar from "./NavBar";
-    import {EventBus} from "../../../utils/event-bus";
-    import {MessageBus} from "../../../utils/MessageBus";
     import LoggedInAsAlert from "../../../partials/LoggedInAsAlert";
     import LoadingEclipse from "../../../partials/LoadingEclipse";
 
@@ -34,7 +31,6 @@
             return {
                 dark: false,
                 showSidebar: null,
-                messageBus: MessageBus,
             }
         },
         props: {
@@ -47,13 +43,11 @@
 
         },
         mounted() {
-            EventBus.$on('toggled-dark', function () {
-                this.dark = !this.dark;
-            }.bind(this));
+            // check if session is passed
+            if(this.$attrs.session){
+                this.$store.commit('auth/setSession', JSON.parse(this.$attrs.session))
+            }
 
-            EventBus.$on('toggled-sidebar', function () {
-                this.showSidebar = !this.showSidebar;
-            }.bind(this))
         },
     }
 

@@ -12,6 +12,8 @@
     <meta name="description" content="@yield('meta_description', 'Laravel Startup')">
     <meta name="author" content="@yield('meta_author', 'Sam Ngu | Acadea')">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
 
 @yield('meta')
 

@@ -5,6 +5,7 @@ import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import vuetifyopt from "../vuetifyopt";
+import store from "../store/store";
 window.Vue = Vue;
 
 
@@ -21,6 +22,8 @@ requireComponent.keys().forEach(fileName => {
         camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, ''))
     )
 
+    console.log({componentName})
+
     // Register component globally
     // componentConfig.default || componentConfig  --> this check if component is exported default or using the specified export
     Vue.component(componentName, componentConfig.default || componentConfig);
@@ -36,9 +39,9 @@ Vue.use(Vuetify);
  */
 
 
-const app = new Vue({
+const index = new Vue({
     vuetify: new Vuetify(vuetifyopt),
     el: '#app',
     // router: routes,
-    // store  // uncomment this if using vuex
+    store  // uncomment this if using vuex
 });

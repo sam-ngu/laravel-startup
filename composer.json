@@ -77,7 +77,7 @@
             "@php artisan config:cache",
             "@php artisan route:cache"
         ],
-        "cc": [
+        "ca": [
             "composer clear-all",
             "composer cache-all"
         ],

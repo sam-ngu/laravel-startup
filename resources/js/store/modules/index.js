@@ -1,5 +1,5 @@
 import camelCase from 'lodash/camelCase'
-const requireModule = require.context('.', false, '/\.js$/');
+const requireModule = require.context('.', false, /\.js$/);
 const modules = {}
 
 requireModule.keys().forEach((fileName) => {
@@ -11,10 +11,14 @@ requireModule.keys().forEach((fileName) => {
     const moduleName = camelCase(
         fileName.replace(/(\.\/|\.js)/g, '')
     )
-    modules[moduleName] = {
-        namespaced: true,
-        ...requireModule(fileName),
-    }
+    console.log({
+        ...requireModule(fileName)
+    })
+    const moduleConfig = requireModule(fileName).default || requireModule(fileName)
+
+    const module = Object.assign({namespaced: true}, {...moduleConfig})
+    console.log({module})
+    modules[moduleName] = module
 })
 
 export default modules

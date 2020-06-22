@@ -14,7 +14,7 @@ const mix = require('laravel-mix');
 mix.setPublicPath('public');
 
 
-mix.js('resources/js/public/app.js', 'js')
+mix.js('resources/js/public/index.js', 'js')
     .sass('resources/sass/app.scss', 'css')
     .extract([
         'axios',
@@ -55,5 +55,35 @@ mix.webpackConfig({
         // plugins: [
         //     new webpack.EnvironmentPlugin(['MIX_PUBLISH_APP_URL']),
         // ],
-    }
+    },
+
+    // module: {
+    //     rules: [
+    //         {
+    //             test: /\.s(c|a)ss$/,
+    //             use: [
+    //                 'vue-style-loader',
+    //                 'css-loader',
+    //                 {
+    //                     loader: 'sass-loader',
+    //                     // // Requires sass-loader@^7.0.0
+    //                     // options: {
+    //                     //     implementation: require('sass'),
+    //                     //     fiber: require('fibers'),
+    //                     //     // indentedSyntax: true // optional
+    //                     // },
+    //                     // Requires sass-loader@^8.0.0
+    //                     options: {
+    //                         implementation: require('sass'),
+    //                         sassOptions: {
+    //                             fiber: require('fibers'),
+    //                             indentedSyntax: false // optional
+    //                         },
+    //                     },
+    //                 },
+    //             ],
+    //         },
+    //     ],
+    // },
+
 });

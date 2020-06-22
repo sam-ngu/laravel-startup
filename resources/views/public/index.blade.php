@@ -1,12 +1,13 @@
 @extends('layouts.master')
 
 @push('after-scripts')
-    <script src="{{mix('js/app.js')}}"></script>
+    <script src="{{mix('js/index.js')}}"></script>
 @endpush
 
 @section('content')
 
-    <AppPublic/>
+
+    <app-public session="{{ ($user = auth()->user()) ? json_encode(auth()->user()->toArray()) : null }}"/>
 
 
 @endsection

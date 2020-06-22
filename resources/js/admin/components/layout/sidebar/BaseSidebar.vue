@@ -85,8 +85,6 @@
 </template>
 
 <script>
-    import {EventBus} from "../../../../utils/event-bus";
-    import {MessageBus} from "../../../../utils/MessageBus";
     import SidebarListTile from "./SidebarListTile";
 
     export default {
@@ -108,10 +106,12 @@
 
                     },
                 ],
-                session: MessageBus.getSession(),
             }
         },
         computed:{
+            session(){
+                return this.$store.getters['auth/session']
+            }
 
         },
         props: {
@@ -119,9 +119,9 @@
         },
         methods: {},
         mounted() {
-            EventBus.$on('toggled-sidebar', function(){
-                this.show = !this.show;
-            }.bind(this))
+            // EventBus.$on('toggled-sidebar', function(){
+            //     this.show = !this.show;
+            // }.bind(this))
         },
     }
 
