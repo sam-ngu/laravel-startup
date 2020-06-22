@@ -69,7 +69,6 @@
                 colour: this.initialColour,
                 menuItems: [
                     {title: 'FAQ', url: "/faq"},
-                    {title: 'Courses', url: "/courses"},
                     {title: 'Contact', url: "/contact"}
                 ]
             }

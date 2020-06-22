@@ -14,4 +14,21 @@ class FrontController extends Controller
     {
         return view('public.auth.login');
     }
+
+    public function register()
+    {
+        return view('public.auth.register');
+    }
+
+    public function forgotPassword()
+    {
+        return view('public.auth.passwords.email');
+    }
+
+    public function resetPassword()
+    {
+        return view('public.auth.passwords.reset');
+    }
+
+
 }

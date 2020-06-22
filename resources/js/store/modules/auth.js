@@ -2,7 +2,6 @@ const state = {
     session: {
         user: {}
     },
-    name: 'gege'
 };
 
 const getters = {

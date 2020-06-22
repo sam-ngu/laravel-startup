@@ -22,7 +22,6 @@ requireComponent.keys().forEach(fileName => {
         camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, ''))
     )
 
-    console.log({componentName})
 
     // Register component globally
     // componentConfig.default || componentConfig  --> this check if component is exported default or using the specified export

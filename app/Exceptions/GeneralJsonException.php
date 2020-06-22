@@ -9,13 +9,14 @@ class GeneralJsonException extends Exception
 {
 
     protected $code = 422;
+
     /**
      * Report the exception.
      *
      * @return void
      */
-     public function report()
-     {
+    public function report()
+    {
         //
     }
 
@@ -23,11 +24,15 @@ class GeneralJsonException extends Exception
     /**
      * Render the exception as an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function render($request)
     {
-        return JsonResponse::create(['error' => $this->getMessage()], $this->code);
+        return new JsonResponse([
+            'errors' => [
+                'data' => $this->getMessage()
+            ]
+        ], $this->code);
     }
 }
