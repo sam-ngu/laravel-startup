@@ -14,7 +14,7 @@ const mix = require('laravel-mix');
 mix.setPublicPath('public');
 
 
-mix.js('resources/js/app.js', 'js')
+mix.js('resources/js/public/app.js', 'js')
     .sass('resources/sass/app.scss', 'css')
     .extract([
         'axios',
@@ -30,6 +30,7 @@ if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
 mix.options({
     hmrOptions: {
         host: 'laravel-startup.dev.local',
+        port: 8080,
     }
 });
 

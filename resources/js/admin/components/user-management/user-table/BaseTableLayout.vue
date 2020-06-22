@@ -132,13 +132,16 @@
         },
 
         watch: {
-            searchKeywords: _.throttle(function () {
-                clearTimeout(this.searchProductTimeoutId);
-                this.isLoading = false;
-                this.searchProductTimeoutId = setTimeout(function(){
-                    this.fetchUsers();
-                }.bind(this), 1500);
-            }),
+            searchKeywords: {
+                handler: _.throttle(function () {
+                    clearTimeout(this.searchProductTimeoutId);
+                    this.isLoading = false;
+                    this.searchProductTimeoutId = setTimeout(function(){
+                        this.fetchUsers();
+                    }.bind(this), 1500);
+                }),
+                immediate: true,
+            },
         },
         computed: {
 
@@ -169,9 +172,6 @@
                     }.bind(this))
                     .catch(axiosErrorCallback);
             },
-            reloadTable(){
-                this.fetchUsers()
-            },
             switchTab(tabIndex){
                 this.tab = tabIndex;
                 this.reloadTable()
@@ -179,7 +179,6 @@
         },
         mounted() {
             // call api -- grab users deets
-            this.reloadTable();
 
             EventBus.$on("table-reload-required", function () {
                 this.reloadTable();
