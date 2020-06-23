@@ -1,6 +1,6 @@
-@extends('frontend.layouts.app')
+@extends('layouts.master')
 
-@section('title', app_name() . ' | ' . __('labels.frontend.passwords.reset_password_box_title'))
+@section('title', config('app.name') . ' | ' . __('labels.frontend.passwords.reset_password_box_title'))
 
 @section('content')
     <div class="row justify-content-center align-items-center">

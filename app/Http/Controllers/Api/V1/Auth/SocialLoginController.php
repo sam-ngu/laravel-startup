@@ -68,7 +68,7 @@ class SocialLoginController extends Controller
         session([config('access.socialite_session_name') => $provider]);
 
         event(new UserLoggedIn(auth()->user()));
-        
+
         return (new UserResource(auth()->user()))->response();
     }
 

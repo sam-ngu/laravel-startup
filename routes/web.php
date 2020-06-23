@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,30 +18,18 @@ Route::get('/', function () {
     return view('public.index');
 });
 
-Route::group([
-    'middleware' => [
-        'guest'
-    ]
-], function (){
+include_route_files(__DIR__ . '/auth');
 
-    Route::get('/login', [\App\Http\Controllers\Front\FrontController::class, 'login']);
+//\Illuminate\Support\Facades\Auth::routes();
 
-    Route::get('/register', [\App\Http\Controllers\Front\FrontController::class, 'register']);
 
-    // Socialite Routes
-    Route::get('login/{provider}', [SocialLoginController::class, 'login'])->name('social.login');
-    Route::get('login/{provider}/callback', [SocialLoginController::class, 'login']);
+//Auth::routes(['verify' => true]);
 
-    // Confirm Account Routes
-    Route::get('account/confirm/{token}', [ConfirmAccountController::class, 'confirm'])->name('account.confirm');
-    Route::get('account/confirm/resend/{uuid}', [ConfirmAccountController::class, 'sendConfirmationEmail'])->name('account.confirm.resend');
+Route::get('/home', 'HomeController@index')->name('home');
 
-    // Password Reset Routes
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.email');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email.post');
 
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset.form');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+if(\Illuminate\Support\Facades\App::environment('local')){
+    Route::get('/playground', function (){
 
-});
-
+    });
+}
