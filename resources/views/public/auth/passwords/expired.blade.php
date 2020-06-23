@@ -1,3 +1,4 @@
+{{-- this file is not needed ? remnant from laravel boilerplate--}}
 @extends('frontend.layouts.app')
 
 @section('title', app_name() . ' | ' . __('labels.frontend.passwords.expired_password_box_title'))

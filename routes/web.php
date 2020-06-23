@@ -33,5 +33,5 @@ if(\Illuminate\Support\Facades\App::environment('local')){
         $user = \App\Models\User::query()->find(1);
 
         $user->sendPasswordResetNotification('123');
-    });
+    })->middleware(['password.confirm']);
 }

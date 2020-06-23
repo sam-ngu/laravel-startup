@@ -90,19 +90,23 @@
 
                 axios.post(uri, this.inputData)
                     .then(function(response){
-                        // console.log(response);
-                        let redirect = response.data.redirect;
+                        console.log({response});
+                        window.location = response.data.data.redirect;
                         // console.log(redirect)
                         // console.trace("login redirect");
-                        window.location = redirect;
 
                     }.bind(this))
                     .catch((response) => {
                         // if(response.)
                         response = response.response;
                         // console.log(response)
-                        if(!response.data.success) // !!bad practice here, inconsistent api, this is to capture user is still under confirmation error
-                            return swalMessage('error', response.data.message)
+                        const payload = {
+                            message: response.data.message,
+                            errors: Object.values(response.data.errors).join('\n')
+                        }
+                        if(response.status !== 200) { // !!bad practice here, inconsistent api, this is to capture user is still under confirmation error
+                            return swalMessage('error', payload)
+                        }
                         axiosErrorCallback(response, response.data.message)
                     })
 

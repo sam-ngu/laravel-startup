@@ -9,7 +9,7 @@ const swalTimer = (messageType, timer=1500, info) => {
     if(_.isEmpty(info))
         info = "";
 
-    return swal({
+    return swal.fire({
         title: title,
         type: messageType,
         showCancelButton: false,
@@ -31,9 +31,20 @@ const swalTimer = (messageType, timer=1500, info) => {
 
 const swalMessage = (messageType, info) => {
     let title = messageType.toUpperCase();
-    if(_.isEmpty(info))
+    if(_.isEmpty(info)){
         info = "";
-    return swal({
+    }
+
+    if(info instanceof Object){
+        let payload = '';
+        for (const key in info) {
+            payload += info[key] + '\n'
+        }
+        info = payload;
+    }
+
+
+    return swal.fire({
         title: title,
         type: messageType,
         showCancelButton: false,
@@ -52,7 +63,7 @@ const swalLoader = (info) => {
     if(_.isEmpty(info))
         info = "";
 
-    return swal({
+    return swal.fire({
         title: "Loading",
         showCancelButton: false,
         showConfirmButton: false,
@@ -70,7 +81,7 @@ const swalLoader = (info) => {
 }
 
 const swalConfirm = (html="", confirmCallback, rejectCallback) => {
-    return swal({
+    return swal.fire({
         title: "Are you sure?",
         type: "warning",
         showCancelButton: true,
