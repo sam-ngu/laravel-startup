@@ -73,6 +73,9 @@ trait UserMethod
         return config('access.users.requires_approval') && ! $this->confirmed;
     }
 
+
+    // this will overwrite default laravel notification
+
     /**
      * Send the password reset notification.
      *

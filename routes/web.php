@@ -30,6 +30,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 if(\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){
+        $user = \App\Models\User::query()->find(1);
 
+        $user->sendPasswordResetNotification('123');
     });
 }

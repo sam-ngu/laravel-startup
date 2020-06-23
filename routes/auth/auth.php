@@ -40,9 +40,6 @@ Route::group([
 
 
 
-
-
-
     // Password Reset Routes
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
