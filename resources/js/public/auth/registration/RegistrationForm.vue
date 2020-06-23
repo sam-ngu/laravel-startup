@@ -2,7 +2,7 @@
     <v-card class="pa-12 elevation-2">
         <v-card-title>
             <h2 class="display-1">
-                <v-icon size="36">account_circle</v-icon> Account Registration
+                <v-icon size="36">mdi-account-circle</v-icon> Account Registration
             </h2>
         </v-card-title>
         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">

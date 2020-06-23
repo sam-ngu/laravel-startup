@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\Front\AuthController;
 
 Route::group([
     'middleware' => [
@@ -47,8 +46,10 @@ Route::group([
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
 
-    Route::get('/register', [RegisterController::class, 'register'])->name('register');
+
 
 });
 
@@ -64,10 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
     // These routes can not be hit if the password is expired
     Route::group(['middleware' => 'password_expires'], function () {
         // Change Password Routes
-        Route::patch('password/update', [UpdatePasswordController::class, 'update'])->name('password.update');
+//        Route::patch('password/update', [UpdatePasswordController::class, 'update'])->name('password.update');
     });
-
     // Password expired routes
-    Route::get('password/expired', [PasswordExpiredController::class, 'expired'])->name('password.expired');
-    Route::patch('password/expired', [PasswordExpiredController::class, 'update'])->name('password.expired.update');
+//    Route::get('password/expired', [PasswordExpiredController::class, 'expired'])->name('password.expired');
+//    Route::patch('password/expired', [PasswordExpiredController::class, 'update'])->name('password.expired.update');
 });

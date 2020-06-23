@@ -11,7 +11,7 @@
         <div slot="socialite" class="row">
             <div class="col">
                 <div class="text-center">
-                    {!! $socialiteLinks !!}
+                    {!! $socialiteLinks ?? '' !!}
                 </div>
             </div><!--/ .col -->
         </div><!-- / .row -->

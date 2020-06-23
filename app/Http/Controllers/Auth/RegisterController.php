@@ -76,4 +76,14 @@ class RegisterController extends Controller
             return redirect($this->redirectPath());
         }
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return view('public.auth.register');
+    }
 }
