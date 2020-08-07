@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('public.layouts.master')
 
 @section('title', config('app.name') . ' | ' . __('labels.frontend.auth.register_box_title'))
 

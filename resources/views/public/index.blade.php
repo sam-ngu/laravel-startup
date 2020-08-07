@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('public.layouts.master')
 
 @push('after-scripts')
     <script src="{{mix('js/index.js')}}"></script>

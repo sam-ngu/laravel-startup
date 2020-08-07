@@ -15,7 +15,9 @@ mix.setPublicPath('public');
 
 
 mix.js('resources/js/public/index.js', 'js')
-    .sass('resources/sass/app.scss', 'css')
+    .sass('resources/sass/public/public.scss', 'css/public')
+    .sass('resources/sass/app/app.scss', 'css/app')
+    .sass('resources/sass/admin/admin.scss', 'css/admin')
     .extract([
         'axios',
         'lodash',
