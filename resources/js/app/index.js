@@ -12,8 +12,6 @@ window.Vue = Vue;
 // Require in a base component context
 const requireComponent = require.context('.', false, /.vue$/)
 
-
-
 // autoloading all public folder components
 requireComponent.keys().forEach(fileName => {
     // get component config
@@ -23,7 +21,6 @@ requireComponent.keys().forEach(fileName => {
     const componentName = upperFirst(
         camelCase(fileName.replace(/^\.\//, '').replace(/\.\w+$/, ''))
     )
-
 
     // Register component globally
     // componentConfig.default || componentConfig  --> this check if component is exported default or using the specified export
@@ -39,10 +36,9 @@ Vue.use(Vuetify);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
 const index = new Vue({
     vuetify: new Vuetify(vuetifyopt),
     el: '#app',
-    // router: routes,
+    router: routes,
     store  // uncomment this if using vuex
 });

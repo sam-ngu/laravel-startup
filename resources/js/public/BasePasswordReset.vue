@@ -16,12 +16,14 @@
                                     label="Email"
                                     :error-messages="errors.email"
                                     :rules="rules.email"
+                                    @change="errors={}"
                                     v-model="inputData.email"
                                 />
 
                                 <v-text-field
                                     type="password"
                                     label="Password"
+                                    @change="errors={}"
                                     :error-messages="errors.password"
                                     :rules="rules.password"
                                     v-model="inputData.password"
@@ -30,6 +32,7 @@
                                 <v-text-field
                                     type="password"
                                     label="Password Again"
+                                    @change="errors={}"
                                     :rules="rules.password_confirmation"
                                     v-model="inputData.password_confirmation"
                                 />

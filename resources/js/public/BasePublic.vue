@@ -8,7 +8,7 @@
     import LayoutMaster from "./layout/LayoutMaster";
     import BaseIndex from "./index/BaseIndex";
     export default {
-        name: "AppPublic",
+        name: "BasePublic",
         components: {BaseIndex, LayoutMaster},
         data() {
             return {}

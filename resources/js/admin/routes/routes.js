@@ -1,9 +1,9 @@
 import VueRouter from 'vue-router'
 
-import BaseDashboard from '../../backend/components/dashboard/BaseDashboard'
+import BaseDashboard from '../../admin/components/dashboard/BaseDashboard'
 
-import {user} from '../routes/auth/user'
-import {role} from '../routes/auth/role'
+import {user} from './auth/user'
+import {role} from './auth/role'
 
 
 let routes = [

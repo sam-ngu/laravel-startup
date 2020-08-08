@@ -1,7 +1,7 @@
 @extends('public.layouts.master')
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script type="application/javascript" src="{{mix('js/public.js')}}"></script>
 @endpush
 
 @section('content')

@@ -106,7 +106,7 @@
                     .then(function(response){
                         swalTimer("success");
                         this.$emit("role-updated");
-                        EventBus.$emit("table-reload-required")
+                        // EventBus.$emit("table-reload-required")
                     }.bind(this))
                     .catch(axiosErrorCallback)
             },

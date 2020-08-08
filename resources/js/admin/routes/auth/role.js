@@ -1,6 +1,6 @@
-import BaseRoleManagement from '../../../backend/components/role-management/BaseRoleManagement'
-import BaseRoleUpdate from '../../../backend/components/role-management/role-update/BaseRoleUpdate'
-import BaseRoleCreate from '../../../backend/components/role-management/role-create/BaseRoleCreate'
+import BaseRoleManagement from '../../../admin/components/role-management/BaseRoleManagement'
+import BaseRoleUpdate from '../../../admin/components/role-management/role-update/BaseRoleUpdate'
+import BaseRoleCreate from '../../../admin/components/role-management/role-create/BaseRoleCreate'
 
 let baseBreadcrumb = [
     {

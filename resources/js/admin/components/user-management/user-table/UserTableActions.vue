@@ -36,8 +36,7 @@
 </template>
 
 <script>
-    import {MessageBus} from "../../../../utils/MessageBus";
-    import {EventBus} from "../../../../utils/event-bus";
+    // import {MessageBus} from "../../../../utils/MessageBus";
     import ButtonTooltip from "../../../../partials/ButtonTooltip";
     import {swalConfirm, swalLoader, swalMessage} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
@@ -122,7 +121,7 @@
                     url: uri,
                 }).then(function (response) {
                     swal.close();
-                    EventBus.$emit('table-reload-required');
+                    // EventBus.$emit('table-reload-required');
                 }).catch(axiosErrorCallback)
             },
             deleteItem(){

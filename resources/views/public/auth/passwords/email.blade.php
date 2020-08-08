@@ -6,6 +6,6 @@
 
 @section('content')
 
-    <base-password-reset/>
+    <base-send-password-reset/>
 
 @endsection

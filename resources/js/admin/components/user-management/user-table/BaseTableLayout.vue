@@ -91,7 +91,6 @@
 </template>
 
 <script>
-    import {EventBus} from "../../../../utils/event-bus";
     import UserTable from "./UserTable";
     import StringHelperMixin from "../../../../utils/mixins/StringHelperMixin";
     import ButtonTooltip from "../../../../partials/ButtonTooltip";
@@ -180,9 +179,9 @@
         mounted() {
             // call api -- grab users deets
 
-            EventBus.$on("table-reload-required", function () {
-                this.reloadTable();
-            }.bind(this))
+            // EventBus.$on("table-reload-required", function () {
+            //     this.reloadTable();
+            // }.bind(this))
         },
     }
 </script>

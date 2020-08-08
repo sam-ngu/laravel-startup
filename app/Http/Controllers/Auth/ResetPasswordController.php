@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -75,6 +76,26 @@ class ResetPasswordController extends Controller
         return $response == Password::PASSWORD_RESET
             ? $this->sendResetResponse($request, $response)
             : $this->sendResetFailedResponse($request, $response);
+    }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'message' => trans($response),
+                'redirect' => '/app',
+            ], 200);
+        }
+
+        return redirect($this->redirectPath())
+            ->with('status', trans($response));
     }
 
 

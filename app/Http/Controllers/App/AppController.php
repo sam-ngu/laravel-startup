@@ -11,6 +11,4 @@ class AppController
         return view('app.index');
     }
 
-
-
 }

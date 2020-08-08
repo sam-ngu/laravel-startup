@@ -1,6 +1,6 @@
-import BaseUserManagement from '../../../backend/components/user-management/BaseUserManagement'
+import BaseUserManagement from '../../components/user-management/BaseUserManagement'
 import BaseUserUpdate from '../../components/user-management/user-update/BaseUserUpdate'
-import BaseUserCreate from '../../../backend/components/user-management/user-create/BaseUserCreate'
+import BaseUserCreate from '../../components/user-management/user-create/BaseUserCreate'
 
 
 let baseBreadcrumb = [

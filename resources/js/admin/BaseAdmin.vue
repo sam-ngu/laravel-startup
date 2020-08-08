@@ -7,8 +7,6 @@
 
 <script>
     import LayoutMaster from "./components/layout/LayoutMaster";
-    import {MessageBus} from "../../utils/message-bus";
-    import LoadingEclipse from "../../utils/LoadingEclipse";
 
     export default {
         name: 'AppAdmin',
