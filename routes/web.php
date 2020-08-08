@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\App\AppController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,28 @@ Route::get('/', function () {
     return view('public.index');
 });
 
+Route::group([
+    'middleware' => [
+        \App\Http\Middleware\Authenticate::class,
+    ]
+], function (){
+    Route::get('/app', [AppController::class, 'dashboard']);
+
+});
+
+Route::group([
+    'middleware' => [
+        \App\Http\Middleware\Authenticate::class,
+        // admin only
+    ]
+], function (){
+    Route::get('/admin', [AppController::class, 'dashboard']);
+
+});
+
+
+
+
 include_route_files(__DIR__ . '/auth');
 
 //\Illuminate\Support\Facades\Auth::routes();
@@ -30,7 +54,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 if(\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){
-        $user = \App\Models\User::query()->find(1);
+        $user = User::query()->find(1);
 
         $user->sendPasswordResetNotification('123');
     })->middleware(['password.confirm']);

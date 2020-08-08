@@ -4,7 +4,7 @@ import {swalMessage} from "./SwalHelper";
 *
 * */
 const axiosErrorCallback = (response, afterCallback) => {
-    let errors = response.response.data.error;
+    let errors = response.response.data.errors;
     if ((typeof errors) === "string")
         errors = {errors};
     swal.close();

@@ -8,7 +8,7 @@ class AppController
 
     public function dashboard()
     {
-        return view('');
+        return view('app.index');
     }
 
 

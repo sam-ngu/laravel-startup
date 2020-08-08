@@ -7,7 +7,7 @@
 @section('content')
 
 
-    <app-public session="{{ ($user = auth()->user()) ? json_encode(auth()->user()->toArray()) : null }}"/>
+    <base-public session="{{ ($user = auth()->user()) ? json_encode(auth()->user()->toArray()) : null }}"/>
 
 
 @endsection

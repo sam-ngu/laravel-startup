@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,7 +49,7 @@ class RegisterController extends Controller
     /**
      * @param RegisterRequest $request
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Response
      * @throws \Throwable
      */
     public function register(RegisterRequest $request, UserRepository $repository)
@@ -63,11 +64,14 @@ class RegisterController extends Controller
 
             event(new UserRegistered($user));
 
-            return redirect($this->redirectPath())->withFlashSuccess(
-                config('access.users.requires_approval') ?
-                    __('exceptions.frontend.auth.confirmation.created_pending') :
-                    __('exceptions.frontend.auth.confirmation.created_confirm')
-            );
+            $message = config('access.users.requires_approval') ?
+                __('exceptions.frontend.auth.confirmation.created_pending') :
+                __('exceptions.frontend.auth.confirmation.created_confirm');
+
+            return $request->wantsJson() ? new Response([
+                'data' => $message
+            ]) : redirect($this->redirectPath())->withFlashSuccess($message);
+
         } else {
             auth()->login($user);
 

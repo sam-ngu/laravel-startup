@@ -5,13 +5,9 @@
 @section('content')
     <base-login>
         <template v-slot:socialite>
-            <div class="row">
-                <div class="col">
-                    <div class="text-center"> 
-                        {!! $socialiteLinks ?? ''!!}
-                    </div>
-                </div><!--col-->
-            </div><!--row-->
+            <div class="text-center"> 
+                {!! $socialiteLinks ?? ''!!}
+            </div>
         </template>
     </base-login>
 @endsection

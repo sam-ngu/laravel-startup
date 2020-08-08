@@ -1,104 +1,121 @@
 <template>
     <layout-master>
+        <v-container>
+            <v-row justify="center" align="center">
+                <v-col cols="12" sm="8" md="6">
+                    <v-card>
+                        <v-card-title>
+                            <h2 class="text-center">Reset Password</h2>
+                        </v-card-title>
 
-        <div style="height: 100%">
-
-            <v-container align-content-center fill-height>
-
-                <v-row align="center" justify="center" fill-height>
-
-
-                    <v-card style="width: 400px">
                         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
-
-
-                            <v-card-title class="text-center ">
-                                <h3 class="text-center mx-auto display-1 font-weight-bold">Forgot your password?</h3>
-                                <h5 class="text-center mx-auto subtitle-1">Don't worry. We'll help you reset it.</h5>
-                            </v-card-title>
 
                             <v-card-text>
                                 <v-text-field
-                                    label="Email Address"
-                                    v-model="inputData.email"
+                                    type="email"
+                                    label="Email"
+                                    :error-messages="errors.email"
                                     :rules="rules.email"
-                                >
-                                </v-text-field>
+                                    v-model="inputData.email"
+                                />
+
+                                <v-text-field
+                                    type="password"
+                                    label="Password"
+                                    :error-messages="errors.password"
+                                    :rules="rules.password"
+                                    v-model="inputData.password"
+                                />
+
+                                <v-text-field
+                                    type="password"
+                                    label="Password Again"
+                                    :rules="rules.password_confirmation"
+                                    v-model="inputData.password_confirmation"
+                                />
+
+
+
                             </v-card-text>
 
-                            <v-card-actions>
-                                <v-row column align="center">
-                                    <v-col xs12>
-                                        <v-btn
-                                            :disabled="!states.is_form_valid"
-                                            rounded
-                                            color="red lighten-1 white--text"
-                                            @click="submitForm">Reset Password</v-btn>
-                                    </v-col>
-                                    <v-col xs12 class="mt-2">
-                                        <v-btn  small text href="/login"><span class="body-1">Back</span></v-btn>
-                                    </v-col>
-                                </v-row>
-                            </v-card-actions>
                         </v-form>
 
+                        <v-card-actions>
+                            <v-btn color="primary" :disabled="!states.is_form_valid" @click="submitForm">Reset</v-btn>
+                        </v-card-actions>
+
                     </v-card>
-
-
-                </v-row>
-
-            </v-container>
-        </div>
-
+                </v-col>
+            </v-row>
+        </v-container>
     </layout-master>
 </template>
+
 <script>
-
-    import LayoutMaster from "./layout/LayoutMaster";
-    import {emailValidator} from "../utils/ValidationHelper";
-    import {swalLoader, swalMessage} from "../utils/swal/SwalHelper";
-    import {axiosErrorCallback} from "../utils/swal/AxiosHelper";
-
-    export default {
-        name: "BasePasswordReset",
-        components: { LayoutMaster},
-        data() {
-            return {
-                states: {
-                    is_form_valid: false
-                },
-                inputData: {
-                    email: null,
-                },
-                rules: {
-                    email: [
-                        v => !!v || "Required",
-                        emailValidator,
-                    ]
-                }
-
+import LayoutMaster from "./layout/LayoutMaster";
+import {swalMessage} from "../utils/swal/SwalHelper";
+import {axiosErrorCallback} from "../utils/swal/AxiosHelper";
+import {emailValidator} from "../utils/ValidationHelper";
+export default {
+    name: "BasePasswordReset",
+    components: {LayoutMaster},
+    data() {
+        return {
+            states: {
+                is_form_valid: false
+            },
+            rules: {
+                email: [
+                    v => !!v || 'Required',
+                    emailValidator,
+                ],
+                password: [
+                    v => !!v || "Required",
+                    v => (v && v.length >= 8) || "Password must be at least 8 characters"
+                ],
+                password_confirmation: [
+                    v => !!v || "Required",
+                    v => this.inputData.password ? ((v && v === this.inputData.password) || "Passwords do not match!") : true,
+                ],
+            },
+            errors: {},
+            inputData: {
+                email: "",
+                password: "",
+                password_confirmation: "",
+            },
+        }
+    },
+    props: {},
+    computed: {},
+    methods: {
+        submitForm(){
+            if(!this.$refs.form.validate()){
+                swalMessage("error", "Please complete the form");
+                return
             }
-        },
-        props: {},
-        computed: {},
-        methods: {
-            submitForm() {
-                if(!this.$refs.form.validate())
-                    return swalMessage('error', 'Please complete the form');
-                swalLoader();
-                let uri = '/password/email';
+            const uri = '/password/reset';
+            const token = window.location.pathname.split('/')[3]
+            axios.post(uri, { ...this.inputData, token})
+                .then(function(response){
+                    let redirect = response.data.redirect;
+                    swalMessage("success", response.data.data)
+                        .then(function (response) {
+                            window.location = redirect;
+                        });
+                }.bind(this))
+                .catch((response) => {
+                    this.errors = response.response.data.errors;
 
-                return axios.post(uri, this.inputData)
-                    .then((response) => {
-                        swalMessage('success', response.data.message)
-                    })
-                    .catch(response => axiosErrorCallback(response, response.response.data.error))
-            }
-        },
-        mounted() {
+                    // axiosErrorCallback
+                })
 
-        },
-    }
+        }
+    },
+    mounted() {
+
+    },
+}
 </script>
 
 <style scoped>

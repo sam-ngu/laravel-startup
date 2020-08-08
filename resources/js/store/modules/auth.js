@@ -14,8 +14,10 @@ const actions = {};
 
 const mutations = {
     setCurrentUser(state, user){
-        console.log('hey')
         state.session.user = user;
+    },
+    setSession(state, session) {
+        state.session = session;
     }
 };
 
