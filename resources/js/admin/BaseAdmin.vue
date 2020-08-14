@@ -1,5 +1,5 @@
 <template>
-    <layout-master :disable-sidebar="showSidebar" >
+    <layout-master >
         <v-breadcrumbs :items="breadcrumbItems" divider=">"></v-breadcrumbs>
         <router-view></router-view>
     </layout-master>
@@ -25,13 +25,7 @@
             }
         },
         computed: {
-            showSidebar(){
-                // if is in control then show
-                if(this.$router.full)
-                    return true;
-                else
-                    return false;
-            }
+
         },
         watch: {
             '$route'(){ // make sure only the last breadcrumb link is enabled
@@ -49,7 +43,10 @@
 
         },
         mounted(){
-            MessageBus.setSession(this.session);
+            // check if session is passed
+            if(this.session){
+                this.$store.commit('auth/setSession', JSON.parse(this.session))
+            }
             // to route to the correct page if required
             let url = new URL(window.location.href);
             let routeName = url.searchParams.get("to");

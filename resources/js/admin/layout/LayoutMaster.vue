@@ -4,13 +4,13 @@
 
             <logged-in-as-alert/>
 
-            <sidebar v-if="!disableSidebar" v-model="showSidebar"></sidebar>
+            <base-sidebar ></base-sidebar>
 
-            <navbar v-if="!disableSidebar" @toggled-sidebar="showSidebar=!showSidebar"></navbar>
+            <navbar  @toggled-sidebar="showSidebar=!showSidebar"></navbar>
 
-            <v-content>
+            <v-main>
                 <slot></slot>
-            </v-content>
+            </v-main>
         </v-app>
 
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import Sidebar from "./sidebar/BaseSidebar";
+    import BaseSidebar from "./sidebar/BaseSidebar";
     import Navbar from "./NavBar";
     import LoggedInAsAlert from "../../partials/LoggedInAsAlert";
     import LoadingEclipse from "../../partials/LoadingEclipse";
@@ -26,27 +26,23 @@
 
     export default {
         name: "layout-master",
-        components: {LoadingEclipse, LoggedInAsAlert, Navbar, Sidebar},
+        components: {LoadingEclipse, LoggedInAsAlert, Navbar, BaseSidebar},
         data() {
             return {
                 dark: false,
-                showSidebar: null,
             }
         },
+        computed: {
+
+        },
         props: {
-            disableSidebar: {
-                type: Boolean,
-                default: false
-            }
+
         },
         methods: {
 
         },
         mounted() {
-            // check if session is passed
-            if(this.$attrs.session){
-                this.$store.commit('auth/setSession', JSON.parse(this.$attrs.session))
-            }
+
 
         },
     }

@@ -5,9 +5,9 @@
             width="300"
             clipped
             fixed
-            :value="value"
+            :value="showSidebar"
             floating
-            @input="($event)=>{$emit('input', $event)}"
+            @input="toggleSidebar"
 
     >
         <v-list inset>
@@ -35,49 +35,49 @@
                 <!--<v-list-item-title>Menu</v-list-item-title>-->
             <!--</v-list-item>-->
 
-            <v-list-group
-                    v-if="session.user.roles_label === 'Administrator'"
-                    prepend-icon="account_circle"
-                    value="true"
-            >
-                <template v-slot:activator>
+<!--            <v-list-group-->
+<!--                    v-if="session.user.roles_label === 'Administrator'"-->
+<!--                    prepend-icon="account_circle"-->
+<!--                    value="true"-->
+<!--            >-->
+<!--                <template v-slot:activator>-->
 
-                    <v-list-item >
-                        <v-list-item-title>Users</v-list-item-title>
-                    </v-list-item>
-                </template>
+<!--                    <v-list-item >-->
+<!--                        <v-list-item-title>Users</v-list-item-title>-->
+<!--                    </v-list-item>-->
+<!--                </template>-->
 
-                <v-list-group
-                        no-action
-                        sub-group
-                        value="true"
-                >
-                    <template v-slot:activator>
+<!--                <v-list-group-->
+<!--                        no-action-->
+<!--                        sub-group-->
+<!--                        value="true"-->
+<!--                >-->
+<!--                    <template v-slot:activator>-->
 
-                        <v-list-item>
-                            <v-list-item-title>Access</v-list-item-title>
-                        </v-list-item>
-                    </template>
+<!--                        <v-list-item>-->
+<!--                            <v-list-item-title>Access</v-list-item-title>-->
+<!--                        </v-list-item>-->
+<!--                    </template>-->
 
-                    <sidebar-list-tile
-                        v-for="(admin, i) in admins"
-                        :key="i"
-                        :to="admin.to"
-                        :icon="admin.icon"
-                        :title="admin.name"
-                    />
+<!--                    <sidebar-list-tile-->
+<!--                        v-for="(admin, i) in admins"-->
+<!--                        :key="i"-->
+<!--                        :to="admin.to"-->
+<!--                        :icon="admin.icon"-->
+<!--                        :title="admin.name"-->
+<!--                    />-->
 
-                </v-list-group>
-            </v-list-group>
+<!--                </v-list-group>-->
+<!--            </v-list-group>-->
 
-            <v-list-item
-                v-if="session.user.roles_label === 'Administrator'"
-                href="/admin/log-viewer">
-                <v-list-item-action>
-                    <v-icon>event_note</v-icon>
-                </v-list-item-action>
-                <v-list-item-title>Log Viewer</v-list-item-title>
-            </v-list-item>
+<!--            <v-list-item-->
+<!--                v-if="session.user.roles_label === 'Administrator'"-->
+<!--                href="/admin/log-viewer">-->
+<!--                <v-list-item-action>-->
+<!--                    <v-icon>event_note</v-icon>-->
+<!--                </v-list-item-action>-->
+<!--                <v-list-item-title>Log Viewer</v-list-item-title>-->
+<!--            </v-list-item>-->
 
 
         </v-list>
@@ -88,7 +88,7 @@
     import SidebarListTile from "./SidebarListTile";
 
     export default {
-        name: "sidebar",
+        name: "BaseSidebar",
         components: {SidebarListTile},
         data() {
             return {
@@ -111,13 +111,21 @@
         computed:{
             session(){
                 return this.$store.getters['auth/session']
+            },
+            showSidebar(){
+                return this.$store.getters['app/isSidebarOpened']
             }
 
         },
         props: {
             value: ""
         },
-        methods: {},
+        methods: {
+            toggleSidebar(){
+                console.log('hey')
+                // this.$store.commit('app/toggleSidebar');
+            }
+        },
         mounted() {
             // EventBus.$on('toggled-sidebar', function(){
             //     this.show = !this.show;

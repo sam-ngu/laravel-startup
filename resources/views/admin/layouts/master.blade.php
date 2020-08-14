@@ -33,6 +33,6 @@
 <script src="{{mix('js/vendor.js')}}"></script>
 @stack('after-scripts')
 
-@include('includes.partials.ga')
+{{--@include('includes.partials.ga')--}}
 </body>
 </html>

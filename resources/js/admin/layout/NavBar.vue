@@ -72,7 +72,7 @@
 
             },
             toggleSideBar(){
-                // EventBus.$emit('toggled-sidebar')
+                this.$store.commit('app/toggleSidebar');
             },
             logout(){
                 window.location.href = '/logout';

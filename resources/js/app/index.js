@@ -5,7 +5,7 @@ import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import vuetifyopt from "../vuetifyopt";
-import store from "../store/store";
+import store from "./store/store";
 window.Vue = Vue;
 
 

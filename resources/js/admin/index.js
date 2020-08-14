@@ -6,7 +6,7 @@ import './../bootstrap'
 import BaseAdmin from './BaseAdmin.vue'
 import routes from './routes/routes'
 import vuetifyopt from "../vuetifyopt";
-import store from "../store/store";
+import store from "./store/store";
 window.Vue = Vue;
 
 Vue.config.productionTip = false;
@@ -25,5 +25,5 @@ const index = new Vue({
     vuetify: new Vuetify(vuetifyopt),
     el: '#app',
     router: routes,
-    // store  // uncomment this if using vuex
+    store  // uncomment this if using vuex
 });

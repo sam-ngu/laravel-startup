@@ -13,20 +13,22 @@
 </template>
 
 <script>
-    import {MessageBus} from "../utils/MessageBus";
 
     export default {
         name: "LoggedInAsAlert",
         data() {
             return {
-                session: MessageBus.getSession()
             }
         },
         props: {},
-        computed: {},
+        computed: {
+            session(){
+                return this.$store.getters['auth/session'];
+            }
+        },
         methods: {
             displayLogInAsAlert(){
-                let session = MessageBus.getSession();
+                let session = this.session;
                 return !_.isEmpty(session.user) && _.isNumber(session.session.admin_user_id) && _.isNumber(session.session.temp_user_id);
             }
         },
