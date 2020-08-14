@@ -6,12 +6,11 @@
 </template>
 
 <script>
-    import LayoutMaster from "./components/layout/LayoutMaster";
+    import LayoutMaster from "./layout/LayoutMaster";
 
     export default {
-        name: 'AppAdmin',
+        name: 'BaseAdmin',
         components: {
-            LoadingEclipse,
             LayoutMaster,
         },
         data(){

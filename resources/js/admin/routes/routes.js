@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 
-import BaseDashboard from '../../admin/components/dashboard/BaseDashboard'
+import BaseDashboard from '../pages/BaseDashboard'
 
 import {user} from './auth/user'
 import {role} from './auth/role'

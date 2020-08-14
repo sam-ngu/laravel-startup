@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import BaseTableLayout from "./user-table/BaseTableLayout";
+    import BaseTableLayout from "../components/user-management/user-table/BaseTableLayout";
 
     export default {
         name: "BaseUserManagement",

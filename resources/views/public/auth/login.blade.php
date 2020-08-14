@@ -13,5 +13,5 @@
 @endsection
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script src="{{mix('js/public.js')}}"></script>
 @endpush

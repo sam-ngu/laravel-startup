@@ -35,7 +35,7 @@ Route::group([
         // admin only
     ]
 ], function (){
-    Route::get('/admin', [AppController::class, 'dashboard']);
+    Route::get('/admin', [AppController::class, 'admin']);
 
 });
 

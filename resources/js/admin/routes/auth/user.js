@@ -1,4 +1,4 @@
-import BaseUserManagement from '../../components/user-management/BaseUserManagement'
+import BaseUserManagement from '../../pages/BaseUserManagement'
 import BaseUserUpdate from '../../components/user-management/user-update/BaseUserUpdate'
 import BaseUserCreate from '../../components/user-management/user-create/BaseUserCreate'
 

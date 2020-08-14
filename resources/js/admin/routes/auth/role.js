@@ -1,4 +1,4 @@
-import BaseRoleManagement from '../../../admin/components/role-management/BaseRoleManagement'
+import BaseRoleManagement from '../../pages/BaseRoleManagement'
 import BaseRoleUpdate from '../../../admin/components/role-management/role-update/BaseRoleUpdate'
 import BaseRoleCreate from '../../../admin/components/role-management/role-create/BaseRoleCreate'
 

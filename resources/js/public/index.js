@@ -16,6 +16,7 @@ const requireComponent = require.context('.', false, /.vue$/)
 
 // autoloading all public folder components
 requireComponent.keys().forEach(fileName => {
+    
     // get component config
     const componentConfig = requireComponent(fileName);
 

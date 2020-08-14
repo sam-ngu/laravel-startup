@@ -88,7 +88,7 @@
 </template>
 
 <script>
-    import ButtonTooltip from "../../../../partials/ButtonTooltip";
+    import ButtonTooltip from "../../../partials/ButtonTooltip";
     export default {
         name: "BaseCrud",
         components: {ButtonTooltip},

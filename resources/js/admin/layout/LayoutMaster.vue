@@ -20,8 +20,8 @@
 <script>
     import Sidebar from "./sidebar/BaseSidebar";
     import Navbar from "./NavBar";
-    import LoggedInAsAlert from "../../../partials/LoggedInAsAlert";
-    import LoadingEclipse from "../../../partials/LoadingEclipse";
+    import LoggedInAsAlert from "../../partials/LoggedInAsAlert";
+    import LoadingEclipse from "../../partials/LoadingEclipse";
 
 
     export default {

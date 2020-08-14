@@ -3,7 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 import './../bootstrap'
-import App from './BaseAdmin.vue'
+import BaseAdmin from './BaseAdmin.vue'
 import routes from './routes/routes'
 import vuetifyopt from "../vuetifyopt";
 import store from "../store/store";
@@ -19,7 +19,7 @@ Vue.use(Vuetify);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app', App);
+Vue.component('base-admin', BaseAdmin);
 
 const index = new Vue({
     vuetify: new Vuetify(vuetifyopt),

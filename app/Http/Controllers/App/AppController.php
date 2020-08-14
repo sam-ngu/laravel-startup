@@ -11,4 +11,9 @@ class AppController
         return view('app.index');
     }
 
+    public function admin()
+    {
+        return view('admin.index');
+    }
+
 }

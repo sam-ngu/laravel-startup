@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import RoleTable from "./RoleTable";
+    import RoleTable from "../components/role-management/RoleTable";
 
     export default {
         name: "BaseRoleManagement",

@@ -12,15 +12,15 @@
         <v-spacer></v-spacer>
 
         <v-btn icon>
-            <v-icon>search</v-icon>
+            <v-icon>mdi-magnify</v-icon>
         </v-btn>
 
         <v-btn icon>
-            <v-icon>apps</v-icon>
+            <v-icon>mdi-apps</v-icon>
         </v-btn>
 
         <v-btn @click="toggleDarkMode" icon>
-            <v-icon :color="darkModeIconColor">brightness_3</v-icon>
+            <v-icon :color="darkModeIconColor">mdi-brightness-3</v-icon>
         </v-btn>
 
         <v-menu offset-y left>
@@ -29,7 +29,7 @@
                 <div v-on="{...menu}">
 
                     <v-btn icon>
-                        <v-icon>more_vert</v-icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </div>
 
@@ -54,8 +54,6 @@
         components: {},
         data() {
             return {
-                dark: false,
-
                 menuItems: [
                     {title: 'Control', action: this.control},
                     {title: 'Logout', action: this.logout}
@@ -65,12 +63,12 @@
         props: {},
         computed: {
             darkModeIconColor(){
-                return this.dark ? "white" : null
+                return this.$vuetify.theme.dark ? "white" : null
             }
         },
         methods: {
             toggleDarkMode(){
-                this.dark = !this.dark;
+                this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
 
             },
             toggleSideBar(){
