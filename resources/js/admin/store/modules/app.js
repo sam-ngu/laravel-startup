@@ -11,8 +11,8 @@ const getters = {
 const actions = {};
 
 const mutations = {
-    toggleSidebar(state){
-        state.isSidebarOpened = !state.isSidebarOpened;
+    setSidebar(state, payload){
+        state.isSidebarOpened = payload
     }
 };
 

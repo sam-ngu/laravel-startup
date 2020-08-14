@@ -5,10 +5,8 @@
             width="300"
             clipped
             fixed
-            :value="showSidebar"
+            v-model="showSidebar"
             floating
-            @input="toggleSidebar"
-
     >
         <v-list inset>
             <sidebar-list-tile :to="{name: 'home'}" title="Dashboard" icon="home"/>
@@ -112,19 +110,19 @@
             session(){
                 return this.$store.getters['auth/session']
             },
-            showSidebar(){
-                return this.$store.getters['app/isSidebarOpened']
+            showSidebar: {
+                get(){
+                    return this.$store.getters['app/isSidebarOpened']
+                },
+                set(value){
+                    this.$store.commit('app/setSidebar', value);
+                }
             }
 
         },
         props: {
-            value: ""
         },
         methods: {
-            toggleSidebar(){
-                console.log('hey')
-                // this.$store.commit('app/toggleSidebar');
-            }
         },
         mounted() {
             // EventBus.$on('toggled-sidebar', function(){

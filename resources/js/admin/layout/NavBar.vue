@@ -5,7 +5,7 @@
             dense
             fixed
             color="red darken-4">
-        <v-app-bar-nav-icon @click="toggleSideBar"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="openSidebar"></v-app-bar-nav-icon>
 
         <v-toolbar-title > <router-link class="white--text" style="text-decoration: none;" :to="{name: 'home'}">Startup</router-link></v-toolbar-title>
 
@@ -71,8 +71,8 @@
                 this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
 
             },
-            toggleSideBar(){
-                this.$store.commit('app/toggleSidebar');
+            openSidebar(){
+                this.$store.commit('app/setSidebar', true);
             },
             logout(){
                 window.location.href = '/logout';
