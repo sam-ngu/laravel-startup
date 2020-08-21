@@ -9,29 +9,9 @@
             floating
     >
         <v-list inset>
-            <sidebar-list-tile :to="{name: 'home'}" title="Dashboard" icon="home"/>
+            <sidebar-list-tile :to="{name: 'home'}" title="Dashboard" icon="mdi-home"/>
 
-
-            <!--<v-list-item to="/">-->
-                <!--<v-list-item-action>-->
-                    <!--<v-icon>home</v-icon>-->
-                <!--</v-list-item-action>-->
-                <!--<v-list-item-title>Dashboard</v-list-item-title>-->
-            <!--</v-list-item>-->
-
-            <!--<v-list-item to="/backtest">-->
-                <!--<v-list-item-action>-->
-                    <!--<v-icon>equalizer</v-icon>-->
-                <!--</v-list-item-action>-->
-                <!--<v-list-item-title>Menu</v-list-item-title>-->
-            <!--</v-list-item>-->
-
-            <!--<v-list-item to="/trade-history">-->
-                <!--<v-list-item-action>-->
-                    <!--<v-icon>av_timer</v-icon>-->
-                <!--</v-list-item-action>-->
-                <!--<v-list-item-title>Menu</v-list-item-title>-->
-            <!--</v-list-item>-->
+            <sidebar-list-tile v-for="admin in admins" :key="admin.id" :to="admin.to" :title="admin.name" :icon="admin.icon"/>
 
 <!--            <v-list-group-->
 <!--                    v-if="session.user.roles_label === 'Administrator'"-->
@@ -68,14 +48,14 @@
 <!--                </v-list-group>-->
 <!--            </v-list-group>-->
 
-<!--            <v-list-item-->
-<!--                v-if="session.user.roles_label === 'Administrator'"-->
-<!--                href="/admin/log-viewer">-->
-<!--                <v-list-item-action>-->
-<!--                    <v-icon>event_note</v-icon>-->
-<!--                </v-list-item-action>-->
-<!--                <v-list-item-title>Log Viewer</v-list-item-title>-->
-<!--            </v-list-item>-->
+            <v-list-item
+                v-if="session.user.roles_label === 'Administrator'"
+                href="/admin/log-viewer">
+                <v-list-item-action>
+                    <v-icon>mdi-event_note</v-icon>
+                </v-list-item-action>
+                <v-list-item-title>Log Viewer</v-list-item-title>
+            </v-list-item>
 
 
         </v-list>
@@ -93,13 +73,13 @@
                 admins: [
                     {
                         name: "User Management",
-                        icon: "people_outline",
+                        icon: "mdi-people_outline",
                         to: {name: 'user-management'}
 
                     },
                     {
                         name: "Role Management",
-                        icon: "settings",
+                        icon: "mdi-settings",
                         to: {name: 'role-management'}
 
                     },

@@ -41,6 +41,7 @@
                 this.$store.commit('auth/setSession', JSON.parse(this.$attrs.session))
             }
 
+
         },
     }
 

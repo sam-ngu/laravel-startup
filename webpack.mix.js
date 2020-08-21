@@ -52,10 +52,10 @@ mix.webpackConfig({
             port: 8080,
 
         },
-        // watchOptions:{
-        //     aggregateTimeout:200,
-        //     poll:500
-        // },
+        watchOptions:{
+            aggregateTimeout:200,
+            poll:500
+        },
         // plugins: [
         //     new webpack.EnvironmentPlugin(['MIX_PUBLISH_APP_URL']),
         // ],

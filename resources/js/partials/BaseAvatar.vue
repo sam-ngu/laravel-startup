@@ -1,6 +1,6 @@
 <template>
     <v-avatar :size="size">
-        <img :src="avatar" alt="NA">
+        <img :src="avatar" alt="NA" style="cursor: pointer">
     </v-avatar>
 </template>
 
@@ -32,7 +32,8 @@
         },
         methods: {
             generateAvatarCdn(size="50", identifier){
-                return "https://api.adorable.io/avatars/" + String(size)+ "/" + String(identifier) + ".png"
+                // return "https://api.adorable.io/avatars/" + String(size)+ "/" + String(identifier) + ".png"
+                return "https://ui-avatars.com/api/?size=" + String(size)+ "&name=" + String(identifier)
             },
         },
         mounted() {

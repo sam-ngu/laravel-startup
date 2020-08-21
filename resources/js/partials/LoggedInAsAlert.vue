@@ -29,7 +29,7 @@
         methods: {
             displayLogInAsAlert(){
                 let session = this.session;
-                return !_.isEmpty(session.user) && _.isNumber(session.session.admin_user_id) && _.isNumber(session.session.temp_user_id);
+                return !_.isEmpty(session.user) && _.isNumber(session.admin_user_id) && _.isNumber(session.temp_user_id);
             }
         },
         mounted() {

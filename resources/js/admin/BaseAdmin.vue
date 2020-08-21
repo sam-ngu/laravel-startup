@@ -44,8 +44,11 @@
         },
         mounted(){
             // check if session is passed
-            if(this.session){
-                this.$store.commit('auth/setSession', JSON.parse(this.session))
+            const session = JSON.parse(this.session);
+            if(this.session && session.user && session.user.roles_label.toLowerCase() === 'administrator') {
+                this.$store.commit('auth/setSession', JSON.parse(this.session));
+            }else {
+                window.location.href = '/login';
             }
             // to route to the correct page if required
             let url = new URL(window.location.href);

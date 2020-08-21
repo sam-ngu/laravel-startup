@@ -11,7 +11,7 @@
                                     <base-avatar
                                         class="pt-2"
                                         :name="user.full_name"
-                                        :size="35"
+                                        :size="40"
                                         :avatar-location="user.avatar_location"
                                     />
                                 </div>
@@ -42,12 +42,11 @@
 
         <!--xs view port-->
         <v-list v-else>
-
             <v-list-item avatar>
                 <v-list-item-avatar>
                     <base-avatar
                         class="pt-2"
-                        :name="user.full_name"
+                        :name="`${user.first_name}+${user.last_name}`"
                         :size="35"
                         :avatar-location="user.avatar_location"
                     />
@@ -134,7 +133,6 @@
 
         },
         mounted() {
-            this.fetchCart();
         },
     }
 </script>

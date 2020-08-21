@@ -5,9 +5,9 @@
 // * Date: 2/03/19
 // * Time: 6:24 PM
 // */
-//use App\Http\Controllers\Api\V1\User\UserController;
-//use App\Http\Controllers\Api\V1\User\UserStatusController;
-//
+use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\User\UserStatusController;
+
 //Route::group([
 //    'namespace' => 'V1',
 //    'prefix' => 'v1',

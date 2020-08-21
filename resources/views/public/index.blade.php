@@ -6,8 +6,13 @@
 
 @section('content')
 
+    @php
+        $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user()))->toArray(null) : null
+    @endphp
 
-    <base-public session="{{ ($user = auth()->user()) ? json_encode(auth()->user()->toArray()) : null }}"/>
+    <base-public session="{{ json_encode([
+        'user' => $user
+        ]) }}"/>
 
 
 @endsection

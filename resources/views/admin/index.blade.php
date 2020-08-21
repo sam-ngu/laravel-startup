@@ -6,6 +6,14 @@
 
 @section('content')
 
-    <base-admin session="{{ ($user = auth()->user()) ? json_encode(auth()->user()->toArray()) : null }}"/>
+    @php
+        $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user()))->toArray(null) : null
+    @endphp
+
+
+    <base-admin session="{{ json_encode([
+            'user' => $user
+    ]) }}"
+    />
 
 @endsection
