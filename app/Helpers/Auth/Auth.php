@@ -13,7 +13,7 @@ class Auth
     /**
      * Remove old session variables from admin logging in as user.
      */
-    public function flushTempSession()
+    public static function flushTempSession()
     {
         // Remove any old session variables
         session()->forget('admin_user_id');
