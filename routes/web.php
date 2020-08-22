@@ -51,11 +51,11 @@ include_route_files(__DIR__ . '/auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 if(\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){
         $user = User::query()->find(1);
 
+        /** @var User $user*/
         $user->sendPasswordResetNotification('123');
-    })->middleware(['password.confirm']);
+    });
 }

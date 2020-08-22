@@ -63,9 +63,9 @@ return [
             'type' => 'string',
             'attributes' => ['nullable'],
         ],
-        
+    ],
 
-
+    'post' => [
         'title'     => [
             'type'       => 'string',
             'attributes' => ['nullable'],
@@ -81,7 +81,6 @@ return [
                 'on'         => 'authors',
             ],
         ],
-
-    ],
+    ]
 
 ];

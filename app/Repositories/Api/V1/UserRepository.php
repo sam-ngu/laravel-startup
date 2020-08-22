@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Api\V1;
 
+use App\Events\Models\User\UserPasswordChanged;
 use App\Exceptions\GeneralJsonException;
 use App\Models\User;
 use App\Repositories\BaseRepository;
@@ -113,6 +114,19 @@ class UserRepository extends BaseRepository
 
             throw new GeneralException(__('exceptions.backend.access.users.update_error'));
         });
+    }
+
+    public function updatePassword(User $user, $password)
+    {
+        $isUpdated = $user->update([
+            'password' => $password,
+        ]);
+
+        if($isUpdated){
+            event(new UserPasswordChanged($user));
+            return $user;
+        }
+        throw new GeneralException(__('exceptions.backend.access.users.update_password_error'));
     }
 
 
