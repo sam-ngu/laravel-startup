@@ -1,7 +1,7 @@
 import BaseUserManagement from '../../pages/BaseUserManagement'
 import BaseUserUpdate from '../../components/user-management/user-update/BaseUserUpdate'
 import BaseUserCreate from '../../components/user-management/user-create/BaseUserCreate'
-
+import BaseUser from "../../containers/auth/BaseUser";
 
 let baseBreadcrumb = [
     {
@@ -15,40 +15,40 @@ let baseBreadcrumb = [
 const user = [
     {
         path: '/auth/user',
-        component: BaseUserManagement,
+        component: BaseUser,
         name: 'user-management',
         meta: {
             breadcrumb: baseBreadcrumb,
         },
-        children: [
-            {
-                path: '/auth/user/:id',
-                name: 'user-show',
-                component: BaseUserUpdate,
-                props: true,
-                meta: {
-                    breadcrumb: baseBreadcrumb.concat({
-                        text: "User Details",
-                        disabled: true,
-                        href: '',
-                    })
-                }
-            },
-            {
-                path: '/auth/user/create',
-                name: 'user-create',
-                component: BaseUserCreate,
-                props: true,
-                meta: {
-                    breadcrumb: baseBreadcrumb.concat({
-                        text: "Create User",
-                        disabled: true,
-                        href: '',
-                    })
-                }
-
-            }
-        ]
+        // children: [
+        //     {
+        //         path: '/auth/user/:id',
+        //         name: 'user-show',
+        //         component: BaseUserUpdate,
+        //         props: true,
+        //         meta: {
+        //             breadcrumb: baseBreadcrumb.concat({
+        //                 text: "User Details",
+        //                 disabled: true,
+        //                 href: '',
+        //             })
+        //         }
+        //     },
+        //     {
+        //         path: '/auth/user/create',
+        //         name: 'user-create',
+        //         component: BaseUserCreate,
+        //         props: true,
+        //         meta: {
+        //             breadcrumb: baseBreadcrumb.concat({
+        //                 text: "Create User",
+        //                 disabled: true,
+        //                 href: '',
+        //             })
+        //         }
+        //
+        //     }
+        // ]
 
     },
 
