@@ -26,11 +26,11 @@ export default {
     name: "BooleanField",
     props: {
         value: {
-            type: Boolean,
+            type: Boolean|undefined,
             required: true,
         },
         mode: {
-            type: String,
+            type: String|undefined,
             default: 'read'
         }
     },

@@ -1,6 +1,6 @@
 <template functional>
 
-    <article>
+    <article >
         <span v-if="props.mode === 'read'">{{ props.value }}</span>
 <!--        edit mode  -->
 

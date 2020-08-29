@@ -60,6 +60,7 @@ export default {
         const baseBreadcrumb = this.$route.meta.breadcrumb;
         const basePath = this.$route.fullPath;  // this is something like /auth/user
 
+        console.log({basePath});
         const resourceName = this.resourceName.toLowerCase();
 
         const routes = [
@@ -105,7 +106,11 @@ export default {
 
         ]
 
-        this.$router.addRoutes(routes);
+        const resolved = this.$router.resolve({name: resourceName + '-table'}).resolved
+        if(resolved.matched.length < 1){
+            this.$router.addRoutes(routes);
+        }
+
 
         // to force update the router so newly added routes will show
         this.$router.push({name: resourceName + '-table'});
