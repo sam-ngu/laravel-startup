@@ -9,8 +9,8 @@
     >
         <template v-slot:item="props">
             <tr @click="redirectToUpdate(props.item)" style="cursor: pointer">
-                <td v-for="(header, index) in headers" :key="header.value">
-                    <component :is="header.component" :value="props.item[header.value]" />
+                <td  v-for="(header, index) in headers" :key="header.value">
+                    <component  :is="header.component" :value="props.item[header.value]" />
                 </td>
 <!--                <td class="px-2 text-left" >-->
 <!--                    <router-link :to="{-->
@@ -70,8 +70,7 @@ export default {
                     text: field.label,
                     value: field.key,
                     sortable: field.sortable,  // FIXME: server sided sort
-                    class: 'px-2',
-                    align: 'center',
+                    align: 'left',
                     component: field.type,
                 }
             })
@@ -79,7 +78,7 @@ export default {
     },
     methods: {
         redirectToUpdate(resource){
-            this.$router.push({name: `${this.resourceName}-update/${resource.id}`});
+            this.$router.push({name: `${this.resourceName}-update`, id: resource.id });
         }
     },
     mounted() {

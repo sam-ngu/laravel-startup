@@ -104,12 +104,15 @@ export default {
             },
 
         ]
+
         this.$router.addRoutes(routes);
 
         // to force update the router so newly added routes will show
         this.$router.push({name: resourceName + '-table'});
 
-        this.$store.registerModule(`${resourceName}Management`, resourceStore);
+        if(!this.$store.hasModule(`${resourceName}Management`)){
+            this.$store.registerModule(`${resourceName}Management`, resourceStore);
+        }
         this.$store.commit(`${resourceName}Management/setFields`, this.fields);
         this.$store.commit(`${resourceName}Management/setResourceName`, resourceName);
         this.$store.commit(`${resourceName}Management/setResourceUrl`, this.resourceUrl);
