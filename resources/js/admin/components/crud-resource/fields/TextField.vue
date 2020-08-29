@@ -5,6 +5,7 @@
 <!--        edit mode  -->
 
         <v-text-field
+            solo
             v-else
 
         />

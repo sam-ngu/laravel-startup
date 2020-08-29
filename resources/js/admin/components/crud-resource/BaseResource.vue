@@ -58,14 +58,16 @@ export default {
     },
     created() {
         const baseBreadcrumb = this.$route.meta.breadcrumb;
-        const basePath = this.$route.fullPath;  // this is something like /auth/user
+        const resourceName = this.resourceName.toLowerCase();
+        const matchedPath = this.$router.resolve({name: `${resourceName}-management`}).resolved.matched[0];
+        const basePath = matchedPath.path.slice(0, -2) ;  // this is something like /auth/user
+
 
         console.log({basePath});
-        const resourceName = this.resourceName.toLowerCase();
 
         const routes = [
             {
-                path: basePath,
+                path: basePath + '/manage',
                 component: BaseTable,
                 name: this.resourceName.toLowerCase() + '-table',
                 meta: {
@@ -108,13 +110,22 @@ export default {
 
         const resolved = this.$router.resolve({name: resourceName + '-table'}).resolved
         if(resolved.matched.length < 1){
-            this.$router.addRoutes(routes);
+            // add the routes as children
+            const found = this.$router.options.routes.find(route => {
+                return route.name === resourceName + '-management';
+            })
+            found.children = routes;
+            // console.log({found});
+            // this.$router.
+            // this.$router.addRoutes([found]);
+            // this.$router.addRoutes(routes);
+            console.log(this.$router.options);
         }
 
-
-        // to force update the router so newly added routes will show
+        //
+        // // to force update the router so newly added routes will show
         this.$router.push({name: resourceName + '-table'});
-
+        //
         if(!this.$store.hasModule(`${resourceName}Management`)){
             this.$store.registerModule(`${resourceName}Management`, resourceStore);
         }

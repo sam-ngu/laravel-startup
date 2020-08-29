@@ -38,12 +38,6 @@ export default {
             ]
         }
     },
-    props: {},
-    computed: {},
-    methods: {},
-    mounted() {
-
-    },
 }
 </script>
 

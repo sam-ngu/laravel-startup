@@ -7,7 +7,7 @@ let baseBreadcrumb = [
     {
         text: 'User Management',
         disabled: true,
-        href: '/admin/#/auth/user',
+        href: '/admin/#/auth/user/manage',
     },
 ];
 
@@ -15,43 +15,13 @@ const resourceName = 'user';
 
 const user = [
     {
-        path: '/auth/user',
+        path: '/auth/user/*',
         component: BaseUser,
         name: 'user-management',
         meta: {
             breadcrumb: baseBreadcrumb,
             resourceName,
         },
-        // children: [
-        //     {
-        //         path: '/auth/user/:id',
-        //         name: 'user-show',
-        //         component: BaseUserUpdate,
-        //         props: true,
-        //         meta: {
-        //             breadcrumb: baseBreadcrumb.concat({
-        //                 text: "User Details",
-        //                 disabled: true,
-        //                 href: '',
-        //             })
-        //         }
-        //     },
-        //     {
-        //         path: '/auth/user/create',
-        //         name: 'user-create',
-        //         component: BaseUserCreate,
-        //         props: true,
-        //         meta: {
-        //             breadcrumb: baseBreadcrumb.concat({
-        //                 text: "Create User",
-        //                 disabled: true,
-        //                 href: '',
-        //             })
-        //         }
-        //
-        //     }
-        // ]
-
     },
 
 ];
