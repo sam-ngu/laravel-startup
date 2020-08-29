@@ -20,6 +20,9 @@ const actions = {
     fetchResources({state}){
         // FIXME: dont hard code base api url
         return axios.get(state.resourceUrl)
+    },
+    fetchResource({state}, id){
+        return axios.get(state.resourceUrl + `/${id}`)
     }
 };
 

@@ -13,6 +13,7 @@
 import BaseResource from "../../components/crud-resource/BaseResource";
 import BooleanField from "../../components/crud-resource/fields/BooleanField";
 import TextField from "../../components/crud-resource/fields/TextField";
+import DateField from "../../components/crud-resource/fields/DateField";
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -31,9 +32,25 @@ export default {
                     type: TextField,
                 },
                 {
+                    label: 'Email',
+                    key: 'email',
+                    type: TextField,
+                },
+                {
+                    label: 'Confirmed',
+                    key: 'confirmed_label',
+                    type: BooleanField,
+                },
+                {
                     label: 'Active',
                     key: 'active',
                     type: BooleanField,
+                },
+                {
+                    label: 'Created At',
+                    key: 'created_at',
+                    type: DateField,
+                    readonly: true,
                 },
             ]
         }

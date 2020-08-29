@@ -115,17 +115,17 @@ export default {
                 return route.name === resourceName + '-management';
             })
             found.children = routes;
-            // console.log({found});
-            // this.$router.
-            // this.$router.addRoutes([found]);
+            // FIXME: as of 29th Aug 2020, it is not possible to add child routes to an existing route
+            // waiting for Vue router 4
+            this.$router.addRoutes([found]);
             // this.$router.addRoutes(routes);
             console.log(this.$router.options);
         }
 
-        //
-        // // to force update the router so newly added routes will show
+
+        // to force update the router so newly added routes will show
         this.$router.push({name: resourceName + '-table'});
-        //
+
         if(!this.$store.hasModule(`${resourceName}Management`)){
             this.$store.registerModule(`${resourceName}Management`, resourceStore);
         }

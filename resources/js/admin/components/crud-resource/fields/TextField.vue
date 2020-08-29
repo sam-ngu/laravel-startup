@@ -6,8 +6,10 @@
 
         <v-text-field
             solo
+            hide-details
             v-else
-
+            :value="props.value"
+            @input="($event) => $emit('input', $event)"
         />
 
     </article>
@@ -20,7 +22,7 @@ export default {
     props: {
         mode: {
             type: String,
-            default: 'read', // can be create, or update or read
+            default: 'read', // can be write or read
         },
         value: '',
     },
