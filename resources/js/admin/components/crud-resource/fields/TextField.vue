@@ -8,8 +8,9 @@
             solo
             hide-details
             v-else
+            :rules="props.rules"
             :value="props.value"
-            @input="($event) => $emit('input', $event)"
+            @input="listeners.input"
         />
 
     </article>
@@ -23,6 +24,10 @@ export default {
         mode: {
             type: String,
             default: 'read', // can be write or read
+        },
+        rules: {
+            type: Array,
+            default: () => []
         },
         value: '',
     },

@@ -23,6 +23,12 @@ const actions = {
     },
     fetchResource({state}, id){
         return axios.get(state.resourceUrl + `/${id}`)
+    },
+    patchResource({state}, {id, payload}){
+        return axios.patch(state.resourceUrl + `/${id}`, payload)
+    },
+    postResource({state}, payload){
+        return axios.post(state.resourceUrl, payload);
     }
 };
 

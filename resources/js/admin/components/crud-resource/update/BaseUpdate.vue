@@ -1,26 +1,30 @@
 <template>
 
-    <v-form>
+    <v-form ref="form" @submit.prevent="submit" v-model="states.is_form_valid" lazy-validation>
 
         <v-container>
             <v-card class="p-6">
-                <v-row v-for="(field, index) in fields" :key="field.key">
-                    <v-col cols="12" sm="4" md="4" lg="3" class="my-auto">
-                        {{ field.label }}
-                    </v-col>
+                <v-card-text>
 
-                    <v-col cols="12" sm="5" md="6" lg="5">
-                        <component
-                            v-bind="{...field.options}"
-                            :mode="field.readonly ? 'read' : 'write'"
-                            :is="field.type"
-                            v-model="inputData[field.key]"/>
-                    </v-col>
+                    <v-row v-for="(field, index) in fields" :key="field.key">
+                        <v-col cols="12" sm="4" md="4" lg="3" class="my-auto">
+                            {{ field.label }}
+                        </v-col>
 
-                </v-row>
+                        <v-col cols="12" sm="5" md="6" lg="5">
+                            <component
+                                v-bind="{...field.options}"
+                                :mode="field.readonly ? 'read' : 'write'"
+                                :rules="field.rules"
+                                :is="field.type"
+                                v-model="inputData[field.key]"/>
+                        </v-col>
+
+                    </v-row>
+                </v-card-text>
 
                 <v-card-actions>
-                    <v-btn color="primary">Save</v-btn>
+                    <v-btn @click="submit" color="primary">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-container>
@@ -33,6 +37,9 @@ export default {
     name: "BaseUpdate",
     data() {
         return {
+            states: {
+                is_form_valid: true,
+            },
             inputData: {}
         }
     },
@@ -47,10 +54,17 @@ export default {
     },
     methods: {
         submit(){
-            this.$store.dispatch(`${this.resourceName}Management/patchResource`, this.inputData)
-                .then((response) => {
-                    
-                })
+            if(!this.$refs.form.validate()){
+                return ;
+            }
+            const resourceId = this.$route.params.id;
+
+            this.$store.dispatch(`${this.resourceName}Management/patchResource`, {
+                id: resourceId,
+                payload: this.inputData
+            }).then((response) => {
+
+            })
         }
     },
     mounted() {

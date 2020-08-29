@@ -14,6 +14,7 @@ import BaseResource from "../../components/crud-resource/BaseResource";
 import BooleanField from "../../components/crud-resource/fields/BooleanField";
 import TextField from "../../components/crud-resource/fields/TextField";
 import DateField from "../../components/crud-resource/fields/DateField";
+import {emailValidator} from "../../../utils/ValidationHelper"
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -35,6 +36,10 @@ export default {
                     label: 'Email',
                     key: 'email',
                     type: TextField,
+                    rules: [
+                        v => !!v || 'Required',
+                        emailValidator,
+                    ]
                 },
                 {
                     label: 'Confirmed',
@@ -51,6 +56,9 @@ export default {
                     key: 'created_at',
                     type: DateField,
                     readonly: true,
+                    rules: [
+
+                    ]
                 },
             ]
         }
