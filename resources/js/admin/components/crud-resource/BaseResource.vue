@@ -21,6 +21,7 @@
 import BaseTable from "./table/BaseTable";
 import BaseCreate from "./create/BaseCreate";
 import BaseUpdate from "./update/BaseUpdate";
+import resourceStore from './resource-store';
 
 export default {
     name: "BaseResource",
@@ -42,6 +43,10 @@ export default {
         resourceName: {
             type: String,
             required: true,
+        },
+        resourceUrl: {
+            type: String,
+            required: true,
         }
 
     },
@@ -55,12 +60,15 @@ export default {
         const baseBreadcrumb = this.$route.meta.breadcrumb;
         const basePath = this.$route.fullPath;  // this is something like /auth/user
 
+        const resourceName = this.resourceName.toLowerCase();
+
         const routes = [
             {
                 path: basePath,
                 component: BaseTable,
                 name: this.resourceName.toLowerCase() + '-table',
                 meta: {
+                    resourceName,
                     breadcrumb: baseBreadcrumb,
                 },
             },
@@ -69,6 +77,7 @@ export default {
                 component: BaseCreate,
                 name: this.resourceName.toLowerCase() + '-create',
                 meta: {
+                    resourceName,
                     breadcrumb: baseBreadcrumb.concat([
                         {
                             text: `Create`,
@@ -83,6 +92,7 @@ export default {
                 component: BaseUpdate,
                 name: this.resourceName.toLowerCase() + '-update',
                 meta: {
+                    resourceName,
                     breadcrumb: baseBreadcrumb.concat([
                         {
                             text: `Update`,
@@ -96,6 +106,13 @@ export default {
         ]
         this.$router.addRoutes(routes);
 
+        // to force update the router so newly added routes will show
+        this.$router.push({name: resourceName + '-table'});
+
+        this.$store.registerModule(`${resourceName}Management`, resourceStore);
+        this.$store.commit(`${resourceName}Management/setFields`, this.fields);
+        this.$store.commit(`${resourceName}Management/setResourceName`, resourceName);
+        this.$store.commit(`${resourceName}Management/setResourceUrl`, this.resourceUrl);
     },
 }
 </script>

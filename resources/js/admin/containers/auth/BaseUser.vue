@@ -1,12 +1,18 @@
 <template>
 
-    <base-resource resource-name="User" :fields="resourceFields" :resources="resources" />
+    <base-resource
+        resource-url="/api/v1/users"
+        resource-name="User"
+        :fields="resourceFields"
+        :resources="resources"
+    />
 
 </template>
 
 <script>
 import BaseResource from "../../components/crud-resource/BaseResource";
 import BooleanField from "../../components/crud-resource/fields/BooleanField";
+import TextField from "../../components/crud-resource/fields/TextField";
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -16,14 +22,17 @@ export default {
             resourceFields: [
                 {
                     label: 'First Name',
-                    type: BooleanField,
+                    key: 'first_name',
+                    type: TextField,
                 },
                 {
                     label: 'Last Name',
-                    type: BooleanField,
+                    key: 'last_name',
+                    type: TextField,
                 },
                 {
                     label: 'Active',
+                    key: 'active',
                     type: BooleanField,
                 },
             ]
@@ -33,10 +42,7 @@ export default {
     computed: {},
     methods: {},
     mounted() {
-        axios.get('/api/v1/users')
-            .then((response) => {
-                this.resources = response.data.data;
-            })
+
     },
 }
 </script>

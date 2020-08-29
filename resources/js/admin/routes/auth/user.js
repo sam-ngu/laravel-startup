@@ -11,6 +11,7 @@ let baseBreadcrumb = [
     },
 ];
 
+const resourceName = 'user';
 
 const user = [
     {
@@ -19,6 +20,7 @@ const user = [
         name: 'user-management',
         meta: {
             breadcrumb: baseBreadcrumb,
+            resourceName,
         },
         // children: [
         //     {
