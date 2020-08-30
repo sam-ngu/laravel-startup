@@ -2,7 +2,7 @@
 
     <article>
 
-        <span v-if="mode === 'read'" class="text-capitalize">{{ value.join(', ') }}</span>
+        <span v-if="mode === 'read'" class="text-capitalize">{{ value.map(val => val[itemText]).join(', ') }}</span>
 
         <!--        if searchable use autocomplete-->
         <v-autocomplete

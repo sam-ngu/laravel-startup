@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return (new UserResource($user))->response();
+        return (new UserResource($user->loadMissing(self::RELATIONSHIPS)))->response();
     }
 
     /**
