@@ -26,9 +26,23 @@
             return-object
         />
         <!--        if not searchable use dropdown-->
-        <v-select v-else/>
+        <v-select
+            v-else
+            :value="value"
+            :items="foreignResources"
+            :loading="states.isLoading"
+            return-object
+            hide-no-data
+            chips
+            deletable-chips
+            multiple
+            outlined
+            hide-selected
+            @input="($event) => $emit('input', $event)"
+            :rules="rules"
 
-
+        />
+        
         <error-messages :errors="errors" />
 
     </article>
