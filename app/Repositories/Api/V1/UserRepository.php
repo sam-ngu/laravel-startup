@@ -5,6 +5,7 @@ namespace App\Repositories\Api\V1;
 use App\Events\Models\User\UserPasswordChanged;
 use App\Exceptions\GeneralJsonException;
 use App\Models\User;
+use App\Notifications\User\UserNeedsConfirmation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
@@ -12,7 +13,6 @@ use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserUpdated;
 use App\Events\Models\User\UserRestored;
 use App\Events\Models\User\UserPermanentlyDeleted;
-use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 
 /**
  * Class UserRepository.
@@ -43,9 +43,9 @@ class UserRepository extends BaseRepository
                 'last_name'         => data_get($data, 'last_name'),
                 'email'             => data_get($data, 'email'),
                 'password'          => data_get($data, 'password'),
-                'active'            => isset($data['active']) && $data['active'] == '1' ? 1 : 0,
+                'active'            => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
-                'confirmed'         => isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0,
+                'confirmed'         => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
             ]);
 
             // See if adding any additional permissions
@@ -66,7 +66,7 @@ class UserRepository extends BaseRepository
 
 
                 //Send confirmation email if requested and account approval is off
-                if (isset($data['confirmation_email']) && $user->confirmed === 0 && !config('access.users.requires_approval')) {
+                if (isset($data['confirmation_email']) && $user->confirmed === false && !config('access.users.requires_approval')) {
                     $user->notify(new UserNeedsConfirmation($user->confirmation_code));
                 }
 

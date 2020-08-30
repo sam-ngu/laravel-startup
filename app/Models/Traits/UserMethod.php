@@ -7,6 +7,7 @@ use App\Events\Models\User\UserDeactivated;
 use App\Events\Models\User\UserReactivated;
 use App\Events\Models\User\UserUnconfirmed;
 use App\Exceptions\GeneralException;
+use App\Exceptions\GeneralJsonException;
 use App\Models\User;
 use App\Notifications\User\UserAccountActive;
 use App\Notifications\User\UserNeedsPasswordReset;
@@ -97,7 +98,7 @@ trait UserMethod
 
     public function confirm()
     {
-        throw_if($this->isConfirmed(), GeneralException::class, __('exceptions.backend.access.users.already_confirmed'));
+        throw_if($this->isConfirmed(), GeneralJsonException::class, __('exceptions.backend.access.users.already_confirmed'));
 
         $this->confirmed = 1;
 
@@ -121,9 +122,9 @@ trait UserMethod
             throw new GeneralException(__('exceptions.backend.access.users.not_confirmed'));
         }
 
-        throw_if($this->id === auth()->id(), GeneralException::class, __('exceptions.backend.access.users.cant_unconfirm_self'));
+        throw_if($this->id === auth()->id(), GeneralJsonException::class, __('exceptions.backend.access.users.cant_unconfirm_self'));
 
-        throw_if($this->hasRole(config('access.users.admin_role')), GeneralException::class, __('exceptions.backend.access.users.cant_unconfirm_admin'));
+        throw_if($this->hasRole(config('access.users.admin_role')), GeneralJsonException::class, __('exceptions.backend.access.users.cant_unconfirm_admin'));
 
         $this->confirmed = 0;
         $unconfirmed = $this->save();
@@ -152,6 +153,6 @@ trait UserMethod
         if($this->save()){
             return  $this;
         }
-        throw new GeneralException(__('exceptions.backend.access.users.mark_error'));
+        throw new GeneralJsonException(__('exceptions.backend.access.users.mark_error'));
     }
 }

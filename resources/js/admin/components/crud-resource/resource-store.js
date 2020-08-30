@@ -25,7 +25,9 @@ const actions = {
         return axios.get(state.resourceUrl + `/${id}`)
     },
     patchResource({state}, {id, payload}){
-        return axios.patch(state.resourceUrl + `/${id}`, payload)
+        const uri = state.resourceUrl + `/${id}`
+        console.log({uri});
+        return axios.patch(uri, payload)
     },
     postResource({state}, payload){
         return axios.post(state.resourceUrl, payload);

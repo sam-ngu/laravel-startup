@@ -25,10 +25,13 @@
                             </v-col>
 
                         </v-row>
+
+                        <p class="error--text" v-for="(error, key) in errors" :key="error"> {{key.toUpperCase()}}: {{ error }}</p>
+
                     </v-card-text>
 
                     <v-card-actions>
-                        <v-btn @click="submit" color="primary">Save</v-btn>
+                        <v-btn :disabled="!states.isFormValid" @click="submit" color="primary">Save</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-container>
@@ -49,7 +52,8 @@ export default {
                 isFormValid: true,
                 isLoading: true,
             },
-            inputData: {}
+            inputData: {},
+            errors: [],
         }
     },
     props: {},
@@ -69,10 +73,14 @@ export default {
             this.states.isLoading = true;
             const resourceId = this.$route.params.id;
 
+
             this.$store.dispatch(`${this.resourceName}Management/patchResource`, {
                 id: resourceId,
                 payload: this.inputData
             }).then((response) => {
+                this.states.isLoading = false;
+            }).catch((error) => {
+                this.errors = error.response.data.errors;
                 this.states.isLoading = false;
             })
         }
