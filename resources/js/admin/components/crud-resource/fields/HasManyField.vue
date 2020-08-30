@@ -2,11 +2,11 @@
 
     <article>
 
-<!--        if not searchable use dropdown-->
+        <span v-if="mode === 'read'" class="text-capitalize">{{ value.join(', ') }}</span>
 
-<!--        if searchable use autocomplete-->
+        <!--        if searchable use autocomplete-->
         <v-autocomplete
-            v-if="searchable"
+            v-else-if="mode === 'write' && searchable"
             :value="value"
             :items="foreignResources"
             :loading="states.isLoading"
@@ -21,14 +21,15 @@
             :item-text="itemText"
             :item-value="itemValue"
             placeholder="Start typing to Search"
-            prepend-icon="mdi-account_circle"
             @input="($event) => $emit('input', $event)"
             :rules="rules"
             return-object
         />
-
+        <!--        if not searchable use dropdown-->
         <v-select v-else/>
 
+
+        <error-messages :errors="errors" />
 
     </article>
 
@@ -36,8 +37,10 @@
 </template>
 
 <script>
+import ErrorMessages from "../partials/ErrorMessages";
 export default {
     name: "HasManyField",
+    components: {ErrorMessages},
     data() {
         return {
             states:{
@@ -46,6 +49,7 @@ export default {
             search: '',
             foreignResources: [],
             searchTimeoutId: null,
+            errors: {},
         }
     },
     watch: {
@@ -80,11 +84,16 @@ export default {
         rules: {
             type: Array,
             default: () => [],
+        },
+        mode: {
+            type: String,
+            default: 'read',
         }
     },
     computed: {},
     methods: {
         searchResources(){
+            this.states.isLoading = true;
             let uri = this.resourceUrl;
             if(this.searchable) {
                 uri += `?search=${this.search}`;
@@ -92,7 +101,13 @@ export default {
 
             return axios.get(uri)
                 .then((response) => {
+                    this.foreignResources = response.data.data;
+                    this.states.isLoading = false;
 
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                    this.states.isLoading = false;
                 })
 
         },

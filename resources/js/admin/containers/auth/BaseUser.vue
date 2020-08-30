@@ -37,10 +37,12 @@ export default {
                     label: 'Email',
                     key: 'email',
                     type: TextField,
-                    rules: [
-                        v => !!v || 'Required',
-                        emailValidator,
-                    ]
+                    props: {
+                        rules: [
+                            v => !!v || 'Required',
+                            emailValidator,
+                        ]
+                    }
                 },
                 {
                     label: 'Confirmed',
@@ -56,6 +58,13 @@ export default {
                     label: 'Roles',
                     key: 'roles',
                     type: HasManyField,
+                    props: {
+                        resourceUrl: '/api/v1/roles',
+                        searchable: true,
+                        itemText: 'name',
+                        itemValue: 'id',
+
+                    }
                 },
 
                 {

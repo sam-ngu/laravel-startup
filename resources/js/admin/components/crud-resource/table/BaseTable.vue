@@ -11,7 +11,12 @@
             <tr @click="redirectToUpdate(props.item)" style="cursor: pointer">
                 <td  v-for="(header, index) in headers" :key="header.value" >
                     <div @click.stop="() => {}" style="display: inline-block; width: fit-content; cursor: default">
-                        <component :is="header.component" :value="props.item[header.value]" />
+                        <component
+                            v-bind="header.props && {...header.props}"
+                            mode="read"
+                            :is="header.component"
+                            :value="props.item[header.value]"
+                        />
                     </div>
                 </td>
             </tr>
@@ -43,6 +48,7 @@ export default {
 
             return fields.map(field => {
                 return {
+                    ...field,
                     text: field.label,
                     value: field.key,
                     sortable: field.sortable,  // FIXME: server sided sort

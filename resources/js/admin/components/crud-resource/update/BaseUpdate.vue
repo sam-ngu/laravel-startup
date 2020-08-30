@@ -16,9 +16,8 @@
 
                             <v-col cols="12" sm="5" md="6" lg="5">
                                 <component
-                                    v-bind="{...field.options}"
+                                    v-bind="field.props && {...field.props}"
                                     :mode="field.readonly ? 'read' : 'write'"
-                                    :rules="field.rules"
                                     :is="field.type"
                                     v-model="inputData[field.key]"
                                 />
@@ -26,7 +25,7 @@
 
                         </v-row>
 
-                        <p class="error--text" v-for="(error, key) in errors" :key="error"> {{key.toUpperCase()}}: {{ error }}</p>
+                        <error-messages :errors="errors"/>
 
                     </v-card-text>
 
@@ -43,9 +42,10 @@
 
 <script>
 import BaseLoader from "../partials/BaseLoader";
+import ErrorMessages from "../partials/ErrorMessages";
 export default {
     name: "BaseUpdate",
-    components: {BaseLoader},
+    components: {ErrorMessages, BaseLoader},
     data() {
         return {
             states: {
