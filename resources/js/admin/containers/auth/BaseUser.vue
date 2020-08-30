@@ -15,6 +15,7 @@ import BooleanField from "../../components/crud-resource/fields/BooleanField";
 import TextField from "../../components/crud-resource/fields/TextField";
 import DateField from "../../components/crud-resource/fields/DateField";
 import {emailValidator} from "../../../utils/ValidationHelper"
+import HasManyField from "../../components/crud-resource/fields/HasManyField";
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -51,6 +52,12 @@ export default {
                     key: 'active',
                     type: BooleanField,
                 },
+                {
+                    label: 'Roles',
+                    key: 'roles',
+                    type: HasManyField,
+                },
+
                 {
                     label: 'Created At',
                     key: 'created_at',
