@@ -3,6 +3,8 @@
 namespace App\Models\Traits;
 
 use App\Events\Models\User\UserConfirmed;
+use App\Events\Models\User\UserDeactivated;
+use App\Events\Models\User\UserReactivated;
 use App\Events\Models\User\UserUnconfirmed;
 use App\Exceptions\GeneralException;
 use App\Models\User;
@@ -132,5 +134,24 @@ trait UserMethod
         }
 
         throw new GeneralException(__('exceptions.backend.access.users.cant_confirm'));
+    }
+
+    public function setActive(bool $isActive = true)
+    {
+        if($this->active === $isActive ){
+            return $this;
+        }
+
+        $this->active = $isActive;
+
+        if($isActive){
+            event(new UserReactivated($this));
+        }else{
+            event(new UserDeactivated($this));
+        }
+        if($this->save()){
+            return  $this;
+        }
+        throw new GeneralException(__('exceptions.backend.access.users.mark_error'));
     }
 }

@@ -9,8 +9,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class BaseRepository
 {
-    protected $allowedFilters = [];
-    protected $allowedSorts = [];
+    public $allowedFilters = [];
+    public $allowedSorts = [];
 
     public function __construct()
     {

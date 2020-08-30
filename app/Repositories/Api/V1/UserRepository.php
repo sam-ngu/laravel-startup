@@ -66,7 +66,7 @@ class UserRepository extends BaseRepository
 
 
                 //Send confirmation email if requested and account approval is off
-                if (isset($data['confirmation_email']) && $user->confirmed == 0 && !config('access.users.requires_approval')) {
+                if (isset($data['confirmation_email']) && $user->confirmed === 0 && !config('access.users.requires_approval')) {
                     $user->notify(new UserNeedsConfirmation($user->confirmation_code));
                 }
 
@@ -96,20 +96,38 @@ class UserRepository extends BaseRepository
         }
 
         return DB::transaction(function () use ($user, $data) {
+
             if ($user->update([
                 'first_name' => data_get($data, 'first_name') ?? data_get($user, 'first_name'),
                 'last_name'  => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
                 'email'      => data_get($data, 'email') ?? data_get($user, 'email'),
-                'active'     => data_get($data, 'active') ?? data_get($user, 'active'),
-                'confirmed'  => data_get($data, 'confirmed') ?? data_get($user, 'confirmed'),
-
             ])) {
+                $toConfirmUser = !$user->isConfirmed() && filter_var(data_get($data, 'confirmed'), FILTER_VALIDATE_BOOLEAN);
+                $toUnconfirmUser = $user->isConfirmed() && !filter_var(data_get($data, 'confirmed'), FILTER_VALIDATE_BOOLEAN);
+
+                $toDeactivateUser = $user->isActive() && !filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN);
+                $toReactivateUser = !$user->isActive() && filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN);
+
+                if($toReactivateUser){
+                    $user = $user->setActive(true);
+                }
+                if($toDeactivateUser){
+                    $user = $user->setActive(false);
+                }
+
+                if($toConfirmUser){
+                    $user = $user->confirm();
+                }
+
+                if($toUnconfirmUser){
+                    $user = $user->unconfirm();
+                }
+
                 // Add selected roles/permissions
                 $user->syncRoles(data_get($data, 'roles') ?? data_get($user, 'roles'));
                 $user->syncPermissions(data_get($data, 'permissions') ?? data_get($user, 'permissions'));
 
                 event(new UserUpdated($user));
-
                 return $user;
             }
 
@@ -174,7 +192,6 @@ class UserRepository extends BaseRepository
 
         if ($user->restore()) {
             event(new UserRestored($user));
-
             return $user;
         }
 

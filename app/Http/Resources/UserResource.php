@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'avatar_type' => data_get($this, 'avatar_type'),
             'avatar_location' => data_get($this, 'avatar_location'),
             'active'=> (bool)data_get($this, 'active'),
-            'confirmed' => (bool)data_get($this, 'confirmed_label'),
+            'confirmed' => (bool)data_get($this, 'confirmed'),
             'timezone' => (string)data_get($this, 'timezone'),
             'roles' => data_get($this, 'roles_label'),
             'permissions' => data_get($this, 'permissions_label'),

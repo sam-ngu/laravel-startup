@@ -20,7 +20,7 @@ abstract class ApiTestCase extends TestCase
             $admin = $this->createAdmin();
         }
 
-        $this->actingAs($admin, 'web');
+        $this->actingAs($admin, 'api');
 
         return $admin;
     }
