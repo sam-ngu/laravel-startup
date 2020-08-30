@@ -43,7 +43,7 @@ export default {
                 },
                 {
                     label: 'Confirmed',
-                    key: 'confirmed_label',
+                    key: 'confirmed',
                     type: BooleanField,
                 },
                 {
@@ -56,9 +56,6 @@ export default {
                     key: 'created_at',
                     type: DateField,
                     readonly: true,
-                    rules: [
-
-                    ]
                 },
             ]
         }

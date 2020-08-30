@@ -5,8 +5,8 @@
 <!--        edit mode  -->
 
         <v-text-field
-            solo
-            hide-details
+            outlined
+            hide-details="auto"
             v-else
             :rules="props.rules"
             :value="props.value"
@@ -14,7 +14,6 @@
         />
 
     </article>
-
 </template>
 
 <script>

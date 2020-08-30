@@ -45,7 +45,7 @@
         mounted(){
             // check if session is passed
             const session = JSON.parse(this.session);
-            if(this.session && session.user && session.user.roles_label.toLowerCase() === 'administrator') {
+            if(this.session && session.user && session.user.roles.includes('administrator')) {
                 this.$store.commit('auth/setSession', JSON.parse(this.session));
             }else {
                 window.location.href = '/login';
@@ -58,8 +58,6 @@
                     name: routeName
                 })
             }
-
-
         }
     }
 </script>

@@ -84,6 +84,8 @@ class UserController extends Controller
             'last_name',
             'email',
             'roles',
+            'active',
+            'confirmed',
             'permissions'
         ));
         if($request->password){

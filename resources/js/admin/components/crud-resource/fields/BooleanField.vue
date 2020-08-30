@@ -10,11 +10,11 @@
         </v-chip>
 
         <v-switch
-
             v-else
             v-bind="{...$attrs}"
             :value="props.value"
-            @input="($event) => $emit('input', $event)"
+            @change="listeners.input"
+            @input="listeners.input"
         >
         </v-switch>
 
@@ -26,7 +26,7 @@ export default {
     name: "BooleanField",
     props: {
         value: {
-            type: Boolean|undefined,
+            type: Boolean|undefined|null,
             required: true,
         },
         mode: {

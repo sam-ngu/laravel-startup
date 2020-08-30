@@ -39,13 +39,13 @@ class UserRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $user = parent::create([
-                'first_name'         => data_get($data, 'first_name'),
-                'last_name'          => data_get($data, 'last_name'),
-                'email'              => data_get($data, 'email'),
-                'password'           => data_get($data, 'password'),
-                'active'             => isset($data['active']) && $data['active'] == '1' ? 1 : 0,
-                'confirmation_code'  => md5(uniqid(mt_rand(), true)),
-                'confirmed'          => isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0,
+                'first_name'        => data_get($data, 'first_name'),
+                'last_name'         => data_get($data, 'last_name'),
+                'email'             => data_get($data, 'email'),
+                'password'          => data_get($data, 'password'),
+                'active'            => isset($data['active']) && $data['active'] == '1' ? 1 : 0,
+                'confirmation_code' => md5(uniqid(mt_rand(), true)),
+                'confirmed'         => isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0,
             ]);
 
             // See if adding any additional permissions
@@ -90,7 +90,6 @@ class UserRepository extends BaseRepository
      */
     public function update($user, array $data): User
     {
-
         // See if adding any additional permissions
         if (!isset($data['permissions']) || !count($data['permissions'])) {
             $data['permissions'] = [];
@@ -98,10 +97,12 @@ class UserRepository extends BaseRepository
 
         return DB::transaction(function () use ($user, $data) {
             if ($user->update([
-                'first_name'         => data_get($data, 'first_name') ?? data_get($user, 'first_name'),
-                'last_name'          => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
-                'email'              => data_get($data, 'email') ?? data_get($user, 'email'),
-                'company_id'         => data_get($data, 'company_id') ?? data_get($user, 'company_id'),
+                'first_name' => data_get($data, 'first_name') ?? data_get($user, 'first_name'),
+                'last_name'  => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
+                'email'      => data_get($data, 'email') ?? data_get($user, 'email'),
+                'active'     => data_get($data, 'active') ?? data_get($user, 'active'),
+                'confirmed'  => data_get($data, 'confirmed') ?? data_get($user, 'confirmed'),
+
             ])) {
                 // Add selected roles/permissions
                 $user->syncRoles(data_get($data, 'roles') ?? data_get($user, 'roles'));
@@ -122,7 +123,7 @@ class UserRepository extends BaseRepository
             'password' => $password,
         ]);
 
-        if($isUpdated){
+        if ($isUpdated) {
             event(new UserPasswordChanged($user));
             return $user;
         }
@@ -150,10 +151,8 @@ class UserRepository extends BaseRepository
             $user->providers()->delete();
             $user->sessions()->delete();
 
-
             if ($user->forceDelete()) {
                 event(new UserPermanentlyDeleted($user));
-
                 return $user;
             }
 
