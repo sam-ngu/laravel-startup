@@ -95,7 +95,7 @@ export default {
         searchResources(){
             this.states.isLoading = true;
             let uri = this.resourceUrl;
-            if(this.searchable) {
+            if(this.searchable && this.search ) {
                 uri += `?search=${this.search}`;
             }
 

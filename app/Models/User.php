@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -21,6 +22,7 @@ class User extends Authenticatable
         HasRoles,
         SoftDeletes,
         UserAttribute,
+        Searchable,
         HasApiTokens;
 
     /**
@@ -80,4 +82,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(PasswordHistory::class);
     }
+
+    public function toSearchableArray()
+    {
+        return $this->only(['id', 'first_name', 'last_name']);
+    }
+
 }

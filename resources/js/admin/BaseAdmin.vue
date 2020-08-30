@@ -45,7 +45,8 @@
         mounted(){
             // check if session is passed
             const session = JSON.parse(this.session);
-            if(this.session && session.user && session.user.roles.includes('administrator')) {
+
+            if(this.session && session.user && session.user.roles.find((role) => role.name === 'administrator')) {
                 this.$store.commit('auth/setSession', JSON.parse(this.session));
             }else {
                 window.location.href = '/login';

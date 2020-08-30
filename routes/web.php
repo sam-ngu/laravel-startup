@@ -49,7 +49,7 @@ include_route_files(__DIR__ . '/auth');
 
 //Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 if(\Illuminate\Support\Facades\App::environment('local')){
     Route::get('/playground', function (){

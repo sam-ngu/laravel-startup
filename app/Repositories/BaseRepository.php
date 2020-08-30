@@ -44,7 +44,7 @@ abstract class BaseRepository
 
     public function search(string $search)
     {
-        return app()->make($this->model)->search($search);
+        return app()->make($this->model())->search($search);
     }
 
     /**

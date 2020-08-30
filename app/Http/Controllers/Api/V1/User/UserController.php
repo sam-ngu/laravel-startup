@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
+use Illuminate\Database\Eloquent\Builder;
 use function DeepCopy\deep_copy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
+    const RELATIONSHIPS = [
+        'roles'
+    ];
 
     /**
      * Display a listing of the resource.
@@ -27,13 +31,14 @@ class UserController extends Controller
         $searchKeyword = (string)$request->search ?? null;
         $pageSize = (int)$request->page_size ?? 25;
 
+        $users = $repository->buildQuery()->with(self::RELATIONSHIPS);
 
-        if($searchKeyword){
-            $users = $repository->search($searchKeyword);
-        }else{
-            $users = $repository->buildQuery();
+        if($searchKeyword) {
+            $users = $repository->search($searchKeyword)->query(function (Builder $builder)use($users){
+                $builder->with(self::RELATIONSHIPS);
+                $builder->whereIn('id', $users->get()->pluck('id'));
+            });
         }
-
         return UserResource::collection($users->paginate($pageSize))->response();
     }
 

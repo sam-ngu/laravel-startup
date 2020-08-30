@@ -7,7 +7,11 @@
 @section('content')
 
     @php
-        $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user()))->toArray(null) : null
+
+        $user = auth()->user();
+        if($user){
+            $user = new \App\Http\Resources\UserResource($user->loadMissing(['roles']));
+        }
     @endphp
 
 

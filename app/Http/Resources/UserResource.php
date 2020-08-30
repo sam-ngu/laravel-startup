@@ -25,7 +25,7 @@ class UserResource extends JsonResource
             'active'=> (bool)data_get($this, 'active'),
             'confirmed' => (bool)data_get($this, 'confirmed'),
             'timezone' => (string)data_get($this, 'timezone'),
-            'roles' => data_get($this, 'roles_label'),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'permissions' => data_get($this, 'permissions_label'),
             'social_buttons' => data_get($this, 'social_buttons'),
             'last_login_at'=> (string)data_get($this, 'last_login_at'),
