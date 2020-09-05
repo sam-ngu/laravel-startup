@@ -2,11 +2,15 @@ const state = {
     fields: [],
     resourceName: '',
     resourceUrl: '',
+    actions: [],
 };
 
 const getters = {
     fields(state){
         return state.fields;
+    },
+    actions(state){
+        return state.actions;
     },
     resourceName(state){
         return state.resourceName
@@ -31,12 +35,18 @@ const actions = {
     },
     postResource({state}, payload){
         return axios.post(state.resourceUrl, payload);
-    }
+    },
+    deleteResource({state}, id){
+        return axios.delete(state.resourceUrl + `/${id}`);
+    },
 };
 
 const mutations = {
     setFields(state, payload){
         state.fields = payload;
+    },
+    setActions(state, payload){
+        state.actions = payload;
     },
     setResourceName(state, payload){
         state.resourceName = payload;

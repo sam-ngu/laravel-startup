@@ -19,6 +19,19 @@
                         />
                     </div>
                 </td>
+
+                <!--action-->
+                <td>
+                    <!--delete button-->
+                    <div @click.stop="deleteResource(props.item)">
+                        <button-tooltip icon="mdi-delete" tooltip="Delete" />
+                    </div>
+                    <!--action dropdown-->
+                    <div v-for="(action, index) in actions">
+
+                    </div>
+
+                </td>
             </tr>
 
         </template>
@@ -26,8 +39,10 @@
 </template>
 
 <script>
+import ButtonTooltip from "../../../../partials/ButtonTooltip";
 export default {
     name: "BaseTable",
+    components: {ButtonTooltip},
     data() {
         return {
             resources: [],
@@ -42,6 +57,9 @@ export default {
     computed: {
         resourceName(){
             return this.$route.meta.resourceName;
+        },
+        actions(){
+            return this.$store.getters[`${this.resourceName}Management/actions`];
         },
         headers(){
             const fields = this.$store.getters[`${this.resourceName}Management/fields`];
@@ -66,6 +84,12 @@ export default {
                     id: resource.id
                 }
             });
+        },
+        deleteResource(resource){
+            this.$store.dispatch(`${this.resourceName}Management/deleteResource`, resource.id)
+                .then((resource) => {
+
+                })
         }
 
     },

@@ -2,15 +2,6 @@
 
     <section>
         <router-view/>
-
-    <!--  TODO:  account for create, table and update-->
-<!--        <article v-for="(field, index) in fields" :key="field.label">-->
-<!--            <component-->
-<!--                :is="resolveFieldComponent(field.type)"-->
-<!--                :label="field.label"-->
-<!--            />-->
-<!--        </article>-->
-
     </section>
 </template>
 
@@ -36,7 +27,17 @@ export default {
             //     hideOnUpdate:
             // }
             type: Array,
-            default: [],
+            default: () => [],
+        },
+        actions: {
+            // action Object looks something like
+            // {
+            //     label: ,
+            //     show: Boolean|Function, (function should return boolean)
+            //     onclick: Function, (callback function to perform action)
+            // }
+            type: Array,
+            default: () => [],
         },
         resourceName: {
             type: String,
@@ -125,6 +126,7 @@ export default {
             this.$store.registerModule(`${resourceName}Management`, resourceStore);
         }
         this.$store.commit(`${resourceName}Management/setFields`, this.fields);
+        this.$store.commit(`${resourceName}Management/setActions`, this.actions);
         this.$store.commit(`${resourceName}Management/setResourceName`, resourceName);
         this.$store.commit(`${resourceName}Management/setResourceUrl`, this.resourceUrl);
     },

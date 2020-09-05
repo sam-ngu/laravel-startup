@@ -106,9 +106,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user, UserRepository $repository)
     {
-        $result = $this->userRepository->deleteById($user->id);
+        $result = $repository->softDelete($user);
 
         event(new UserDeleted($user));
 

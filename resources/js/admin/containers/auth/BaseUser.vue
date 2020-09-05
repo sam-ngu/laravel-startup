@@ -4,7 +4,6 @@
         resource-url="/api/v1/users"
         resource-name="User"
         :fields="resourceFields"
-        :resources="resources"
     />
 
 </template>
@@ -21,7 +20,15 @@ export default {
     components: {BaseResource},
     data() {
         return {
-            resources: [],
+            actions: [
+                {
+                    label: 'Login As',
+                    show: (resource) => resource.roles,
+                    onclick: (resource) => {
+
+                    }
+                },
+            ],
             resourceFields: [
                 {
                     label: 'First Name',
