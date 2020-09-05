@@ -20,7 +20,7 @@ import BaseTable from "./table/BaseTable";
 import BaseCreate from "./create/BaseCreate";
 import BaseUpdate from "./update/BaseUpdate";
 import resourceStore from './resource-store';
-
+import {resetRouter} from './utils/reset-router';
 export default {
     name: "BaseResource",
     data() {
@@ -111,8 +111,11 @@ export default {
             });
             found.children = routes;
             // FIXME: as of 29th Aug 2020, it is not possible to add child routes to an existing route
+            // this is only a workaround
+            resetRouter(this.$router);
             // waiting for Vue router 4
-            this.$router.addRoutes([found]);
+            // this.$router.addRoutes([found]);
+
         }
 
         // to force update the router so newly added routes will show

@@ -124,8 +124,16 @@ class UserRepository extends BaseRepository
                 }
 
                 // Add selected roles/permissions
-                $user->syncRoles(data_get($data, 'roles') ?? data_get($user, 'roles'));
-                $user->syncPermissions(data_get($data, 'permissions') ?? data_get($user, 'permissions'));
+                $roles = data_get($data, 'roles');
+                if(is_array($roles)){
+                    $roles = array_map(fn($role) => data_get($role, 'name'), $roles);
+                    $user->syncRoles($roles);
+                }
+                $permissions = data_get($data, 'permissions');
+                if(is_array($permissions)){
+                    $permissions = array_map(fn($permission) => data_get($permission, 'name'), $permissions);
+                    $user->syncPermissions($permissions);
+                }
 
                 event(new UserUpdated($user));
                 return $user;

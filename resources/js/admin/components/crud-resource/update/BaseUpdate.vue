@@ -79,6 +79,7 @@ export default {
                 payload: this.inputData
             }).then((response) => {
                 this.states.isLoading = false;
+                this.$router.push({name: `${this.resourceName.toLowerCase()}-table`})
             }).catch((error) => {
                 this.errors = error.response.data.errors;
                 this.states.isLoading = false;
