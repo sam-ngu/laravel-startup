@@ -7,7 +7,8 @@
 @section('content')
 
     @php
-        $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user()))->toArray(null) : null
+
+        $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user())) : null
     @endphp
 
     <base-public session="{{ json_encode([

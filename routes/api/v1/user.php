@@ -15,4 +15,8 @@ Route::group([
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
+
+    // for admin to login as user
+//    Route::post('/users/{user}/login-as', [\App\Http\Controllers\Auth\LoginController::class, 'loginAs']);
+
 });

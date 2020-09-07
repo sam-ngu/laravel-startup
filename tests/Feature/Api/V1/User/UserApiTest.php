@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api\V1\User\Api\V1\User;
+namespace Tests\Feature\Api\V1\User;
 
 use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserPermanentlyDeleted;

@@ -22,7 +22,7 @@ Route::group([
         \App\Http\Middleware\ParseFormData::class,
     ]
 ], function(){
-    include_route_files(__DIR__ . '/api/');
+    require_once(__DIR__ . '/api/v1.php');
 
 });
 

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('public.index');
-});
+})->name('home');
 
 Route::group([
     'middleware' => [
@@ -35,7 +35,7 @@ Route::group([
         // admin only
     ]
 ], function (){
-    Route::get('/admin', [AppController::class, 'admin']);
+    Route::get('/admin', [AppController::class, 'admin'])->name('admin');
 
 });
 

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\GeneralException;
+use App\Exceptions\GeneralJsonException;
+use App\Helpers\Auth\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -37,7 +41,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'loginAs', 'logoutAs']);
     }
 
     /**
@@ -73,5 +77,75 @@ class LoginController extends Controller
                 ]
             ], 200)
             : redirect()->intended($this->redirectPath());
+    }
+
+    public function loginAs(Request $request, User $user)
+    {
+        // Overwrite who we're logging in as, if we're already logged in as someone else.
+        if (session()->has('admin_user_id') && session()->has('temp_user_id')) {
+            // Let's not try to login as ourselves.
+            if ($request->user()->id === $user->id || session()->get('admin_user_id') == $user->id) {
+                throw new GeneralJsonException('Do not try to login as yourself.');
+            }
+
+            // Overwrite temp user ID.
+            session(['temp_user_id' => $user->id]);
+
+            // Login.
+            auth()->loginUsingId($user->id);
+
+            // Redirect.
+            return redirect()->route('home');
+        }
+
+        Auth::flushTempSession();
+
+        // Won't break, but don't let them "Login As" themselves
+        if ($request->user()->id === $user->id) {
+            throw new GeneralJsonException('Do not try to login as yourself.');
+        }
+
+        // Add new session variables
+        session(['admin_user_id' => $request->user()->id]);
+        session(['admin_user_name' => $request->user()->full_name]);
+        session(['temp_user_id' => $user->id]);
+
+        // Login user
+        auth()->loginUsingId($user->id);
+
+        // Redirect to frontend
+        return redirect()->route('home');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logoutAs()
+    {
+        // If for some reason route is getting hit without someone already logged in
+        if (! auth()->user()) {
+            return redirect()->route('login');
+        }
+
+        // If admin id is set, relogin
+        if (session()->has('admin_user_id') && session()->has('temp_user_id')) {
+            // Save admin id
+            $admin_id = session()->get('admin_user_id');
+
+            app()->make(Auth::class)->flushTempSession();
+
+            // Re-login admin
+            auth()->loginUsingId((int) $admin_id);
+
+            // Redirect to backend user page
+            return redirect()->route('admin');
+        } else {
+            app()->make(Auth::class)->flushTempSession();
+
+            // Otherwise logout and redirect to login
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
     }
 }

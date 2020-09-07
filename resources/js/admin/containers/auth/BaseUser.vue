@@ -26,8 +26,11 @@ export default {
                     label: 'Login As User',
                     show: true,
                     onclick: (resource) => {
-                        console.log({resource})
-
+                        window.location.href = '/login-as/' + resource.id;
+                        // axios.post('/login-as/' + resource.id)
+                        //     .then((response) => {
+                        //
+                        //     })
                     },
                     disabled: false
                 },
