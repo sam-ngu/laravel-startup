@@ -3,6 +3,7 @@
     <base-resource
         resource-url="/api/v1/users"
         resource-name="User"
+        :actions="actions"
         :fields="resourceFields"
     />
 
@@ -22,11 +23,13 @@ export default {
         return {
             actions: [
                 {
-                    label: 'Login As',
-                    show: (resource) => resource.roles,
+                    label: 'Login As User',
+                    show: true,
                     onclick: (resource) => {
+                        console.log({resource})
 
-                    }
+                    },
+                    disabled: false
                 },
             ],
             resourceFields: [

@@ -42,7 +42,7 @@
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 
     export default {
-        name: "UserTableActions",
+        aname: "UserTableActions",
         components: {ButtonTooltip},
         data() {
             return {}

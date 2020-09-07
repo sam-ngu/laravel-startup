@@ -21,15 +21,14 @@
                 </td>
 
                 <!--action-->
-                <td>
+                <td class="d-flex align-center">
                     <!--delete button-->
                     <div @click.stop="deleteResource(props.item)">
                         <button-tooltip icon="mdi-delete" tooltip="Delete" />
                     </div>
                     <!--action dropdown-->
-                    <div v-for="(action, index) in actions">
+                    <table-actions :resource="props.item" :actions="actions" />
 
-                    </div>
 
                 </td>
             </tr>
@@ -40,9 +39,10 @@
 
 <script>
 import ButtonTooltip from "../../../../partials/ButtonTooltip";
+import TableActions from "./TableActions";
 export default {
     name: "BaseTable",
-    components: {ButtonTooltip},
+    components: {TableActions, ButtonTooltip},
     data() {
         return {
             resources: [],
