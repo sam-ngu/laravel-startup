@@ -10,7 +10,7 @@
 
                     <v-card style="width: 400px">
                         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
-                            
+
                             <v-card-title class="text-center ">
                                 <h3 class="text-center mx-auto title font-weight-bold">Forgot your password?</h3>
                                 <h5 class="text-center mx-auto subtitle-2">Don't worry. We'll help you reset it.</h5>
