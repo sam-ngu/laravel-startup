@@ -8,8 +8,6 @@ use App\Events\Models\Role\RoleUpdated;
 use App\Exceptions\GeneralJsonException;
 use App\Models\Role;
 use App\Repositories\BaseRepository;
-use Illuminate\Http\Client\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class RoleRepository extends BaseRepository
@@ -39,17 +37,17 @@ class RoleRepository extends BaseRepository
     public function create(array $data): Role
     {
         $permissions = data_get($data, 'permissions');
-        if(! $permissions || count($permissions) === 0 ){
+        if (! $permissions || count($permissions) === 0) {
             $permissions = [];
         }
-        if(config('access.roles.role_must_contain_permission') && $permissions === []){
+        if (config('access.roles.role_must_contain_permission') && $permissions === []) {
             throw new GeneralJsonException('Role needs permission');
         }
 
         return DB::transaction(function () use ($data, $permissions) {
             $role = parent::create([
                 'name' => data_get($data, 'name'),
-                'guard_name' => strtolower(data_get($data, 'guard_name', config('auth.defaults.guard')))
+                'guard_name' => strtolower(data_get($data, 'guard_name', config('auth.defaults.guard'))),
             ]);
 
             /** @var Role $role */
@@ -76,16 +74,17 @@ class RoleRepository extends BaseRepository
      */
     public function update($role, array $data): Role
     {
-        if($role->isAdmin()){
+        if ($role->isAdmin()) {
             throw new GeneralJsonException('You cannot edit the admin role');
         }
         $permissions = data_get($data, 'permissions');
-        if(! $permissions || count($permissions) === 0 ){
+        if (! $permissions || count($permissions) === 0) {
             $permissions = [];
         }
-        if(config('access.roles.role_must_contain_permission') && $permissions === []){
+        if (config('access.roles.role_must_contain_permission') && $permissions === []) {
             throw new GeneralJsonException('Role needs permission');
         }
+
         return DB::transaction(function () use ($role, $data, $permissions) {
             if ($updated = $role->update([
                 'name' => data_get($data, 'name') ?? $role->name,

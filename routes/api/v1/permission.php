@@ -8,7 +8,5 @@ Route::group([
         'role:'.config('access.users.admin_role'),
     ],
 ], function () {
-
     Route::get('permissions', [PermissionController::class, 'index']);
-
 });

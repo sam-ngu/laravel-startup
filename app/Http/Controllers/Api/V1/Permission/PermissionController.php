@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api\V1\Permission;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
@@ -30,8 +28,7 @@ class PermissionController extends Controller
     {
         $pageSize = (int)$request->page_size ?? 250;
         $permissions = Permission::query();
+
         return PermissionResource::collection($permissions->paginate($pageSize))->response();
     }
-
-
 }
