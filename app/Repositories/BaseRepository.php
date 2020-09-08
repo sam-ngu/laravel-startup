@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -68,6 +67,7 @@ abstract class BaseRepository
         $this->model = $this->model
             ->onlyTrashed()
             ->orderBy($orderBy, $sort);
+
         return $this;
     }
 
@@ -84,5 +84,4 @@ abstract class BaseRepository
     {
         return $model->delete();
     }
-
 }

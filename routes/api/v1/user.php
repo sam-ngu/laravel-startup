@@ -4,9 +4,9 @@ use App\Http\Controllers\Api\V1\User\UserController;
 
 Route::group([
     'middleware' => [
-        'role:'.config('access.users.admin_role')
-    ]
-], function(){
+        'role:'.config('access.users.admin_role'),
+    ],
+], function () {
 
     // all routes prefixed with api.v1
     Route::get('/users', [UserController::class, 'index']);
@@ -18,5 +18,4 @@ Route::group([
 
     // for admin to login as user
 //    Route::post('/users/{user}/login-as', [\App\Http\Controllers\Auth\LoginController::class, 'loginAs']);
-
 });

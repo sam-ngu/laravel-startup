@@ -3,7 +3,6 @@
 
 namespace App\Helpers\Auth;
 
-
 use App\Exceptions\GeneralException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -16,10 +15,11 @@ class CaptchaHelper
      * @return mixed
      * @throws GeneralException
      */
-    static public function verifyToken()
+    public static function verifyToken()
     {
-        if(!config('access.captcha.registration'))
+        if (! config('access.captcha.registration')) {
             return true;
+        }
         $token = request('captcha_token');
 
         $guzzle = new Client([
@@ -30,7 +30,8 @@ class CaptchaHelper
             'verify' => true,
             'timeout' => 15, //timeout for request
         ]);
-        try{
+
+        try {
             // TODO: test this
             $response = Http::post('/recaptcha/api/siteverify', [
                 'response' => $token,
@@ -42,13 +43,14 @@ class CaptchaHelper
 //                    'secret' => config('no-captcha.secret'),
 //                ]
 //            ]);
-        }catch (ClientException $exception){
+        } catch (ClientException $exception) {
             $message = $exception->getMessage();
+
             throw new GeneralException($message, $exception->getCode());
         }
 
         $body = json_decode($response->getBody(), true);
-        return data_get($body, 'success');
 
+        return data_get($body, 'success');
     }
 }

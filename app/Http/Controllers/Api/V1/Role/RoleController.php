@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1\Role;
 
-
 use App\Events\Models\Role\RolePermanentlyDeleted;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\Role\UpdateRoleRequest;
 use App\Http\Requests\Api\V1\Role\StoreRoleRequest;
+use App\Http\Requests\Api\V1\Role\UpdateRoleRequest;
 use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Repositories\Api\V1\RoleRepository;
@@ -17,7 +16,7 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     const RELATIONSHIPS = [
-        'users', 'permissions'
+        'users', 'permissions',
     ];
 
     /**
@@ -38,12 +37,13 @@ class RoleController extends Controller
 
         $roles = $repository->buildQuery()->with(self::RELATIONSHIPS);
 
-        if($searchKeyword){
-            $roles = $repository->search($searchKeyword)->query(function(Builder $builder) use($roles){
+        if ($searchKeyword) {
+            $roles = $repository->search($searchKeyword)->query(function (Builder $builder) use ($roles) {
                 $builder->with(self::RELATIONSHIPS);
                 $builder->whereIn('id', $roles->get()->pluck('id'));
             });
         }
+
         return RoleResource::collection($roles->paginate($pageSize))->response();
     }
 
@@ -82,6 +82,7 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, Role $role, RoleRepository $repository)
     {
         $result = $repository->update($role, $request->only('name', 'permissions'));
+
         return (new RoleResource($result))->response();
     }
 
@@ -99,7 +100,4 @@ class RoleController extends Controller
 
         return new JsonResponse(null, 204);
     }
-
-
-
 }

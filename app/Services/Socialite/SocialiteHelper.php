@@ -3,7 +3,6 @@
 
 namespace App\Services\Socialite;
 
-
 use App\Events\Models\User\UserProviderRegistered;
 use App\Exceptions\GeneralException;
 use App\Models\SocialAccount;
@@ -33,14 +32,14 @@ class SocialiteHelper
          */
         if (! $user) {
             // Registration is not enabled
-            throw_if(!config('access.registration'), GeneralException::class, __('exceptions.frontend.auth.registration_disabled'));
+            throw_if(! config('access.registration'), GeneralException::class, __('exceptions.frontend.auth.registration_disabled'));
 
             // Get users first name and last name from their full name
             [$firstName, $lastName] = $this->getNameParts($data->getName());
 
             $user = parent::create([
-                'first_name'  => $firstName,
-                'last_name'  => $lastName,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
                 'email' => $email,
                 'active' => 1,
                 'confirmed' => 1,
@@ -55,16 +54,16 @@ class SocialiteHelper
         if (! $user->hasProvider($provider)) {
             // Gather the provider data for saving and associate it with the user
             $user->providers()->save(new SocialAccount([
-                'provider'    => $provider,
+                'provider' => $provider,
                 'provider_id' => $data->id,
-                'token'       => $data->token,
-                'avatar'      => $data->avatar,
+                'token' => $data->token,
+                'avatar' => $data->avatar,
             ]));
         } else {
             // Update the users information, token and avatar can be updated.
             $user->providers()->update([
-                'token'       => $data->token,
-                'avatar'      => $data->avatar,
+                'token' => $data->token,
+                'avatar' => $data->avatar,
             ]);
 
             $user->avatar_type = $provider;
@@ -102,8 +101,4 @@ class SocialiteHelper
 
         return [$firstName, $lastName];
     }
-
-
-
-
 }

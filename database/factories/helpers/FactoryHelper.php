@@ -14,8 +14,8 @@ if (! function_exists('Factories\Helpers\getRandomModelId')) {
         $count = app()->make($model)->query()->count();
         if ($count === 0) {
             return factory($model)->create()->id;
-        } else
+        } else {
             return rand(1, $count);
+        }
     }
-
 }

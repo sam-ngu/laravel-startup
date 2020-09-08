@@ -24,5 +24,4 @@ abstract class ApiTestCase extends TestCase
 
         return $admin;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'all'  => 'Toate',
+    'all' => 'Toate',
     'date' => 'Dată',
 ];

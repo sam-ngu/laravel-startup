@@ -3,10 +3,9 @@
 Route::group([
 
     'middleware' => [
-        'role:'.config('access.users.admin_role')
+        'role:'.config('access.users.admin_role'),
     ],
-], function (){
+], function () {
 
 //    Route::get('permissions', );
-
 });

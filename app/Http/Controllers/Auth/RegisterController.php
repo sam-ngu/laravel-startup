@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Events\Models\User\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -62,7 +59,6 @@ class RegisterController extends Controller
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.
         if (config('access.users.confirm_email') || config('access.users.requires_approval')) {
-
             event(new UserRegistered($user));
 
             $message = config('access.users.requires_approval') ?
@@ -70,9 +66,8 @@ class RegisterController extends Controller
                 __('exceptions.frontend.auth.confirmation.created_confirm');
 
             return new JsonResponse([
-                'data' => $message
+                'data' => $message,
             ]);
-
         } else {
             auth()->login($user);
 

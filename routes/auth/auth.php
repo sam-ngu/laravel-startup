@@ -10,10 +10,9 @@ use App\Http\Controllers\Auth\VerificationController;
 
 Route::group([
     'middleware' => [
-        'guest'
-    ]
-], function (){
-
+        'guest',
+    ],
+], function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 
@@ -26,12 +25,12 @@ Route::group([
     Route::get('login/{provider}/callback', [SocialLoginController::class, 'login']);
 
 
-    if(config('access.users.confirm_email')){
+    if (config('access.users.confirm_email')) {
         // verification routes
         Route::get('email/verify', [VerificationController::class, 'show']);
         Route::post('email/resend', [VerificationController::class, 'resend']);
         Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']);
-    }else{
+    } else {
         // TODO: admin to approve user account
         // Confirm Account Routes
 //        Route::get('account/confirm/{token}', [AuthController::class, 'confirm'])->name('account.confirm');
@@ -49,9 +48,6 @@ Route::group([
 
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
-
-
-
 });
 
 /*

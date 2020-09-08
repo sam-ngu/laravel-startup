@@ -3,11 +3,8 @@
 namespace App\Events\Models\Role;
 
 use App\Models\Role;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -22,7 +19,7 @@ class RolePermanentlyDeleted
      * @param Role $model
      * @return void
      */
-    public function __construct( $role )
+    public function __construct($role)
     {
         $this->role = $role;
     }

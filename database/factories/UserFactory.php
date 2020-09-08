@@ -1,9 +1,10 @@
 <?php
 
-use Faker\Generator;
 use App\Models\User;
+use Faker\Generator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 /*
@@ -19,14 +20,14 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Generator $faker) {
     return [
-        'uuid' 			    => Str::uuid()->toString(),
-        'first_name'        => $faker->firstName,
-        'last_name'         => $faker->lastName,
-        'email'             => $faker->safeEmail,
+        'uuid' => Str::uuid()->toString(),
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->safeEmail,
         'email_verified_at' => now(),
-        'password'          => 'secret',
+        'password' => 'secret',
         'password_changed_at' => null,
-        'remember_token'    => Str::random(10),
+        'remember_token' => Str::random(10),
         'confirmation_code' => md5(uniqid(mt_rand(), true)),
         'active' => 1,
         'confirmed' => 1,

@@ -20,11 +20,11 @@ class ParseFormData
 //            return $next($request);
 //        }
 
-        if($request->method() === 'GET'){
+        if ($request->method() === 'GET') {
             return $next($request);
         }
         if ($request->method() === 'POST') {
-            if($request->isJson()){
+            if ($request->isJson()) {
                 return $next($request);
             }
             // potential form data
@@ -33,17 +33,16 @@ class ParseFormData
             // convert to empty array string to empty array.
             $data = ParseInputStream::convertEmptyArrayStringToArray($data);
             $request->request->add($data);
-            return $next($request);
 
+            return $next($request);
         }
 
         if (preg_match('/multipart\/form-data/', $request->headers->get('Content-Type')) or
             preg_match('/multipart\/form-data/', $request->headers->get('content-type'))
         ) {
-            $params = array();
+            $params = [];
             new ParseInputStream($params);
             $request->request->add($params);
-
         }
 
         return $next($request);

@@ -4,9 +4,9 @@ use App\Http\Controllers\Api\V1\Role\RoleController;
 
 Route::group([
     'middleware' => [
-        'role:'.config('access.users.admin_role')
+        'role:'.config('access.users.admin_role'),
     ],
-], function (){
+], function () {
     /*
      * All route names are prefixed with api.v1.role
      * */

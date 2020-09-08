@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
 use App\Helpers\Auth\Auth;
 use App\Http\Controllers\Controller;
@@ -73,8 +72,8 @@ class LoginController extends Controller
         return $request->wantsJson()
             ? new Response([
                 'data' => [
-                    'redirect' => '/app'
-                ]
+                    'redirect' => '/app',
+                ],
             ], 200)
             : redirect()->intended($this->redirectPath());
     }

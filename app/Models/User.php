@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\PasswordHistory;
-use App\Models\SocialAccount;
-use App\Models\Traits\UserAttribute;
 use App\Models\System\Session;
+use App\Models\Traits\UserAttribute;
 use App\Models\Traits\UserMethod;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,7 +41,7 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'last_login_at', 'deleted_at'
+        'last_login_at', 'deleted_at',
     ];
 
     /**
@@ -56,7 +53,7 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
         'email_verified_at' => 'datetime',
-        'last_login_at' => 'datetime'
+        'last_login_at' => 'datetime',
     ];
 
     /**
@@ -87,5 +84,4 @@ class User extends Authenticatable
     {
         return $this->only(['id', 'first_name', 'last_name']);
     }
-
 }

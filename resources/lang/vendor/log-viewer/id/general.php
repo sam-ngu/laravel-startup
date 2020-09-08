@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'all'  => 'Semua',
+    'all' => 'Semua',
     'date' => 'Tanggal',
 ];

@@ -7,11 +7,8 @@ use App\Events\Models\User\UserDeactivated;
 use App\Events\Models\User\UserReactivated;
 use App\Events\Models\User\UserUnconfirmed;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\ApiTestCase;
-use Tests\TestCase;
 
 class UserConfirmedAndActiveTest extends ApiTestCase
 {
@@ -55,7 +52,6 @@ class UserConfirmedAndActiveTest extends ApiTestCase
 
         $result = $response->assertStatus(200)->json('data');
         $this->assertEquals(false, data_get($result, 'confirmed'));
-
     }
 
     public function test_user_can_be_activated()
@@ -77,6 +73,5 @@ class UserConfirmedAndActiveTest extends ApiTestCase
 
         $result = $response->assertStatus(200)->json('data');
         $this->assertEquals(false, data_get($result, 'active'));
-
     }
 }

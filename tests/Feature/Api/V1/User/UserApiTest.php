@@ -8,8 +8,6 @@ use App\Events\Models\User\UserUpdated;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
@@ -18,7 +16,6 @@ use Tests\ApiTestCase;
 
 class UserApiTest extends ApiTestCase
 {
-
     protected $admin;
 
     protected $uri = '/api/v1/users';
@@ -33,7 +30,7 @@ class UserApiTest extends ApiTestCase
 
     public function test_index()
     {
-        $users = factory(User::class,10)->create();
+        $users = factory(User::class, 10)->create();
 
         $dummy = $users->first();
 
@@ -46,22 +43,22 @@ class UserApiTest extends ApiTestCase
         $repo = new UserRepository;
         $sortableFields = $repo->allowedSorts;
 
-        if(!empty($sortableFields)){
-            collect($sortableFields)->each(function ($sortable){
+        if (! empty($sortableFields)) {
+            collect($sortableFields)->each(function ($sortable) {
                 // testing desc sort
                 $response = $this->json('get', $this->uri, [
-                    'sort' => '-' . $sortable
+                    'sort' => '-' . $sortable,
                 ]);
 
                 $results = $response->assertStatus(200)->json('data');
 
                 // make sure array is actually sorted
-                collect($results)->reduce(function ($carry, $current){
+                collect($results)->reduce(function ($carry, $current) {
                     $this->assertTrue($carry < $current);
+
                     return $current;
                 });
             });
-
         }
 
 
@@ -69,9 +66,9 @@ class UserApiTest extends ApiTestCase
 
         $filterables = $repo->allowedFilters;
 
-        if(!empty($filterables)){
-            collect($filterables)->each(function ($filterable) use($dummy){
-                if($filterable instanceof AllowedFilter){
+        if (! empty($filterables)) {
+            collect($filterables)->each(function ($filterable) use ($dummy) {
+                if ($filterable instanceof AllowedFilter) {
                     $filterable = $filterable->getName();
                 }
 
@@ -86,19 +83,14 @@ class UserApiTest extends ApiTestCase
 
                 $results = $response->assertStatus(200)->json('data');
 
-                collect($results)->each(function ($result)use($filterable, $dummyValue){
-                    $this->assertTrue(data_get($result, $filterable) === $dummyValue );
+                collect($results)->each(function ($result) use ($filterable, $dummyValue) {
+                    $this->assertTrue(data_get($result, $filterable) === $dummyValue);
                 });
-
-
             });
-
-
         }
 
         // test search
-        if((new \ReflectionClass(User::class))->hasMethod('search') ){
-
+        if ((new \ReflectionClass(User::class))->hasMethod('search')) {
             $searchableFields = collect($dummy->toSearchableArray())->except(['id'])->keys();
 
             $toSearch = $searchableFields->random();
@@ -106,16 +98,15 @@ class UserApiTest extends ApiTestCase
             $uuid = Str::uuid()->toString();
 
             $dummy = factory(User::class, 5)->create([
-                $toSearch => $uuid
+                $toSearch => $uuid,
             ]);
 
-            $response = $this->json('get', $this->uri . '?' . http_build_query(['search' => $uuid]) );
+            $response = $this->json('get', $this->uri . '?' . http_build_query(['search' => $uuid]));
 
             $results = $response->assertStatus(200)->json('data');
 
             $this->assertCount(5, $results);
         }
-
     }
 
     public function test_show()
@@ -126,7 +117,6 @@ class UserApiTest extends ApiTestCase
         $result = $response->assertStatus(200)->json('data');
 
         $this->assertEquals(data_get($result, 'id'), $dummy->id);
-
     }
 
     public function test_create()
@@ -161,7 +151,7 @@ class UserApiTest extends ApiTestCase
         $toUpdate = $fillables->random();
 
         $response = $this->json('patch', $this->uri . '/' . $dummy->id, [
-            $toUpdate => data_get($dummy2, $toUpdate)
+            $toUpdate => data_get($dummy2, $toUpdate),
         ]);
 
         $result = $response->assertStatus(200)->json('data');
@@ -169,7 +159,6 @@ class UserApiTest extends ApiTestCase
         Event::assertDispatched(UserUpdated::class);
 
         $this->assertEquals(data_get($dummy2, $toUpdate), data_get($dummy->refresh(), $toUpdate));
-
     }
 
 
@@ -187,8 +176,5 @@ class UserApiTest extends ApiTestCase
         User::query()->findOrFail($dummy->id);
 
         Event::assertDispatched(UserPermanentlyDeleted::class);
-
-
     }
-
 }

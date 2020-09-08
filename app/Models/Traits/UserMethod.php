@@ -8,7 +8,6 @@ use App\Events\Models\User\UserReactivated;
 use App\Events\Models\User\UserUnconfirmed;
 use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
-use App\Models\User;
 use App\Notifications\User\UserAccountActive;
 use App\Notifications\User\UserNeedsPasswordReset;
 
@@ -104,21 +103,22 @@ trait UserMethod
 
         $saved = $this->save();
 
-        if($saved){
+        if ($saved) {
             event(new UserConfirmed($this));
 
-            if(config('access.users.requires_approval')){
+            if (config('access.users.requires_approval')) {
                 $this->notify(new UserAccountActive);
             }
 
             return $this;
         }
+
         throw new GeneralException(__('exceptions.backend.access.users.cant_confirm'));
     }
 
     public function unconfirm()
     {
-        if(!$this->isConfirmed()){
+        if (! $this->isConfirmed()) {
             throw new GeneralException(__('exceptions.backend.access.users.not_confirmed'));
         }
 
@@ -129,8 +129,9 @@ trait UserMethod
         $this->confirmed = 0;
         $unconfirmed = $this->save();
 
-        if($unconfirmed){
+        if ($unconfirmed) {
             event(new UserUnconfirmed($this));
+
             return $this;
         }
 
@@ -139,20 +140,21 @@ trait UserMethod
 
     public function setActive(bool $isActive = true)
     {
-        if($this->active === $isActive ){
+        if ($this->active === $isActive) {
             return $this;
         }
 
         $this->active = $isActive;
 
-        if($isActive){
+        if ($isActive) {
             event(new UserReactivated($this));
-        }else{
+        } else {
             event(new UserDeactivated($this));
         }
-        if($this->save()){
+        if ($this->save()) {
             return  $this;
         }
+
         throw new GeneralJsonException(__('exceptions.backend.access.users.mark_error'));
     }
 }

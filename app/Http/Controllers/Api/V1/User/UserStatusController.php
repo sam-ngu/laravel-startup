@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Events\Backend\Auth\User\UserDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Auth\User\ManageUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Auth\User;
 use App\Repositories\Backend\Auth\UserRepository;
-use function DeepCopy\deep_copy;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Psy\Util\Json;
 
 class UserStatusController extends Controller
 {
@@ -39,6 +35,7 @@ class UserStatusController extends Controller
     public function mark(ManageUserRequest $request, User $user, $status)
     {
         $result = $this->userRepository->mark($user, $status);
+
         return (new UserResource($result))->response();
     }
 
@@ -53,6 +50,7 @@ class UserStatusController extends Controller
     public function delete(ManageUserRequest $request, User $deletedUser)
     {
         $result = $this->userRepository->forceDelete($deletedUser);
+
         return (new UserResource($result))->response();
     }
 
@@ -66,6 +64,7 @@ class UserStatusController extends Controller
     public function restore(ManageUserRequest $request, User $deletedUser)
     {
         $result = $this->userRepository->restore($deletedUser);
+
         return (new UserResource($result))->response();
     }
 }

@@ -7,39 +7,39 @@ return [
             'type' => 'uuid',
         ],
         'first_name' => [
-            'type'       => 'string',
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
-        'last_name'  => [
-            'type'       => 'string',
+        'last_name' => [
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
-        'email'      => [
-            'type'       => 'string',
+        'email' => [
+            'type' => 'string',
             'attributes' => ['unique'],
         ],
         'avatar_type' => [
-            'type'       => 'string',
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
         'avatar_location' => [
-            'type'       => 'string',
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
         'password' => [
-            'type'       => 'string',
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
         'password_changed_at' => [
             'type' => 'timestamp',
-            'attributes' => ['nullable']
+            'attributes' => ['nullable'],
         ],
         'active' => [
             'type' => 'tinyInteger',
             'attributes' => [
                 'unsigned',
-                'default' => [1]
-            ]
+                'default' => [1],
+            ],
         ],
         'confirmation_code' => [
             'type' => 'string',
@@ -48,8 +48,8 @@ return [
         'confirmed' => [
             'type' => 'boolean',
             'attributes' => [
-                'default' => [config('access.users.confirm_email') ? false : true]
-            ]
+                'default' => [config('access.users.confirm_email') ? false : true],
+            ],
         ],
         'timezone' => [
             'type' => 'string',
@@ -66,21 +66,21 @@ return [
     ],
 
     'post' => [
-        'title'     => [
-            'type'       => 'string',
+        'title' => [
+            'type' => 'string',
             'attributes' => ['nullable'],
         ],
-        'body'      => [
-            'type'       => 'mediumText',
+        'body' => [
+            'type' => 'mediumText',
             'attributes' => ['nullable'],
         ],
         'author_id' => [
-            'type'    => 'foreignId',
+            'type' => 'foreignId',
             'foreign' => [
                 'references' => 'id',
-                'on'         => 'authors',
+                'on' => 'authors',
             ],
         ],
-    ]
+    ],
 
 ];

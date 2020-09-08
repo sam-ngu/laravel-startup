@@ -3,22 +3,18 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Events\Models\User\UserDeleted;
-use App\Exceptions\GeneralException;
-use App\Helpers\Auth\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Database\Eloquent\Builder;
-use function DeepCopy\deep_copy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     const RELATIONSHIPS = [
-        'roles'
+        'roles',
     ];
 
     /**
@@ -33,12 +29,13 @@ class UserController extends Controller
 
         $users = $repository->buildQuery()->with(self::RELATIONSHIPS);
 
-        if($searchKeyword) {
-            $users = $repository->search($searchKeyword)->query(function (Builder $builder)use($users){
+        if ($searchKeyword) {
+            $users = $repository->search($searchKeyword)->query(function (Builder $builder) use ($users) {
                 $builder->with(self::RELATIONSHIPS);
                 $builder->whereIn('id', $users->get()->pluck('id'));
             });
         }
+
         return UserResource::collection($users->paginate($pageSize))->response();
     }
 
@@ -61,6 +58,7 @@ class UserController extends Controller
             'roles',
             'permissions'
         ));
+
         return (new UserResource($result))->response();
     }
 
@@ -93,11 +91,11 @@ class UserController extends Controller
             'confirmed',
             'permissions'
         ));
-        if($request->password){
+        if ($request->password) {
             $result = $repository->updatePassword($user, $request->get('password'));
         }
-        return (new UserResource($result))->response();
 
+        return (new UserResource($result))->response();
     }
 
     /**
@@ -114,8 +112,4 @@ class UserController extends Controller
 
         return new JsonResponse(null, 204);
     }
-
-
-
-
 }

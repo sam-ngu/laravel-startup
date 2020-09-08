@@ -23,20 +23,18 @@ Route::get('/', function () {
 Route::group([
     'middleware' => [
         \App\Http\Middleware\Authenticate::class,
-    ]
-], function (){
+    ],
+], function () {
     Route::get('/app', [AppController::class, 'dashboard']);
-
 });
 
 Route::group([
     'middleware' => [
         \App\Http\Middleware\Authenticate::class,
         // admin only
-    ]
-], function (){
+    ],
+], function () {
     Route::get('/admin', [AppController::class, 'admin'])->name('admin');
-
 });
 
 
@@ -51,11 +49,11 @@ include_route_files(__DIR__ . '/auth');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-if(\Illuminate\Support\Facades\App::environment('local')){
-    Route::get('/playground', function (){
+if (\Illuminate\Support\Facades\App::environment('local')) {
+    Route::get('/playground', function () {
         $user = User::query()->find(1);
 
-        /** @var User $user*/
+        /** @var User $user */
         $user->sendPasswordResetNotification('123');
     });
 }

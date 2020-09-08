@@ -10,7 +10,6 @@ use App\Models\Role;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 
-
 class RoleRepository extends BaseRepository
 {
     public $allowedFilters;
@@ -44,7 +43,6 @@ class RoleRepository extends BaseRepository
 
             /** @var Role $role */
             if ($role) {
-
                 event(new RoleCreated($role));
 
                 return $role;
@@ -66,7 +64,6 @@ class RoleRepository extends BaseRepository
     public function update($role, array $data): Role
     {
         return DB::transaction(function () use ($role, $data) {
-
             if ($updated = $role->update([
                 'name' => data_get($data, 'name') ?? $role->name,
             ])) {

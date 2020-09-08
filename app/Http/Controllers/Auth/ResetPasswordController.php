@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-
 class ResetPasswordController extends Controller
 {
     /*
@@ -65,9 +64,10 @@ class ResetPasswordController extends Controller
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
         $response = $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
-            $this->resetPassword($user, $password);
-        }
+            $this->credentials($request),
+            function ($user, $password) {
+                $this->resetPassword($user, $password);
+            }
         );
 
         // If the password was successfully reset, we will redirect the user back to
@@ -97,6 +97,4 @@ class ResetPasswordController extends Controller
         return redirect($this->redirectPath())
             ->with('status', trans($response));
     }
-
-
 }

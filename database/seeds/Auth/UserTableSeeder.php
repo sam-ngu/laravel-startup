@@ -21,33 +21,32 @@ class UserTableSeeder extends Seeder
 
         // Add the master administrator, user id of 1
         $admin = factory(User::class)->create([
-            'first_name'        => 'Admin',
-            'last_name'         => 'Istrator',
-            'email'             => 'admin@admin.com',
-            'password'          => 'secret',
+            'first_name' => 'Admin',
+            'last_name' => 'Istrator',
+            'email' => 'admin@admin.com',
+            'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
-            'confirmed'         => true,
+            'confirmed' => true,
         ]);
 
         factory(User::class)->create([
-            'first_name'        => 'Backend',
-            'last_name'         => 'User',
-            'email'             => 'executive@executive.com',
-            'password'          => 'secret',
+            'first_name' => 'Backend',
+            'last_name' => 'User',
+            'email' => 'executive@executive.com',
+            'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
-            'confirmed'         => true,
+            'confirmed' => true,
         ]);
 
         factory(User::class)->create([
-            'first_name'        => 'Default',
-            'last_name'         => 'User',
-            'email'             => 'user@user.com',
-            'password'          => 'secret',
+            'first_name' => 'Default',
+            'last_name' => 'User',
+            'email' => 'user@user.com',
+            'password' => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
-            'confirmed'         => true,
+            'confirmed' => true,
         ]);
 
         $this->enableForeignKeys();
-
     }
 }
