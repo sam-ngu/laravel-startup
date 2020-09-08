@@ -41,15 +41,44 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function(to, from, next){
-    // if entering control area, check if user is admin and prompt for entering password
 
-    // if(to.matched.some(record => {
-    //     console.log(record)
-    // }))
-
+    console.log({to});
+    console.log({from});
     //
+    // const toSplitted = to.name.split('-');
+    // console.log(toSplitted[toSplitted.length -1]);
+    // if(toSplitted[toSplitted.length - 1] === 'management'){
+    //     console.log('pushing');
+    //
+    //     const path = to.path + '/manage';
+    //
+    //     console.log({path});
+    //     next(path);
+    //
+    // }else {
+    //     next()
+    // }
 
-    next()
+    next();
 });
+
+router.afterEach((to, from) => {
+
+
+    // const toSplitted = to.name.split('-');
+    // console.log(toSplitted[toSplitted.length -1]);
+    //
+    // if(toSplitted[toSplitted.length - 1] === 'management'){
+    //
+    //     console.log('pushing');
+    //
+    //     const path = to.path + '/manage';
+    //
+    //     // router.push(path);
+    //
+    //
+    // }
+
+})
 
 export default router

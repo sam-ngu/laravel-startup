@@ -2,6 +2,7 @@
     <v-navigation-drawer
             app
             hide-overlay
+            disable-route-watcher
             width="300"
             clipped
             fixed
@@ -75,13 +76,11 @@
                         name: "User Management",
                         icon: "mdi-people_outline",
                         to: {name: 'user-management'}
-
                     },
                     {
                         name: "Role Management",
                         icon: "mdi-settings",
                         to: {name: 'role-management'}
-
                     },
                 ],
             }
@@ -100,15 +99,7 @@
             }
 
         },
-        props: {
-        },
-        methods: {
-        },
-        mounted() {
-            // EventBus.$on('toggled-sidebar', function(){
-            //     this.show = !this.show;
-            // }.bind(this))
-        },
+
     }
 
 

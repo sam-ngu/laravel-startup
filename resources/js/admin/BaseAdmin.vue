@@ -1,9 +1,10 @@
 <template>
     <layout-master >
         <v-breadcrumbs :items="breadcrumbItems" divider=">"></v-breadcrumbs>
-        <router-view></router-view>
+        <router-view :key="$route.fullPath"></router-view>
     </layout-master>
 </template>
+
 
 <script>
     import LayoutMaster from "./layout/LayoutMaster";

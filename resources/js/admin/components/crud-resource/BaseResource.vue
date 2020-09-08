@@ -1,10 +1,9 @@
 <template>
 
   <section>
-    <router-view/>
+    <router-view  />
   </section>
 </template>
-
 <script>
 
 import BaseTable from "./table/BaseTable";
@@ -50,7 +49,16 @@ export default {
     }
 
   },
-  computed: {},
+  watch: {
+      '$route'(){
+
+          console.log('aaeaea')
+          if(this.$route.name === `${this.resourceName.toLowerCase()}-management`){
+              this.$router.push({name: this.resourceName.toLowerCase() + '-table'});
+          }
+
+      }
+  },
   methods: {
     resolveFieldComponent(type) {
       return (type instanceof Function) ? type() : type;
@@ -60,7 +68,7 @@ export default {
     const baseBreadcrumb = this.$route.meta.breadcrumb;
     const resourceName = this.resourceName.toLowerCase();
     const matchedPath = this.$router.resolve({name: `${resourceName}-management`}).resolved.matched[0];
-    const basePath = matchedPath.path.slice(0, -2);  // this is something like /auth/user
+    const basePath = matchedPath.path;  // this is something like /auth/user
 
     const routes = [
       {
@@ -119,8 +127,8 @@ export default {
       // waiting for Vue router 4
       // this.$router.addRoutes([found]);
 
-      // to force update the router so newly added routes will show
-      this.$router.push({name: resourceName + '-table'});
+        // to force update the router so newly added routes will show
+        this.$router.push({name: resourceName + '-table'});
     }
 
 

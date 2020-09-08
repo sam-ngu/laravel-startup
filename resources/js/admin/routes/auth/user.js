@@ -15,13 +15,17 @@ const resourceName = 'user';
 
 const user = [
     {
-        path: '/auth/user/*',
+        path: '/auth/user',
         component: BaseUser,
         name: 'user-management',
         meta: {
             breadcrumb: baseBreadcrumb,
             resourceName,
         },
+    },
+    {
+        path: '/auth/user/*',
+        redirect: 'user-management',
     },
 
 ];

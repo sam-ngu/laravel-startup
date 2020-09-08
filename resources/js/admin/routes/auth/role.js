@@ -14,14 +14,19 @@ const resourceName = 'user';
 
 const role = [
     {
-        path: '/auth/role/*',
+        path: '/auth/role',
         component: BaseRole,
         name: 'role-management',
         meta: {
             breadcrumb: baseBreadcrumb,
             resourceName
         },
-    }
+    },
+    {
+        path: '/auth/role/*',
+        redirect: 'role-management',
+    },
+
 ]
 //
 // const role = [
