@@ -4,78 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da7df5eb415d9ef698b5b4560f4488f1",
+    "content-hash": "fe197eecf3e748c6bede10d08abd7a53",
     "packages": [
-        {
-            "name": "acadea/boilerplate-generator",
-            "version": "dev-feature/readme",
-            "dist": {
-                "type": "path",
-                "url": "./../packages/boilerplate-generator",
-                "reference": "607d839d15004fe5278ada8b2c2f6e153d1fed3f"
-            },
-            "require": {
-                "php": "^7.4"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "orchestra/testbench": "^5.0",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Acadea\\Boilerplate\\BoilerplateServiceProvider"
-                    ],
-                    "aliases": {
-                        "Boilerplate": "Acadea\\Boilerplate\\BoilerplateFacade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Acadea\\Boilerplate\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Acadea\\Boilerplate\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sam Ngu",
-                    "email": "opensource@acadea.io",
-                    "homepage": "https://acadea.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "An opinionated Laravel boilerplate generator. Generate boilerplates like repositories, routes, events, api docs and much more!",
-            "homepage": "https://github.com/acadea/laravel-boilerplate-generator",
-            "keywords": [
-                "acadea",
-                "laravel-boilerplate-generator"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
         {
             "name": "arcanedev/no-captcha",
             "version": "11.0.0",
@@ -6168,6 +6098,76 @@
     ],
     "packages-dev": [
         {
+            "name": "acadea/boilerplate-generator",
+            "version": "dev-feature/readme",
+            "dist": {
+                "type": "path",
+                "url": "./../packages/boilerplate-generator",
+                "reference": "607d839d15004fe5278ada8b2c2f6e153d1fed3f"
+            },
+            "require": {
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^5.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Acadea\\Boilerplate\\BoilerplateServiceProvider"
+                    ],
+                    "aliases": {
+                        "Boilerplate": "Acadea\\Boilerplate\\BoilerplateFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Acadea\\Boilerplate\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Acadea\\Boilerplate\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-html coverage"
+                ],
+                "format": [
+                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sam Ngu",
+                    "email": "opensource@acadea.io",
+                    "homepage": "https://acadea.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An opinionated Laravel boilerplate generator. Generate boilerplates like repositories, routes, events, api docs and much more!",
+            "homepage": "https://github.com/acadea/laravel-boilerplate-generator",
+            "keywords": [
+                "acadea",
+                "laravel-boilerplate-generator"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.8.0",
             "source": {
@@ -7419,6 +7419,60 @@
                 "schema"
             ],
             "time": "2020-05-27T16:41:55+00:00"
+        },
+        {
+            "name": "laracasts/cypress",
+            "version": "1.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laracasts/cypress.git",
+                "reference": "74cd5c6cbdfba8281c25f5959a1b3ed922880486"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laracasts/cypress/zipball/74cd5c6cbdfba8281c25f5959a1b3ed922880486",
+                "reference": "74cd5c6cbdfba8281c25f5959a1b3ed922880486",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laracasts\\Cypress\\CypressServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laracasts\\Cypress\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Way",
+                    "email": "jeffrey@laracasts.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Cypress Boilerplate",
+            "homepage": "https://github.com/laracasts/cypress",
+            "keywords": [
+                "cypress",
+                "laracasts"
+            ],
+            "time": "2020-09-07T13:34:18+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -9244,7 +9298,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-json": "*"
     },
     "platform-dev": [],

@@ -5,6 +5,7 @@
 /storage/*.index
 /vendor
 .env
+.env.cypress
 .env.testing
 .env.backup
 .phpunit.result.cache
