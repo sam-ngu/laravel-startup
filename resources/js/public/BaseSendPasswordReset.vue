@@ -10,11 +10,10 @@
 
                     <v-card style="width: 400px">
                         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
-
-
+                            
                             <v-card-title class="text-center ">
-                                <h3 class="text-center mx-auto display-1 font-weight-bold">Forgot your password?</h3>
-                                <h5 class="text-center mx-auto subtitle-1">Don't worry. We'll help you reset it.</h5>
+                                <h3 class="text-center mx-auto title font-weight-bold">Forgot your password?</h3>
+                                <h5 class="text-center mx-auto subtitle-2">Don't worry. We'll help you reset it.</h5>
                             </v-card-title>
 
                             <v-card-text>
@@ -28,14 +27,14 @@
 
                             <v-card-actions>
                                 <v-row column align="center">
-                                    <v-col cols="12">
+                                    <v-col cols="6" >
                                         <v-btn
                                             :disabled="!states.is_form_valid"
                                             rounded
-                                            color="red lighten-1 white--text"
+                                            color="primary white--text"
                                             @click="submitForm">Reset Password</v-btn>
                                     </v-col>
-                                    <v-col xs12 class="mt-2">
+                                    <v-col cols="6"  class="mt-2">
                                         <v-btn  small text href="/login"><span class="body-1">Back</span></v-btn>
                                     </v-col>
                                 </v-row>

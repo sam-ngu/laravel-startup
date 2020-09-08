@@ -16,4 +16,6 @@ class AppController
         return view('admin.index');
     }
 
+
+
 }

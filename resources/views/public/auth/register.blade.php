@@ -16,8 +16,8 @@
 @endsection
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script src="{{mix('js/public.js')}}"></script>
     @if(config('access.captcha.registration'))
-        {!! Captcha::script('vueRecaptchaApiLoaded') !!}
+        {!! no_captcha('v2')->script('vueRecaptchaApiLoaded') !!}
     @endif
 @endpush

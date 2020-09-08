@@ -17,6 +17,7 @@ Route::group([
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 
+
     Route::get('password/confirm', [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
     Route::post('password/confirm', [ConfirmPasswordController::class, 'confirm']);
 
