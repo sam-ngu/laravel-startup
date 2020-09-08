@@ -1,19 +1,18 @@
 <template>
     <v-alert
-        v-if="displayLogInAsAlert()"
+        v-if="displayLogInAsAlert"
         class="logged-in-as-alert"
         :value="true"
-        color="purple"
-        icon="info"
+        type="info"
         outlined
     >
         You are currently logged in as {{ session.user.first_name + ' ' + session.user.last_name }}.
-        <a href="/logout-as">Re-Login as {{session.session.admin_user_name}}</a>.
+        <a class="accent--text" href="/logout-as">Re-Login as {{session.admin_user_name}}</a>.
     </v-alert>
 </template>
 
-<script>
 
+<script>
     export default {
         name: "LoggedInAsAlert",
         data() {
@@ -24,16 +23,11 @@
         computed: {
             session(){
                 return this.$store.getters['auth/session'];
-            }
-        },
-        methods: {
+            },
             displayLogInAsAlert(){
                 let session = this.session;
                 return !_.isEmpty(session.user) && _.isNumber(session.admin_user_id) && _.isNumber(session.temp_user_id);
             }
-        },
-        mounted() {
-
         },
     }
 </script>

@@ -7,13 +7,14 @@
 @section('content')
 
     @php
-
+        $session =  session()->only(['admin_user_id', 'admin_user_name', 'temp_user_id']);
         $user = auth()->user() ? (new \App\Http\Resources\UserResource(auth()->user())) : null
     @endphp
 
-    <base-public session="{{ json_encode([
-        'user' => $user
-        ]) }}"/>
+    <base-public session="{{ json_encode(array_merge([
+        'user' => $user,
+
+    ], $session)) }}"/>
 
 
 @endsection

@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     // for admin to login as user
-    Route::get('login-as/{user}', [\App\Http\Controllers\Auth\LoginController::class, 'loginAs']);
+    Route::get('login-as/{user}', [LoginController::class, 'loginAs']);
 
 
     //For when admin is logged in as user from backend

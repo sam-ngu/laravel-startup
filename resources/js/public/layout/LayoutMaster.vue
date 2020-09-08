@@ -10,6 +10,7 @@
 
             <base-privacy-notice/>
 
+            <logged-in-as-alert/>
         </v-app>
 
     </div>
@@ -21,10 +22,11 @@
     import Navbar from "./navbar/NavBar";
     import BaseFooter from "./footer/BaseFooter";
     import BasePrivacyNotice from "./privacy-notice/BasePrivacyNotice";
+    import LoggedInAsAlert from "../../partials/LoggedInAsAlert";
 
     export default {
         name: "layout-master",
-        components: {BasePrivacyNotice, BaseFooter, Navbar},
+        components: {LoggedInAsAlert, BasePrivacyNotice, BaseFooter, Navbar},
         data() {
             return {
             }
