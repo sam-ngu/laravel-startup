@@ -9,6 +9,7 @@ use App\Exceptions\GeneralJsonException;
 use App\Models\Role;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class RoleRepository extends BaseRepository
@@ -89,7 +90,7 @@ class RoleRepository extends BaseRepository
             if ($updated = $role->update([
                 'name' => data_get($data, 'name') ?? $role->name,
             ])) {
-                $role->syncPermissions($permissions);
+                $role->syncPermissions(data_get($permissions, '*.name'));
                 event(new RoleUpdated($role));
 
                 return $role;

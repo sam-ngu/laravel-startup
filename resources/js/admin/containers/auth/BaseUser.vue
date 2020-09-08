@@ -76,10 +76,8 @@ export default {
                         searchable: true,
                         itemText: 'name',
                         itemValue: 'id',
-
                     }
                 },
-
                 {
                     label: 'Created At',
                     key: 'created_at',

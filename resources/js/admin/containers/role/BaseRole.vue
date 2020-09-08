@@ -16,6 +16,7 @@ import TextField from "../../components/crud-resource/fields/TextField";
 import DateField from "../../components/crud-resource/fields/DateField";
 import {emailValidator} from "../../../utils/ValidationHelper"
 import HasManyField from "../../components/crud-resource/fields/HasManyField";
+import ArrayField from "../../components/crud-resource/fields/ArrayField";
 export default {
     name: "BaseRole",
     components: {BaseResource},
@@ -29,39 +30,17 @@ export default {
                     type: TextField,
                 },
                 {
-                    label: 'Users',
-                    key: 'email',
-                    type: TextField,
-                    props: {
-                        rules: [
-                            v => !!v || 'Required',
-                            emailValidator,
-                        ]
-                    }
-                },
-                {
-                    label: 'Confirmed',
-                    key: 'confirmed',
-                    type: BooleanField,
-                },
-                {
-                    label: 'Active',
-                    key: 'active',
-                    type: BooleanField,
-                },
-                {
-                    label: 'Roles',
-                    key: 'roles',
+                    label: 'Permissions',
+                    key: 'permissions',
                     type: HasManyField,
+                    hideOnIndex: false,
                     props: {
-                        resourceUrl: '/api/v1/roles',
+                        resourceUrl: '/api/v1/permissions',
                         searchable: true,
                         itemText: 'name',
                         itemValue: 'id',
-
                     }
                 },
-
                 {
                     label: 'Created At',
                     key: 'created_at',

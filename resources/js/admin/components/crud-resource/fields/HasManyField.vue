@@ -2,7 +2,17 @@
 
     <article>
 
-        <span v-if="mode === 'read'" class="text-capitalize">{{ value.map(val => val[itemText]).join(', ') }}</span>
+        <div v-if="mode === 'read'" class="text-capitalize">
+            <v-chip
+                v-for="(val, index) in value"
+                :key="val[itemValue]"
+                color="primary"
+                label
+                v-bind="{...$attrs}"
+            >
+                {{ val[itemText] }}
+            </v-chip>
+        </div>
 
         <!--        if searchable use autocomplete-->
         <v-autocomplete
@@ -42,7 +52,7 @@
             :rules="rules"
 
         />
-        
+
         <error-messages :errors="errors" />
 
     </article>

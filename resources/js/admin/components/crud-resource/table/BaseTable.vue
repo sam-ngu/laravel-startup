@@ -27,7 +27,7 @@
                         <button-tooltip icon="mdi-delete" tooltip="Delete" />
                     </div>
                     <!--action dropdown-->
-                    <table-actions :resource="props.item" :actions="actions" />
+                    <table-actions v-if="actions.length !== 0" :resource="props.item" :actions="actions" />
 
 
                 </td>
@@ -64,7 +64,9 @@ export default {
         headers(){
             const fields = this.$store.getters[`${this.resourceName}Management/fields`];
 
-            return fields.map(field => {
+            return fields
+                .filter(field => !field.hideOnIndex)
+                .map(field => {
                 return {
                     ...field,
                     text: field.label,

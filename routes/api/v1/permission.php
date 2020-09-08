@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Permission\PermissionController;
+
 Route::group([
 
     'middleware' => [
@@ -7,5 +9,6 @@ Route::group([
     ],
 ], function () {
 
-//    Route::get('permissions', );
+    Route::get('permissions', [PermissionController::class, 'index']);
+
 });

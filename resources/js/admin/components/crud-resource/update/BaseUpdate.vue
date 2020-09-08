@@ -2,7 +2,7 @@
 
     <section>
 
-        <base-loader v-show="states.isLoading"/>
+        <base-loader :value="states.isLoading" />
 
         <v-form v-show="!states.isLoading" ref="form" @submit.prevent="submit" v-model="states.isFormValid" lazy-validation>
             <v-container>

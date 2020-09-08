@@ -1,12 +1,11 @@
 <template functional>
 
-    <div class="loader-circle text-center my-auto" >
+    <div v-if="props.value" class="loader-circle text-center my-auto" >
         <v-progress-circular
             class="mx-auto"
             color="primary"
             indeterminate
             size="64"
-            :value="value"
         />
     </div>
 
