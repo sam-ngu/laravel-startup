@@ -12,7 +12,7 @@
         <v-list inset>
             <sidebar-list-tile :to="{name: 'home'}" title="Dashboard" icon="mdi-home"/>
 
-            <sidebar-list-tile v-for="admin in admins" :key="admin.id" :to="admin.to" :title="admin.name" :icon="admin.icon"/>
+            <sidebar-list-tile v-for="admin in admins()" :key="admin.id" :to="admin.to" :title="admin.name" :icon="admin.icon"/>
 
 <!--            <v-list-group-->
 <!--                    v-if="session.user.roles_label === 'Administrator'"-->
@@ -58,7 +58,6 @@
                 <v-list-item-title>Log Viewer</v-list-item-title>
             </v-list-item>
 
-
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -71,21 +70,46 @@
         components: {SidebarListTile},
         data() {
             return {
-                admins: [
+
+            }
+        },
+        methods: {
+            matchRoute(to){
+                return this.$router.resolve(to).resolved.matched[0];
+            },
+            /** This is a workaround to solve the issue where resource table is not rendered,
+             * (vue router reuse the component, and the mounted script on the base resource component is not rerun)
+             * Awaiting fix on Vue 3 -- ability to dynamically add/remove route
+             *  */
+            resolveDestination(resourceName){
+                const table = {name: resourceName + '-table'};
+                const management = {name: resourceName + '-management'};
+                let matched = this.matchRoute(table);
+                if(matched){
+                    return table;
+                }else {
+                    return management;
+                }
+
+            },
+            admins(){
+                return [
                     {
                         name: "User Management",
                         icon: "mdi-people_outline",
-                        to: {name: 'user-management'}
+                        to: this.resolveDestination('user')
                     },
                     {
                         name: "Role Management",
                         icon: "mdi-settings",
-                        to: {name: 'role-management'}
+                        to: this.resolveDestination('role')
                     },
-                ],
-            }
+                ]
+            },
         },
+
         computed:{
+
             session(){
                 return this.$store.getters['auth/session']
             },

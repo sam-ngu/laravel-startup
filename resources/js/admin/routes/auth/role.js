@@ -24,7 +24,9 @@ const role = [
     },
     {
         path: '/auth/role/*',
-        redirect: 'role-management',
+        redirect: {
+            name: 'role-management'
+        },
     },
 
 ]

@@ -1,7 +1,7 @@
 <template>
     <layout-master >
         <v-breadcrumbs :items="breadcrumbItems" divider=">"></v-breadcrumbs>
-        <router-view :key="$route.fullPath"></router-view>
+        <router-view ></router-view>
     </layout-master>
 </template>
 
@@ -25,9 +25,7 @@
                 required : true,
             }
         },
-        computed: {
 
-        },
         watch: {
             '$route'(){ // make sure only the last breadcrumb link is enabled
                 _.forEach(this.$route.meta.breadcrumb, function (value, index) {
@@ -39,10 +37,7 @@
                 this.breadcrumbItems = this.$route.meta.breadcrumb;
             }
         },
-        methods: {
 
-
-        },
         mounted(){
             // check if session is passed
             const session = JSON.parse(this.session);
@@ -64,13 +59,6 @@
     }
 </script>
 
-<style>
-    /*#app {*/
-        /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-        /*-webkit-font-smoothing: antialiased;*/
-        /*-moz-osx-font-smoothing: grayscale;*/
-        /*text-align: center;*/
-        /*color: #2c3e50;*/
-        /*margin-top: 60px;*/
-    /*}*/
+<style scoped>
+
 </style>

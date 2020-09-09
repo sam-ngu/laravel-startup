@@ -25,7 +25,9 @@ const user = [
     },
     {
         path: '/auth/user/*',
-        redirect: 'user-management',
+        redirect: {
+            name: 'user-management',
+        },
     },
 
 ];
