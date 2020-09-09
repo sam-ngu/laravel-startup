@@ -22,7 +22,6 @@ const getters = {
 
 const actions = {
     fetchResources({state}){
-        // FIXME: dont hard code base api url
         return axios.get(state.resourceUrl)
     },
     fetchResource({state}, id){

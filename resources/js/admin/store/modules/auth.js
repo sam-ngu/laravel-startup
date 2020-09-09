@@ -7,7 +7,8 @@ const state = {
 const getters = {
     session(state){
         return state.session;
-    }
+    },
+
 };
 
 const actions = {};
