@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\System\Session;
 use App\Models\Traits\UserAttribute;
 use App\Models\Traits\UserMethod;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use Notifiable,
+        HasFactory,
         UserMethod,
         HasRoles,
         SoftDeletes,

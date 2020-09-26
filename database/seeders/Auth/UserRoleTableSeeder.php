@@ -1,6 +1,9 @@
 <?php
 
+namespace Database\Seeders\Auth;
+
 use App\Models\User;
+use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
 
 /**

@@ -19,7 +19,7 @@ class UserConfirmedAndActiveTest extends ApiTestCase
         parent::setUp();
         $this->loginAsAdmin();
         Event::fake();
-        $this->user = factory(User::class)->create([
+        $this->user = User::factory()->create([
             'confirmed' => false,
             'active' => false,
         ]);
