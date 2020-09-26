@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 
@@ -29,7 +28,7 @@ class PassportClientFactory extends Factory
 
     public function password_client()
     {
-        return $this->state(function (){
+        return $this->state(function () {
             return [
                 'personal_access_client' => false,
                 'password_client' => true,
