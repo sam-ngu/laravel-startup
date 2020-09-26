@@ -1,65 +1,85 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\User;
-use Faker\Generator;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-$factory->define(User::class, function (Generator $faker) {
-    return [
-        'uuid' => Str::uuid()->toString(),
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email' => $faker->safeEmail,
-        'email_verified_at' => now(),
-        'password' => 'secret',
-        'password_changed_at' => null,
-        'remember_token' => Str::random(10),
-        'confirmation_code' => md5(uniqid(mt_rand(), true)),
-        'active' => 1,
-        'confirmed' => 1,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'uuid' => Str::uuid()->toString(),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'email' => $this->faker->safeEmail,
+            'email_verified_at' => now(),
+            'password' => 'secret',
+            'password_changed_at' => null,
+            'remember_token' => Str::random(10),
+            'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'active' => 1,
+            'confirmed' => 1,
+        ];
+    }
 
-$factory->state(User::class, 'active', function () {
-    return [
-        'active' => 1,
-    ];
-});
+    public function active()
+    {
+        return $this->state(function () {
+            return [
+                'active' => 1,
+            ];
+        });
+    }
 
-$factory->state(User::class, 'inactive', function () {
-    return [
-        'active' => 0,
-    ];
-});
+    public function inactive()
+    {
+        return $this->state(function () {
+            return [
+                'active' => 0,
+            ];
+        });
+    }
 
-$factory->state(User::class, 'confirmed', function () {
-    return [
-        'confirmed' => 1,
-    ];
-});
+    public function confirmed()
+    {
+        return $this->state(function () {
+            return [
+                'confirmed' => 1,
+            ];
+        });
+    }
 
-$factory->state(User::class, 'unconfirmed', function () {
-    return [
-        'confirmed' => 0,
-    ];
-});
+    public function unconfirmed()
+    {
+        return $this->state(function () {
+            return [
+                'confirmed' => 0,
+            ];
+        });
+    }
 
-$factory->state(User::class, 'softDeleted', function () {
-    return [
-        'deleted_at' => Carbon::now(),
-    ];
-});
+    public function softDeleted()
+    {
+        return $this->state(function () {
+            return [
+                'deleted_at' => now(),
+            ];
+        });
+    }
+}

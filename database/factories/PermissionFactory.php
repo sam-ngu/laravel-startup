@@ -1,9 +1,18 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Spatie\Permission\Models\Permission;
 
-$factory->define(\Spatie\Permission\Models\Permission::class, function (Faker $faker) {
-    return [];
-});
+
+class PermissionFactory extends Factory
+{
+    protected $model = Permission::class;
+
+    public function definition()
+    {
+        return [];
+    }
+}
+

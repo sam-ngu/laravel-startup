@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Scout\Searchable;
 
 /**
@@ -9,7 +10,8 @@ use Laravel\Scout\Searchable;
  */
 class Role extends \Spatie\Permission\Models\Role
 {
-    use Searchable;
+    use Searchable,
+        HasFactory;
     /**
      * @return mixed
      */

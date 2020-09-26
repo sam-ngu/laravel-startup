@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,7 +22,7 @@ class UserTableSeeder extends Seeder
         $this->disableForeignKeys();
 
         // Add the master administrator, user id of 1
-        $admin = factory(User::class)->create([
+        $admin = User::factory()->create([
             'first_name' => 'Admin',
             'last_name' => 'Istrator',
             'email' => 'admin@admin.com',
@@ -29,7 +31,7 @@ class UserTableSeeder extends Seeder
             'confirmed' => true,
         ]);
 
-        factory(User::class)->create([
+        User::factory()->create([
             'first_name' => 'Backend',
             'last_name' => 'User',
             'email' => 'executive@executive.com',
@@ -38,7 +40,7 @@ class UserTableSeeder extends Seeder
             'confirmed' => true,
         ]);
 
-        factory(User::class)->create([
+        User::factory()->create([
             'first_name' => 'Default',
             'last_name' => 'User',
             'email' => 'user@user.com',
