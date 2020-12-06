@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Events\Auth\UserLoggedIn;
+use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Services\Socialite\SocialiteHelper;
-use Illuminate\Http\JsonResponse;
-use Laravel\Socialite\Facades\Socialite;
-use App\Exceptions\GeneralException;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Laravel\Socialite\Facades\Socialite;
 
 /**
  * Public facing routes
@@ -108,6 +107,4 @@ class SocialLoginController extends Controller
     {
         return Socialite::driver($provider)->user();
     }
-
-
 }

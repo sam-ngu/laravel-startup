@@ -7,11 +7,13 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --https --key /etc/ssl/private/default.key --cert /etc/ssl/private/default.crt --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "cypress:open": "cypress open"
     },
     "devDependencies": {
         "axios": "^0.19",
         "cross-env": "^7.0",
+        "cypress": "^4.12.1",
         "deepmerge": "^4.2.2",
         "fibers": "^5.0.0",
         "laravel-mix": "^5.0.1",
@@ -30,5 +32,12 @@
         "vue-router": "^3.3.4",
         "vuetify": "^2.3.1",
         "vuex": "^3.4.0"
+    },
+    "bit": {
+        "env": {
+            "compiler": "bit.envs/compilers/vue@0.1.10"
+        },
+        "componentsDefaultDirectory": "components/{name}",
+        "packageManager": "npm"
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Validation\Rule;
 use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * Class RegisterRequest.
@@ -29,9 +29,9 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'           => ['required', 'string', 'max:191'],
-            'last_name'            => ['required', 'string', 'max:191'],
-            'email'                => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
+            'first_name' => ['required', 'string', 'max:191'],
+            'last_name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
             'password' => [
                 'required',
                 'string',

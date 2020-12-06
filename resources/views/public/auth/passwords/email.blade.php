@@ -1,11 +1,11 @@
 @extends('public.layouts.master')
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script src="{{mix('js/public.js')}}"></script>
 @endpush
 
 @section('content')
 
-    <base-password-reset/>
+    <base-send-password-reset/>
 
 @endsection

@@ -11,6 +11,7 @@ namespace App\Helpers\Middleware;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyFile;
+
 /**
  * stream - Handle raw input stream
  *
@@ -33,13 +34,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyFile;
  */
 class ParseInputStream
 {
-
     public static function convertEmptyArrayStringToArray(array $data)
     {
-        return collect($data)->map(function ($value, $key){
-            if($value === '[]'){
+        return collect($data)->map(function ($value, $key) {
+            if ($value === '[]') {
                 return [];
             }
+
             return $value;
         })->toArray();
     }
@@ -57,10 +58,10 @@ class ParseInputStream
     {
         $this->input = file_get_contents('php://input');
         $boundary = $this->boundary();
-        if (!strlen($boundary)) {
+        if (! strlen($boundary)) {
             $data = [
                 'parameters' => $this->parse(),
-                'files' => []
+                'files' => [],
             ];
         } else {
             $blocks = $this->split($boundary);
@@ -68,7 +69,6 @@ class ParseInputStream
         }
         // convert to empty array string to empty array.
         return $this->convertEmptyArrayStringToArray($data);
-
     }
     /**
      * @function boundary
@@ -76,10 +76,11 @@ class ParseInputStream
      */
     private function boundary()
     {
-        if(!isset($_SERVER['CONTENT_TYPE'])) {
+        if (! isset($_SERVER['CONTENT_TYPE'])) {
             return null;
         }
         preg_match('/boundary=(.*)$/', $_SERVER['CONTENT_TYPE'], $matches);
+
         return $matches[1] ?? null;
     }
     /**
@@ -89,6 +90,7 @@ class ParseInputStream
     private function parse()
     {
         parse_str(urldecode($this->input), $result);
+
         return $result;
     }
     /**
@@ -100,6 +102,7 @@ class ParseInputStream
     {
         $result = preg_split("/-+$boundary/", $this->input);
         array_pop($result);
+
         return $result;
     }
     /**
@@ -110,18 +113,19 @@ class ParseInputStream
     private function blocks($array)
     {
         $results = [];
-        foreach($array as $key => $value)
-        {
-            if (empty($value))
+        foreach ($array as $key => $value) {
+            if (empty($value)) {
                 continue;
-            $block = $this->decide($value);
-            foreach ( $block['parameters'] as $key => $val ) {
-                $this->parse_parameter( $results, $key, $val );
             }
-            foreach ( $block['files'] as $key => $val ) {
-                $this->parse_parameter( $results, $key, $val );
+            $block = $this->decide($value);
+            foreach ($block['parameters'] as $key => $val) {
+                $this->parse_parameter($results, $key, $val);
+            }
+            foreach ($block['files'] as $key => $val) {
+                $this->parse_parameter($results, $key, $val);
             }
         }
+
         return $results;
     }
     /**
@@ -131,23 +135,22 @@ class ParseInputStream
      */
     private function decide($string)
     {
-        if (strpos($string, 'application/octet-stream') !== FALSE)
-        {
+        if (strpos($string, 'application/octet-stream') !== false) {
             return [
                 'parameters' => $this->file($string),
-                'files' => []
+                'files' => [],
             ];
         }
-        if (strpos($string, 'filename') !== FALSE)
-        {
+        if (strpos($string, 'filename') !== false) {
             return [
                 'parameters' => [],
-                'files' => $this->file_stream($string)
+                'files' => $this->file_stream($string),
             ];
         }
+
         return [
             'parameters' => $this->parameter($string),
-            'files' => []
+            'files' => [],
         ];
     }
     /**
@@ -160,8 +163,9 @@ class ParseInputStream
     private function file($string)
     {
         preg_match('/name=\"([^\"]*)\".*stream[\n|\r]+([^\n\r].*)?$/s', $string, $match);
+
         return [
-            $match[1] => ($match[2] !== NULL ? $match[2] : '')
+            $match[1] => ($match[2] !== null ? $match[2] : ''),
         ];
     }
     /**
@@ -175,44 +179,45 @@ class ParseInputStream
     {
         $result = [];
         $data = ltrim($data);
-        $idx = strpos( $data, "\r\n\r\n" );
-        if ( $idx === FALSE ) {
-            Log::warning( "ParseInputStream.file_stream(): Could not locate header separator in data:" );
-            Log::warning( $data );
+        $idx = strpos($data, "\r\n\r\n");
+        if ($idx === false) {
+            Log::warning("ParseInputStream.file_stream(): Could not locate header separator in data:");
+            Log::warning($data);
         } else {
-            $headers = substr( $data, 0, $idx );
-            $content = substr( $data, $idx + 4, -2 ); // Skip the leading \r\n and strip the final \r\n
+            $headers = substr($data, 0, $idx);
+            $content = substr($data, $idx + 4, -2); // Skip the leading \r\n and strip the final \r\n
             $name = '-unknown-';
             $filename = '-unknown-';
             $filetype = 'application/octet-stream';
-            $header = strtok( $headers, "\r\n" );
-            while ( $header !== FALSE ) {
-                if ( substr($header, 0, strlen("Content-Disposition: ")) == "Content-Disposition: " ) {
+            $header = strtok($headers, "\r\n");
+            while ($header !== false) {
+                if (substr($header, 0, strlen("Content-Disposition: ")) == "Content-Disposition: ") {
                     // Content-Disposition: form-data; name="attach_file[TESTING]"; filename="label2.jpg"
-                    if ( preg_match('/name=\"([^\"]*)\"/', $header, $nmatch ) ) {
+                    if (preg_match('/name=\"([^\"]*)\"/', $header, $nmatch)) {
                         $name = $nmatch[1];
                     }
-                    if ( preg_match('/filename=\"([^\"]*)\"/', $header, $nmatch ) ) {
+                    if (preg_match('/filename=\"([^\"]*)\"/', $header, $nmatch)) {
                         $filename = $nmatch[1];
                     }
-                } elseif ( substr($header, 0, strlen("Content-Type: ")) == "Content-Type: " ) {
+                } elseif (substr($header, 0, strlen("Content-Type: ")) == "Content-Type: ") {
                     // Content-Type: image/jpg
-                    $filetype = trim( substr($header, strlen("Content-Type: ")) );
+                    $filetype = trim(substr($header, strlen("Content-Type: ")));
                 } else {
-                    Log::debug( "PARSEINPUTSTREAM: Skipping Header: " . $header );
+                    Log::debug("PARSEINPUTSTREAM: Skipping Header: " . $header);
                 }
                 $header = strtok("\r\n");
             }
-            if ( substr($data, -2) === "\r\n" ) {
+            if (substr($data, -2) === "\r\n") {
                 $data = substr($data, 0, -2);
             }
-            $path = sys_get_temp_dir() . '/php' . substr( sha1(rand()), 0, 6 );
-            $bytes = file_put_contents( $path, $content );
-            if ( $bytes !== FALSE ) {
-                $file = UploadedFile::createFromBase(new SymfonyFile( $path, $filename, $filetype, $bytes, UPLOAD_ERR_OK ));
-                $result = array( $name => $file );
+            $path = sys_get_temp_dir() . '/php' . substr(sha1(rand()), 0, 6);
+            $bytes = file_put_contents($path, $content);
+            if ($bytes !== false) {
+                $file = UploadedFile::createFromBase(new SymfonyFile($path, $filename, $filetype, $bytes, UPLOAD_ERR_OK));
+                $result = [ $name => $file ];
             }
         }
+
         return $result;
     }
     /**
@@ -225,59 +230,61 @@ class ParseInputStream
     private function parameter($string)
     {
         $data = [];
-        if ( preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $string, $match) ) {
+        if (preg_match('/name=\"([^\"]*)\"[\n|\r]+([^\n\r].*)?\r$/s', $string, $match)) {
             if (preg_match('/^(.*)\[\]$/i', $match[1], $tmp)) {
-                $data[$tmp[1]][] = (data_get($match, '2') !== null && $match[2] !== NULL ? $match[2] : '');
+                $data[$tmp[1]][] = (data_get($match, '2') !== null && $match[2] !== null ? $match[2] : '');
             } else {
-                $data[$match[1]] = (data_get($match, '2') !== null && $match[2] !== NULL ? $match[2] : '');
+                $data[$match[1]] = (data_get($match, '2') !== null && $match[2] !== null ? $match[2] : '');
             }
         }
+
         return $data;
     }
 
-    private function parse_parameter( &$params, $parameter, $value ) {
-        if ( strpos($parameter, '[') !== FALSE ) {
-            $matches = array();
-            if ( preg_match( '/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match ) ) {
+    private function parse_parameter(&$params, $parameter, $value)
+    {
+        if (strpos($parameter, '[') !== false) {
+            $matches = [];
+            if (preg_match('/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match)) {
                 $name = $match[1];
                 $key = $match[2];
                 $rem = $match[3];
-                if ( $name !== '' && $name !== NULL ) {
-                    if ( ! isset($params[$name]) || ! is_array($params[$name]) ) {
-                        $params[$name] = array();
+                if ($name !== '' && $name !== null) {
+                    if (! isset($params[$name]) || ! is_array($params[$name])) {
+                        $params[$name] = [];
                     } else {
                     }
-                    if ( strlen($rem) > 0 ) {
-                        if ( $key === '' || $key === NULL ) {
-                            $arr = array();
-                            $this->parse_parameter( $arr, $rem, $value );
+                    if (strlen($rem) > 0) {
+                        if ($key === '' || $key === null) {
+                            $arr = [];
+                            $this->parse_parameter($arr, $rem, $value);
                             $params[$name][] = $arr;
                         } else {
-                            if ( !isset($params[$name][$key]) || !is_array($params[$name][$key]) ) {
-                                $params[$name][$key] = array();
+                            if (! isset($params[$name][$key]) || ! is_array($params[$name][$key])) {
+                                $params[$name][$key] = [];
                             }
-                            $this->parse_parameter( $params[$name][$key], $rem, $value );
+                            $this->parse_parameter($params[$name][$key], $rem, $value);
                         }
                     } else {
-                        if ( $key === '' || $key === NULL ) {
+                        if ($key === '' || $key === null) {
                             $params[$name][] = $value;
                         } else {
                             $params[$name][$key] = $value;
                         }
                     }
                 } else {
-                    if ( strlen($rem) > 0 ) {
-                        if ( $key === '' || $key === NULL ) {
+                    if (strlen($rem) > 0) {
+                        if ($key === '' || $key === null) {
                             // REVIEW Is this logic correct?!
-                            $this->parse_parameter( $params, $rem, $value );
+                            $this->parse_parameter($params, $rem, $value);
                         } else {
-                            if ( ! isset($params[$key]) || ! is_array($params[$key]) ) {
-                                $params[$key] = array();
+                            if (! isset($params[$key]) || ! is_array($params[$key])) {
+                                $params[$key] = [];
                             }
-                            $this->parse_parameter( $params[$key], $rem, $value );
+                            $this->parse_parameter($params[$key], $rem, $value);
                         }
                     } else {
-                        if ( $key === '' || $key === NULL ) {
+                        if ($key === '' || $key === null) {
                             $params[] = $value;
                         } else {
                             $params[$key] = $value;
@@ -285,7 +292,7 @@ class ParseInputStream
                     }
                 }
             } else {
-                Log::warning( "ParseInputStream.parse_parameter() Parameter name regex failed: '" . $parameter . "'" );
+                Log::warning("ParseInputStream.parse_parameter() Parameter name regex failed: '" . $parameter . "'");
             }
         } else {
             $params[$parameter] = $value;

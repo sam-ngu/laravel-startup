@@ -2,24 +2,27 @@
 
 namespace App\Models;
 
-use App\Models\PasswordHistory;
-use App\Models\SocialAccount;
-use App\Models\Traits\UserAttribute;
 use App\Models\System\Session;
+use App\Models\Traits\UserAttribute;
 use App\Models\Traits\UserMethod;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable,
+        HasFactory,
         UserMethod,
         HasRoles,
         SoftDeletes,
-        UserAttribute;
+        UserAttribute,
+        Searchable,
+        HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -40,7 +43,7 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'last_login_at', 'deleted_at'
+        'last_login_at', 'deleted_at',
     ];
 
     /**
@@ -49,8 +52,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'active' => 'boolean',
+        'confirmed' => 'boolean',
         'email_verified_at' => 'datetime',
-        'last_login_at' => 'datetime'
+        'last_login_at' => 'datetime',
     ];
 
     /**
@@ -75,5 +80,10 @@ class User extends Authenticatable
     public function passwordHistories()
     {
         return $this->hasMany(PasswordHistory::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only(['id', 'first_name', 'last_name']);
     }
 }

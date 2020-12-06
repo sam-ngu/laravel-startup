@@ -4,8 +4,8 @@ namespace App\Rules\Auth;
 
 use App\Helpers\Auth\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UnusedPassword.

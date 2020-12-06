@@ -1,3 +1,4 @@
+{{--remnant from laravel boilerplate--}}
 @extends('public.layouts.master')
 
 @section('content')

@@ -8,20 +8,16 @@
         enable-captcha="{{filter_var(config('access.captcha.registration'), FILTER_VALIDATE_BOOLEAN)}}"
         captcha-key="{{config('no-captcha.sitekey')}}">
 
-        <div slot="socialite" class="row">
-            <div class="col">
-                <div class="text-center">
-                    {!! $socialiteLinks ?? '' !!}
-                </div>
-            </div><!--/ .col -->
-        </div><!-- / .row -->
+        <template v-slot:socialite>
+            {!! $socialiteLinks ?? '' !!}
+        </template>
     </base-registration>
 
 @endsection
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script src="{{mix('js/public.js')}}"></script>
     @if(config('access.captcha.registration'))
-        {!! Captcha::script('vueRecaptchaApiLoaded') !!}
+        {!! no_captcha('v2')->script('vueRecaptchaApiLoaded') !!}
     @endif
 @endpush

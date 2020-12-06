@@ -10,12 +10,12 @@ use App\Http\Controllers\Auth\VerificationController;
 
 Route::group([
     'middleware' => [
-        'guest'
-    ]
-], function (){
-
+        'guest',
+    ],
+], function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
+
 
     Route::get('password/confirm', [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
     Route::post('password/confirm', [ConfirmPasswordController::class, 'confirm']);
@@ -25,12 +25,12 @@ Route::group([
     Route::get('login/{provider}/callback', [SocialLoginController::class, 'login']);
 
 
-    if(config('access.users.confirm_email')){
+    if (config('access.users.confirm_email')) {
         // verification routes
         Route::get('email/verify', [VerificationController::class, 'show']);
         Route::post('email/resend', [VerificationController::class, 'resend']);
         Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']);
-    }else{
+    } else {
         // TODO: admin to approve user account
         // Confirm Account Routes
 //        Route::get('account/confirm/{token}', [AuthController::class, 'confirm'])->name('account.confirm');
@@ -48,9 +48,6 @@ Route::group([
 
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
-
-
-
 });
 
 /*
@@ -58,6 +55,11 @@ Route::group([
     */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+    // for admin to login as user
+    Route::get('login-as/{user}', [LoginController::class, 'loginAs']);
+
 
     //For when admin is logged in as user from backend
     Route::get('logout-as', [LoginController::class, 'logoutAs'])->name('logout-as');

@@ -3,10 +3,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 import './../bootstrap'
-import App from './AppAdmin.vue'
+import BaseAdmin from './BaseAdmin.vue'
 import routes from './routes/routes'
 import vuetifyopt from "../vuetifyopt";
-import store from "../store/store";
+import store from "./store/store";
 window.Vue = Vue;
 
 Vue.config.productionTip = false;
@@ -19,11 +19,11 @@ Vue.use(Vuetify);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app', App);
+Vue.component('base-admin', BaseAdmin);
 
 const index = new Vue({
     vuetify: new Vuetify(vuetifyopt),
     el: '#app',
     router: routes,
-    // store  // uncomment this if using vuex
+    store  // uncomment this if using vuex
 });

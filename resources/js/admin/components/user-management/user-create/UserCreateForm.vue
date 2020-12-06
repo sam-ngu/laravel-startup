@@ -102,7 +102,6 @@
 </template>
 
 <script>
-    import {EventBus} from "../../../../utils/event-bus";
     import {emailValidator} from "../../../../utils/ValidationHelper";
     import {swalMessage, swalTimer} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
@@ -182,7 +181,7 @@
 
                         swalTimer("success");
                         this.$emit("user-created");
-                        EventBus.$emit("table-reload-required")
+                        // EventBus.$emit("table-reload-required")
                     }.bind(this))
                     .catch(axiosErrorCallback)
             }

@@ -16,7 +16,7 @@
 
     @stack('before-styles')
 
-    <link rel="stylesheet" href="{{mix('css/app.css')}}">
+    <link rel="stylesheet" href="{{mix('css/app/app.css')}}">
 
     @stack('after-styles')
 </head>

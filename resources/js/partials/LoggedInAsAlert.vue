@@ -1,37 +1,33 @@
 <template>
     <v-alert
-        v-if="displayLogInAsAlert()"
+        v-if="displayLogInAsAlert"
         class="logged-in-as-alert"
         :value="true"
-        color="purple"
-        icon="info"
+        type="info"
         outlined
     >
         You are currently logged in as {{ session.user.first_name + ' ' + session.user.last_name }}.
-        <a href="/logout-as">Re-Login as {{session.session.admin_user_name}}</a>.
+        <a class="accent--text" href="/logout-as">Re-Login as {{session.admin_user_name}}</a>.
     </v-alert>
 </template>
 
-<script>
-    import {MessageBus} from "../utils/MessageBus";
 
+<script>
     export default {
         name: "LoggedInAsAlert",
         data() {
             return {
-                session: MessageBus.getSession()
             }
         },
         props: {},
-        computed: {},
-        methods: {
+        computed: {
+            session(){
+                return this.$store.getters['auth/session'];
+            },
             displayLogInAsAlert(){
-                let session = MessageBus.getSession();
-                return !_.isEmpty(session.user) && _.isNumber(session.session.admin_user_id) && _.isNumber(session.session.temp_user_id);
+                let session = this.session;
+                return !_.isEmpty(session.user) && _.isNumber(session.admin_user_id) && _.isNumber(session.temp_user_id);
             }
-        },
-        mounted() {
-
         },
     }
 </script>

@@ -5,15 +5,18 @@ import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import vuetifyopt from "../vuetifyopt";
-import store from "../store/store";
+import store from "../app/store/store";
 window.Vue = Vue;
 
 
 // Require in a base component context
 const requireComponent = require.context('.', false, /.vue$/)
 
+
+
 // autoloading all public folder components
 requireComponent.keys().forEach(fileName => {
+
     // get component config
     const componentConfig = requireComponent(fileName);
 

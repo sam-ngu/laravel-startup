@@ -84,9 +84,11 @@
     import {emailValidator} from "../../../utils/ValidationHelper";
     import {swalLoader, swalMessage} from "../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
+    import VueRecaptcha from 'vue-recaptcha';
 
     export default {
         name: "RegistrationForm",
+        components: {VueRecaptcha},
         data() {
             return {
                 states: {

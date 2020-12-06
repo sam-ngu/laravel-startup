@@ -1,9 +1,9 @@
 import VueRouter from 'vue-router'
 
-import BaseDashboard from '../../backend/components/dashboard/BaseDashboard'
+import BaseDashboard from '../pages/BaseDashboard'
 
-import {user} from '../routes/auth/user'
-import {role} from '../routes/auth/role'
+import {user} from './auth/user'
+import {role} from './auth/role'
 
 
 let routes = [
@@ -21,35 +21,18 @@ let routes = [
             ],
         },
     },
-
 ].concat(user, role);  // add more route groups here
 
 
 const router = new VueRouter({
     routes: routes,
-    //     [
-    //
-    //
-    //     // {
-    //     //     path: '/backtest/:backtest_id',
-    //     //     name: 'backtest-details',
-    //     //     component: BacktestDetails,
-    //     //     // props: true,
-    //     // }
-    //
-    // ],
 });
 
 router.beforeEach(function(to, from, next){
-    // if entering control area, check if user is admin and prompt for entering password
 
-    // if(to.matched.some(record => {
-    //     console.log(record)
-    // }))
-
-    //
-
-    next()
+    next();
 });
+
+
 
 export default router

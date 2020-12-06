@@ -33,15 +33,15 @@ trait UserAttribute
      */
     public function getRolesLabelAttribute()
     {
-        $roles = $this->getRoleNames()->toArray();
+        return $this->getRoleNames()->toArray();
 
-        if (\count($roles)) {
-            return implode(', ', array_map(function ($item) {
-                return ucwords($item);
-            }, $roles));
-        }
-
-        return 'N/A';
+//        if (\count($roles)) {
+//            return implode(', ', array_map(function ($item) {
+//                return ucwords($item);
+//            }, $roles));
+//        }
+//
+//        return 'N/A';
     }
 
     /**
@@ -49,15 +49,15 @@ trait UserAttribute
      */
     public function getPermissionsLabelAttribute()
     {
-        $permissions = $this->getDirectPermissions()->toArray();
+        return $this->getDirectPermissions()->toArray();
 
-        if (\count($permissions)) {
-            return implode(', ', array_map(function ($item) {
-                return ucwords($item['name']);
-            }, $permissions));
-        }
-
-        return 'N/A';
+//        if (\count($permissions)) {
+//            return implode(', ', array_map(function ($item) {
+//                return ucwords($item['name']);
+//            }, $permissions));
+//        }
+//
+//        return 'N/A';
     }
 
     /**
@@ -81,12 +81,10 @@ trait UserAttribute
         foreach ($this->providers as $social) {
             $accounts[] = '<a href="'.route(
                 'admin.auth.user.social.unlink',
-                    [$this, $social]
+                [$this, $social]
             ).'" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.access.users.unlink').'" data-method="delete"><i class="fab fa-'.$social->provider.'"></i></a>';
         }
 
         return \count($accounts) ? implode(' ', $accounts) : __('labels.general.none');
     }
-
-
 }

@@ -194,9 +194,9 @@
             // call api -- grab roles deets
             this.fetchRoles();
 
-            EventBus.$on("table-reload-required", function () {
-                this.reloadTable()
-            }.bind(this))
+            // EventBus.$on("table-reload-required", function () {
+            //     this.reloadTable()
+            // }.bind(this))
         },
     }
 </script>

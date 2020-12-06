@@ -7,9 +7,7 @@ use Illuminate\Http\JsonResponse;
 
 class GeneralJsonException extends Exception
 {
-
     protected $code = 422;
-
     /**
      * Report the exception.
      *
@@ -24,15 +22,15 @@ class GeneralJsonException extends Exception
     /**
      * Render the exception as an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function render($request)
     {
-        return new JsonResponse([
+        return JsonResponse::create([
             'errors' => [
-                'data' => $this->getMessage()
-            ]
+                'message' => $this->getMessage(),
+            ],
         ], $this->code);
     }
 }

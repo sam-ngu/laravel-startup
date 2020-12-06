@@ -5,17 +5,13 @@
 @section('content')
     <base-login>
         <template v-slot:socialite>
-            <div class="row">
-                <div class="col">
-                    <div class="text-center"> 
-                        {!! $socialiteLinks ?? ''!!}
-                    </div>
-                </div><!--col-->
-            </div><!--row-->
+            <div class="text-center"> 
+                {!! $socialiteLinks ?? ''!!}
+            </div>
         </template>
     </base-login>
 @endsection
 
 @push('after-scripts')
-    <script src="{{mix('js/index.js')}}"></script>
+    <script src="{{mix('js/public.js')}}"></script>
 @endpush

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\App;
 
-
 class AppController
 {
-
     public function dashboard()
     {
-        return view('');
+        return view('app.index');
     }
 
-
-
+    public function admin()
+    {
+        return view('admin.index');
+    }
 }

@@ -3,14 +3,13 @@
 
 namespace App\Repositories;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class BaseRepository
 {
-    protected $allowedFilters = [];
-    protected $allowedSorts = [];
+    public $allowedFilters = [];
+    public $allowedSorts = [];
 
     public function __construct()
     {
@@ -44,7 +43,7 @@ abstract class BaseRepository
 
     public function search(string $search)
     {
-        return app()->make($this->model)->search($search);
+        return app()->make($this->model())->search($search);
     }
 
     /**
@@ -68,6 +67,7 @@ abstract class BaseRepository
         $this->model = $this->model
             ->onlyTrashed()
             ->orderBy($orderBy, $sort);
+
         return $this;
     }
 
@@ -84,5 +84,4 @@ abstract class BaseRepository
     {
         return $model->delete();
     }
-
 }
