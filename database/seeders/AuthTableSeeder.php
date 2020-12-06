@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Auth\PermissionRoleTableSeeder;
+use Database\Seeders\Auth\UserRoleTableSeeder;
+use Database\Seeders\Auth\UserTableSeeder;
 use Database\Seeders\Traits\DisableForeignKeys;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
