@@ -7,12 +7,14 @@
             color="light-blue darken-2">
         <v-app-bar-nav-icon @click="toggleSideBar"></v-app-bar-nav-icon>
 
-        <v-toolbar-title > <router-link class="white--text" style="text-decoration: none;" :to="{name: 'home'}">Boilerplate</router-link></v-toolbar-title>
+        <v-toolbar-title >
+            <router-link class="white--text" style="text-decoration: none;" :to="{name: 'home'}">Boilerplate</router-link>
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
         <v-btn @click="toggleDarkMode" icon>
-            <v-icon :color="darkModeIconColor">brightness_3</v-icon>
+            <v-icon :color="darkModeIconColor">mdi-brightness-3</v-icon>
         </v-btn>
 
         <v-menu offset-y left>
@@ -21,7 +23,7 @@
                     <v-btn
                         icon
                     >
-                        <v-icon>more_vert</v-icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </div>
 
@@ -61,9 +63,7 @@
         },
         methods: {
             toggleDarkMode(){
-                this.dark = !this.dark;
-                // EventBus.$emit('toggled-dark')
-
+                this.$vuetify.theme.dark = !this.$vuetify.theme.dark
             },
             toggleSideBar(){
                 // EventBus.$emit('toggled-sidebar')
@@ -71,12 +71,8 @@
             logout(){
                 window.location.href = '/logout';
             },
-
-
         },
-        mounted() {
 
-        },
     }
 
 

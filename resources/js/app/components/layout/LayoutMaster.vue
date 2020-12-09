@@ -6,9 +6,9 @@
 
         <navbar v-if="!disableSidebar" @toggled-sidebar="showSidebar=!showSidebar"></navbar>
 
-        <v-content>
+        <v-main>
             <slot></slot>
-        </v-content>
+        </v-main>
     </v-app>
 
 </template>

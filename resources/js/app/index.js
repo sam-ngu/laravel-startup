@@ -1,6 +1,7 @@
 require('../bootstrap');
 
 import Vue from 'vue';
+import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
@@ -31,6 +32,7 @@ requireComponent.keys().forEach(fileName => {
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
+Vue.use(VueRouter);
 Vue.use(VueCompositionAPI);
 
 /**

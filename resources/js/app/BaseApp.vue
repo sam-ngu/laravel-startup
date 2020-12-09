@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>aaa</h1>
-        <layout-master :disable-sidebar="showSidebar" >
+        <layout-master :disable-sidebar="false" >
             <v-breadcrumbs :items="breadcrumbItems" divider=">"></v-breadcrumbs>
             <router-view></router-view>
         </layout-master>
@@ -33,22 +33,16 @@ export default {
         }
     },
     computed: {
-        showSidebar(){
-            // if is in control then show
-            if(this.$router.full)
-                return true;
-            else
-                return false;
-        }
+        // showSidebar(){
+        //     // if is in control then show
+        //     return !!this.$router.full;
+        // }
     },
     watch: {
         '$route'(){
             _.forEach(this.$route.meta.breadcrumb, function (value, index) {
                 let length = this.$route.meta.breadcrumb.length;
-                if(length -1 !== index) // if not the last item
-                    this.$route.meta.breadcrumb[index].disabled = false;
-                else
-                    this.$route.meta.breadcrumb[index].disabled = true;
+                this.$route.meta.breadcrumb[index].disabled = length - 1 === index;
             }.bind(this));
             this.$route.meta.breadcrumb[this.$route.meta.breadcrumb.length-1].disabled = true;
             this.breadcrumbItems = this.$route.meta.breadcrumb;
