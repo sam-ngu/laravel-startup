@@ -43,7 +43,6 @@
 </template>
 
 <script>
-    import {MessageBus} from "../../../../utils/message-bus";
 
     export default {
         name: "ProfileContactInfo",
@@ -72,7 +71,7 @@
                 ]
             },
             user(){
-                return MessageBus.getSession().user;
+                return this.$store.getters['auth/session'].user;
             }
         },
         methods: {

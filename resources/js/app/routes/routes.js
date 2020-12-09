@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 
-import BaseHome from './../components/dashboard/home/BaseHome'
+import BaseHome from './../components/home/BaseHome'
 
 // import {user} from '../routes/auth/user'
 import {profile} from "./profile/profile";

@@ -35,8 +35,8 @@
 
 </template>
 <script>
-    import ImageUploader from "../../../../utils/ImageUploader";
-    import {swalConfirm, swalLoader, swalTimer} from "../../../../../utils/swal/SwalHelper";
+    import ImageUploader from "../../../../partials/ImageUploader";
+    import {swalConfirm, swalLoader, swalTimer} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 
     export default {

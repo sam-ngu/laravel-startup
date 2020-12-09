@@ -66,8 +66,7 @@
 </template>
 
 <script>
-    import {MessageBus} from "../../../../utils/message-bus";
-    import BaseAvatar from "../../../../utils/BaseAvatar";
+    import BaseAvatar from "../../../partials/BaseAvatar";
     import ProfileUpdatePicture from "./basic-info/ProfileUpdatePicture";
     export default {
         name: "ProfileBasicInfo",
@@ -100,7 +99,7 @@
                 ]
             },
             user(){
-                return MessageBus.getSession().user;
+                return this.$store.getters['auth/session'].user;
             }
         },
         methods: {
