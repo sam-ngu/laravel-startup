@@ -6,11 +6,15 @@ import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import vuetifyopt from "../vuetifyopt";
-import store from "./store/store";
+import store from "./vuex-store/store";
 import routes from "./routes/routes";
 import VueCompositionAPI from '@vue/composition-api'
 window.Vue = Vue;
 
+
+Vue.use(VueCompositionAPI);
+Vue.use(Vuetify);
+Vue.use(VueRouter);
 
 // Require in a base component context
 const requireComponent = require.context('.', false, /.vue$/)
@@ -31,9 +35,7 @@ requireComponent.keys().forEach(fileName => {
 })
 
 Vue.config.productionTip = false;
-Vue.use(Vuetify);
-Vue.use(VueRouter);
-Vue.use(VueCompositionAPI);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -4,10 +4,9 @@
             hide-overlay
             clipped
             fixed
-            :value="value"
+            :value="showSidebar"
             floating
-            @input="($event)=>{$emit('input', $event)}"
-
+            @input="($event)=>{ setSidebarOpened($event) }"
     >
         <v-list inset>
 
@@ -21,22 +20,21 @@
 
 <script>
     import SidebarListTile from "./SidebarListTile";
+    import {useAppStateStore} from "../../../../hook/app-state-store";
+
+    const {isSidebarOpened} = useAppStateStore();
 
     export default {
         name: "sidebar",
         components: {SidebarListTile},
-        data() {
-            return {
+        setup(){
+            function setSidebarOpened(value){
+                isSidebarOpened.value = value;
             }
-        },
-        computed:{
-
-        },
-        props: {
-            value: ""
-        },
-        methods: {},
-        mounted() {
+            return {
+                setSidebarOpened,
+                showSidebar: isSidebarOpened
+            }
         },
     }
 

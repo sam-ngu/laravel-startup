@@ -42,14 +42,15 @@
 </template>
 
 <script>
+    import {useAppStateStore} from "../../../hook/app-state-store";
+
+    const {isSidebarOpened} = useAppStateStore();
 
     export default {
         name: "navbar",
         components: {},
         data() {
             return {
-                dark: false,
-
                 menuItems: [
                     {title: 'Logout', action: this.logout}
                 ]
@@ -58,7 +59,7 @@
         props: {},
         computed: {
             darkModeIconColor(){
-                return this.dark ? "white" : null
+                return this.$vuetify.theme.dark ? "white" : null
             }
         },
         methods: {
@@ -66,7 +67,7 @@
                 this.$vuetify.theme.dark = !this.$vuetify.theme.dark
             },
             toggleSideBar(){
-                // EventBus.$emit('toggled-sidebar')
+                isSidebarOpened.value = !isSidebarOpened.value;
             },
             logout(){
                 window.location.href = '/logout';

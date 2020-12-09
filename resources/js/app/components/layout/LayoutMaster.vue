@@ -1,8 +1,8 @@
 <template>
-    <v-app :dark="dark">
+    <v-app>
         <logged-in-as-alert/>
 
-        <sidebar v-if="!disableSidebar" v-model="showSidebar"></sidebar>
+        <sidebar v-if="!disableSidebar"></sidebar>
 
         <navbar v-if="!disableSidebar" @toggled-sidebar="showSidebar=!showSidebar"></navbar>
 
@@ -21,24 +21,12 @@
     export default {
         name: "layout-master",
         components: {LoggedInAsAlert, Navbar, Sidebar},
-        data() {
-            return {
-                dark: false,
-                showSidebar: null,
-            }
-        },
+
         props: {
             disableSidebar: {
                 type: Boolean,
                 default: false
             }
-        },
-        methods: {
-
-        },
-        mounted() {
-
-
         },
     }
 
