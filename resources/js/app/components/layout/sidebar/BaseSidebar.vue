@@ -10,9 +10,9 @@
     >
         <v-list inset>
 
-            <sidebar-list-tile to="/" title="Dashboard" icon="home"/>
+            <sidebar-list-tile to="/" title="Dashboard" icon="mdi-home"/>
 
-            <sidebar-list-tile :to="{name: 'user-profile'}" title="My Profile" icon="account_circle"/>
+            <sidebar-list-tile :to="{name: 'user-profile'}" title="My Profile" icon="mdi-account-circle"/>
 
         </v-list>
     </v-navigation-drawer>
