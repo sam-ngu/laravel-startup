@@ -63,6 +63,12 @@ export default {
             })
         }
 
+        const session = JSON.parse(this.session) || {};
+
+        this.$store.commit('auth/setSession', session)
+
+
+
     }
 }
 </script>

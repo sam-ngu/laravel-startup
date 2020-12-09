@@ -24,7 +24,7 @@
                     <base-avatar
                         :avatar-location="user.avatar_location"
                         :size="45"
-                        :name="user.full_name"></base-avatar>
+                        :name="user.full_name || ''"></base-avatar>
                 </v-list-item-action>
 
             </v-list-item>
@@ -85,14 +85,14 @@
                     {
                         title: "Name",
                         subtitle: this.user.full_name,
-                        actionIcon: "keyboard_arrow_right",
+                        actionIcon: "mdi-chevron-right",
                         action: this.editName,
                         disabled: false,
                     },
                     {
                         title: "Password",
                         subtitle: this.user.password_changed_at ? 'Last updated at ' + this.user.password_changed_at: 'Never changed',
-                        actionIcon: "keyboard_arrow_right",
+                        actionIcon: "mdi-chevron-right",
                         action: this.editPassword,
                         disabled: false
                     },

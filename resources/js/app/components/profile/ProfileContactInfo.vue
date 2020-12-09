@@ -64,7 +64,7 @@
                     {
                         title: "Phone",
                         subtitle: this.user.phone ? this.user.phone : "Not Available",
-                        actionIcon: "keyboard_arrow_right",
+                        actionIcon: "mdi-chevron-right",
                         action: this.editPhone,
                         disabled: false,
                     },
