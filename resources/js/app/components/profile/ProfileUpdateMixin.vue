@@ -26,7 +26,7 @@
         props: {},
         computed: {
             user(){
-                // return MessageBus.getSession().user;
+                return this.$store.getters['auth/session'].user;
             }
         },
         methods: {

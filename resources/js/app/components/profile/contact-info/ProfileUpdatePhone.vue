@@ -11,7 +11,7 @@
                         :rules="rules.phone"
                         label="Phone Number"
                         v-model="inputData.phone"
-                        prepend-icon="phone"
+                        prepend-icon="mdi-phone"
                     ></v-text-field>
 
                 </v-form>
@@ -56,7 +56,9 @@
             }
         },
         mounted() {
-            this.inputData.phone = this.user.phone;
+            setTimeout(() => {
+                this.inputData.phone = this.user.phone;
+            })
         },
     }
 </script>

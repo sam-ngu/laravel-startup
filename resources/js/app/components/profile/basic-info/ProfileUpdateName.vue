@@ -62,8 +62,13 @@
             }
         },
         mounted() {
-            this.inputData.first_name = this.user.first_name;
-            this.inputData.last_name = this.user.last_name;
+
+            // store not available immediately in mounted hook
+            setTimeout(() => {
+                this.inputData.first_name = this.user.first_name;
+                this.inputData.last_name = this.user.last_name;
+            })
+
         },
     }
 </script>

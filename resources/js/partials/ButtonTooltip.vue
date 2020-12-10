@@ -18,7 +18,6 @@
                     }"
                 >
                     <v-icon
-
                         :size="size"
                         v-if="icon"
                     >{{icon}}</v-icon>
