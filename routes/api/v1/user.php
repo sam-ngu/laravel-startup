@@ -14,6 +14,7 @@ Route::group([
     Route::post('/users', [UserController::class, 'store']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::patch('/users/{user}/profile-picture', [UserController::class, 'updateProfilePicture']);
 
 
     // for admin to login as user

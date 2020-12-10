@@ -79,13 +79,13 @@
                     // put everything to form data
                     let form = new FormData();
                     this.inputData.avatar_location.forEach(function(ii){
-                        form.append("avatar_location[]",ii);
+                        form.append("avatar_img",ii);
                     });
                     form.set('avatar_type', 'storage');
 
                     return axios({
                             method: 'patch',
-                            url: `/api/v1/users/${this.user.id}/profile`,
+                            url: `/api/v1/users/${this.user.id}/profile-picture`,
                             data: form,
                             headers:{
                                 'content-type': "multipart/form-data",

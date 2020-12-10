@@ -9,9 +9,11 @@ use App\Events\Models\User\UserRestored;
 use App\Events\Models\User\UserUpdated;
 use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
+use App\Helpers\General\FileHelper;
 use App\Models\User;
 use App\Notifications\User\UserNeedsConfirmation;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -101,11 +103,17 @@ class UserRepository extends BaseRepository
                 'last_name' => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
                 'email' => data_get($data, 'email') ?? data_get($user, 'email'),
             ])) {
-                $toConfirmUser = ! $user->isConfirmed() && filter_var(data_get($data, 'confirmed'), FILTER_VALIDATE_BOOLEAN);
-                $toUnconfirmUser = $user->isConfirmed() && ! filter_var(data_get($data, 'confirmed'), FILTER_VALIDATE_BOOLEAN);
+                if($avatar = data_get($data, 'avatar_img')){
+                    $user->avatar_location = Arr::first(FileHelper::imageProcessor([$avatar]));
+                    $user->save();
+                    throw_if(!$user->save(), GeneralJsonException::class, 'Unable to save user: ' . $user->first_name);
+                }
 
-                $toDeactivateUser = $user->isActive() && ! filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN);
-                $toReactivateUser = ! $user->isActive() && filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN);
+                $toConfirmUser = ! $user->isConfirmed() && filter_var(data_get($data, 'confirmed', $user->confirmed), FILTER_VALIDATE_BOOLEAN);
+                $toUnconfirmUser = $user->isConfirmed() && ! filter_var(data_get($data, 'confirmed', $user->confirmed), FILTER_VALIDATE_BOOLEAN);
+
+                $toDeactivateUser = $user->isActive() && ! filter_var(data_get($data, 'active', $user->active), FILTER_VALIDATE_BOOLEAN);
+                $toReactivateUser = ! $user->isActive() && filter_var(data_get($data, 'active', $user->active), FILTER_VALIDATE_BOOLEAN);
 
                 if ($toReactivateUser) {
                     $user = $user->setActive(true);

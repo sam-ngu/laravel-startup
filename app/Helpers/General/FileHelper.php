@@ -41,27 +41,18 @@ class FileHelper
     public static function imageProcessor(array $images, string $imagePath = self::PATH_IMG, $options = []): array
     {
         $imagesPathArray = self::storeFiles($images, $imagePath);
-//        $imagesUrlArray = array_map(function ($image)use($imagePath){
-//            /* @var $image */
-//            $image = \Illuminate\Http\UploadedFile::createFromBase($image); // to resolve path request workaround which return symfony uploadedFile instance
-//            $path = Storage::putFile('public/img/' . $imagePath, $image);
-//            return Storage::url($path);
-//        }, $images);
 
         // resize the image to a width of 600 and constrain aspect ratio (auto height)
         $imagesUrlArray = [];
         foreach ($imagesPathArray as $imagePath)
         {
             $img = Image::make(Storage::get($imagePath));
-//            $img = Image::make($path);
             $img->resize(600, null, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
-//            $img->save();
-            $stored = Storage::disk('s3')->put($imagePath, $img->encode());
-            Storage::disk('s3')->setVisibility($imagePath, $options);
-            $imagePath = env('AWS_URL') . $imagePath;
+            $stored = Storage::put($imagePath, $img->encode());
+//            Storage::setVisibility($imagePath, $options);
 //            array_push($imagesUrlArray, Storage::url($path));
             array_push($imagesUrlArray, $imagePath);
         }
