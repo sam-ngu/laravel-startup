@@ -245,10 +245,12 @@ class ParseInputStream
     {
         if (strpos($parameter, '[') === false) {
             $params[$parameter] = $value;
+
             return;
         }
-        if ( !filter_var( preg_match('/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match), FILTER_VALIDATE_BOOLEAN )) {
+        if (! filter_var(preg_match('/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match), FILTER_VALIDATE_BOOLEAN)) {
             Log::warning("ParseInputStream.parse_parameter() Parameter name regex failed: '" . $parameter . "'");
+
             return;
         }
 

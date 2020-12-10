@@ -8,7 +8,6 @@
 
 namespace App\Helpers\General;
 
-
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -25,9 +24,10 @@ class FileHelper
      */
     public static function storeFiles(array $files, string $filePath = self::PATH_IMG, $options = [])
     {
-        return array_map(function ($file)use($filePath, $options){
+        return array_map(function ($file) use ($filePath, $options) {
             $file = \Illuminate\Http\UploadedFile::createFromBase($file); // to resolve path request workaround which return symfony uploadedFile instance
             $path = Storage::putFile('public/' . $filePath, $file, $options);
+
             return $path;
         }, $files);
     }
@@ -44,8 +44,7 @@ class FileHelper
 
         // resize the image to a width of 600 and constrain aspect ratio (auto height)
         $imagesUrlArray = [];
-        foreach ($imagesPathArray as $imagePath)
-        {
+        foreach ($imagesPathArray as $imagePath) {
             $img = Image::make(Storage::get($imagePath));
             $img->resize(600, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -56,6 +55,7 @@ class FileHelper
 //            array_push($imagesUrlArray, Storage::url($path));
             array_push($imagesUrlArray, $imagePath);
         }
+
         return $imagesUrlArray;
     }
 }

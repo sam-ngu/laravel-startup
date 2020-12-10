@@ -115,12 +115,10 @@ class UserController extends Controller
 
     public function updateProfilePicture(Request $request, User $user, UserRepository $repository)
     {
-
         $result = $repository->update($user, [
             'avatar_img' => $request->avatar_img,
         ]);
 
         return (new UserResource($result))->response();
-
     }
 }

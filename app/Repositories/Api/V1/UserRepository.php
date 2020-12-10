@@ -103,10 +103,10 @@ class UserRepository extends BaseRepository
                 'last_name' => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
                 'email' => data_get($data, 'email') ?? data_get($user, 'email'),
             ])) {
-                if($avatar = data_get($data, 'avatar_img')){
+                if ($avatar = data_get($data, 'avatar_img')) {
                     $user->avatar_location = Arr::first(FileHelper::imageProcessor([$avatar]));
                     $user->save();
-                    throw_if(!$user->save(), GeneralJsonException::class, 'Unable to save user: ' . $user->first_name);
+                    throw_if(! $user->save(), GeneralJsonException::class, 'Unable to save user: ' . $user->first_name);
                 }
 
                 $toConfirmUser = ! $user->isConfirmed() && filter_var(data_get($data, 'confirmed', $user->confirmed), FILTER_VALIDATE_BOOLEAN);
