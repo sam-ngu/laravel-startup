@@ -243,59 +243,58 @@ class ParseInputStream
 
     private function parse_parameter(&$params, $parameter, $value)
     {
-        if (strpos($parameter, '[') !== false) {
-            $matches = [];
-            if (preg_match('/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match)) {
-                $name = $match[1];
-                $key = $match[2];
-                $rem = $match[3];
-                if ($name !== '' && $name !== null) {
-                    if (! isset($params[$name]) || ! is_array($params[$name])) {
-                        $params[$name] = [];
-                    } else {
-                    }
-                    if (strlen($rem) > 0) {
-                        if ($key === '' || $key === null) {
-                            $arr = [];
-                            $this->parse_parameter($arr, $rem, $value);
-                            $params[$name][] = $arr;
-                        } else {
-                            if (! isset($params[$name][$key]) || ! is_array($params[$name][$key])) {
-                                $params[$name][$key] = [];
-                            }
-                            $this->parse_parameter($params[$name][$key], $rem, $value);
-                        }
-                    } else {
-                        if ($key === '' || $key === null) {
-                            $params[$name][] = $value;
-                        } else {
-                            $params[$name][$key] = $value;
-                        }
-                    }
+        if (strpos($parameter, '[') === false) {
+            $params[$parameter] = $value;
+            return;
+        }
+        if ( !filter_var( preg_match('/^([^[]*)\[([^]]*)\](.*)$/', $parameter, $match), FILTER_VALIDATE_BOOLEAN )) {
+            Log::warning("ParseInputStream.parse_parameter() Parameter name regex failed: '" . $parameter . "'");
+            return;
+        }
+
+        $name = $match[1];
+        $key = $match[2];
+        $rem = $match[3];
+        if ($name !== '' && $name !== null) {
+            if (! isset($params[$name]) || ! is_array($params[$name])) {
+                $params[$name] = [];
+            }
+            if (strlen($rem) > 0) {
+                if ($key === '' || $key === null) {
+                    $arr = [];
+                    $this->parse_parameter($arr, $rem, $value);
+                    $params[$name][] = $arr;
                 } else {
-                    if (strlen($rem) > 0) {
-                        if ($key === '' || $key === null) {
-                            // REVIEW Is this logic correct?!
-                            $this->parse_parameter($params, $rem, $value);
-                        } else {
-                            if (! isset($params[$key]) || ! is_array($params[$key])) {
-                                $params[$key] = [];
-                            }
-                            $this->parse_parameter($params[$key], $rem, $value);
-                        }
-                    } else {
-                        if ($key === '' || $key === null) {
-                            $params[] = $value;
-                        } else {
-                            $params[$key] = $value;
-                        }
+                    if (! isset($params[$name][$key]) || ! is_array($params[$name][$key])) {
+                        $params[$name][$key] = [];
                     }
+                    $this->parse_parameter($params[$name][$key], $rem, $value);
                 }
             } else {
-                Log::warning("ParseInputStream.parse_parameter() Parameter name regex failed: '" . $parameter . "'");
+                if ($key === '' || $key === null) {
+                    $params[$name][] = $value;
+                } else {
+                    $params[$name][$key] = $value;
+                }
             }
         } else {
-            $params[$parameter] = $value;
+            if (strlen($rem) > 0) {
+                if ($key === '' || $key === null) {
+                    // REVIEW Is this logic correct?!
+                    $this->parse_parameter($params, $rem, $value);
+                } else {
+                    if (! isset($params[$key]) || ! is_array($params[$key])) {
+                        $params[$key] = [];
+                    }
+                    $this->parse_parameter($params[$key], $rem, $value);
+                }
+            } else {
+                if ($key === '' || $key === null) {
+                    $params[] = $value;
+                } else {
+                    $params[$key] = $value;
+                }
+            }
         }
     }
 }

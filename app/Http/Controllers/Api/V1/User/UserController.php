@@ -112,4 +112,12 @@ class UserController extends Controller
 
         return new JsonResponse(null, 204);
     }
+
+    public function updateProfilePicture(User $user, UserRepository $repository)
+    {
+
+        $repository->update($user, [
+            ''
+        ]);
+    }
 }
