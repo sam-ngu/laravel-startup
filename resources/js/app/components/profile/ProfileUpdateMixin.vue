@@ -36,15 +36,14 @@
                 swalConfirm("", () => {
                     swalLoader();
                     return axios.patch(this.uri, this.inputData)
-                        .then(function (response) {
-                            // EventBus.$emit('fetch-session-required');
+                        .then((response) => {
                             swalTimer('success', 500)
-                                .then(function () {
+                                .then( () => {
                                     this.$router.push({
                                         name: 'user-profile'
                                     })
-                                }.bind(this));
-                        }.bind(this))
+                                });
+                        })
                         .catch(axiosErrorCallback)
                     }
                 );
@@ -54,7 +53,7 @@
             }
         },
         mounted() {
-            this.uri = `/api/v1/users/${this.user.id}/profile`
+            this.uri = `/api/v1/users/${this.user.id}`
         },
     }
 </script>

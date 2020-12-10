@@ -153,11 +153,13 @@ class UserRepository extends BaseRepository
 
     public function updatePassword(User $user, $password)
     {
-        $isUpdated = $user->update([
-            'password' => $password,
-        ]);
+//        $isUpdated = $user->update([
+//            'password' => $password,
+//        ]);
 
-        if ($isUpdated) {
+        $user->password = $password;
+
+        if ($user->save()) {
             event(new UserPasswordChanged($user));
 
             return $user;

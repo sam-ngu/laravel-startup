@@ -20,11 +20,11 @@
                 <v-list-item-content>
 
                     <v-list-item-title >
-                        <h5 class="text-uppercase" v-text="item.title"></h5>
+                        <h4 class="text-uppercase" v-text="item.title"></h4>
                     </v-list-item-title>
 
                     <v-list-item-subtitle>
-                        <h5 v-text="item.subtitle"></h5>
+                        <h4 v-text="item.subtitle"></h4>
                     </v-list-item-subtitle>
 
                 </v-list-item-content>
