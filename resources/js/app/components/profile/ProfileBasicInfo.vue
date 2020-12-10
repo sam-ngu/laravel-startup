@@ -2,7 +2,7 @@
     <v-card>
         <!--photo-->
         <!--name-->
-        <!--            birthday-->
+        <!--birthday-->
         <!--password-->
 
         <v-card-title>

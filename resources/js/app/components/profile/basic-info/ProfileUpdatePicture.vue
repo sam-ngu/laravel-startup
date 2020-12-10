@@ -3,18 +3,18 @@
     <v-dialog max-width="500px" persistent v-model="states.show">
 
         <v-card>
-            <v-card-title>
+            <v-card-title >
                 <h3>
                     Select Profile Photo
                 </h3>
-                <v-tooltip bottom class="ml-auto">
-                    <template v-slot:activator="{on}">
-                        <v-btn icon v-on="on" @click="close">
-                            <v-icon>clear</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>Close</span>
-                </v-tooltip>
+
+                <div class="ml-auto">
+                    <button-tooltip
+                        icon="mdi-close"
+                        tooltip="Close"
+                        @click="close"
+                    />
+                </div>
 
             </v-card-title>
 
@@ -38,10 +38,14 @@
     import ImageUploader from "../../../../partials/ImageUploader";
     import {swalConfirm, swalLoader, swalTimer} from "../../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
+    import ButtonTooltip from "../../../../partials/ButtonTooltip";
+
+
+
 
     export default {
         name: "ProfileUpdatePicture",
-        components: {ImageUploader},
+        components: {ButtonTooltip, ImageUploader},
         data() {
             return {
                 states: {
@@ -51,7 +55,6 @@
                     image_raw: null,
                     avatar_location: null,
                 },
-
             }
         },
         props: {
@@ -59,7 +62,7 @@
         },
         computed: {
             user(){
-                return MessageBus.getSession().user;
+                return this.$store.getters['auth/session'].user;
             }
         },
         methods: {

@@ -11,21 +11,29 @@
                 :src="imageUrl || undefined"
             >
 
-                <div class="text-center">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{on}">
-                            <div v-on="on">
-                                <v-btn
-                                    icon
-                                    color="primary"
-                                    @click="pickFile"
-                                >
-                                    <v-icon>photo_camera</v-icon>
-                                </v-btn>
-                            </div>
-                        </template>
-                        <span>Upload a pic</span> <!--tooltip not working inside v-img?-->
-                    </v-tooltip>
+                <div class="mx-auto text-center" style="width: fit-content">
+                    <button-tooltip
+                        style="width: fit-content; height: fit-content"
+                        :small="false"
+                        :size="250"
+                        tooltip="Upload a pic"
+                        icon="mdi-camera"
+                        @click="pickFile"
+                    />
+<!--                    <v-tooltip bottom>-->
+<!--                        <template v-slot:activator="{on}">-->
+<!--                            <div v-on="on">-->
+<!--                                <v-btn-->
+<!--                                    icon-->
+<!--                                    color="primary"-->
+<!--                                    @click="pickFile"-->
+<!--                                >-->
+<!--                                    <v-icon>mdi-camera</v-icon>-->
+<!--                                </v-btn>-->
+<!--                            </div>-->
+<!--                        </template>-->
+<!--                        <span>Upload a pic</span> &lt;!&ndash;tooltip not working inside v-img?&ndash;&gt;-->
+<!--                    </v-tooltip>-->
 
                     <div v-if="!value" v-text="'Insert an image'"></div>
                 </div>
@@ -48,8 +56,10 @@
 </template>
 
 <script>
+    import ButtonTooltip from "./ButtonTooltip";
     export default {
         name: "ImageUploader",
+        components: {ButtonTooltip},
         data() {
             return {
                 states: {
