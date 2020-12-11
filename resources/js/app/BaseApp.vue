@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import LayoutMaster from "./components/layout/LayoutMaster";
+import LayoutMaster from "./containers/layout/LayoutMaster";
 import LoadingEclipse from "../partials/LoadingEclipse";
 
 

@@ -1,7 +1,7 @@
-import BaseProfile from '../../components/profile/BaseProfile'
-import ProfileUpdatePhone from '../../components/profile/contact-info/ProfileUpdatePhone'
-import ProfileUpdateName from '../../components/profile/basic-info/ProfileUpdateName'
-import ProfileUpdatePassword from '../../components/profile/basic-info/ProfileUpdatePassword'
+import BaseProfile from '../../containers/profile/BaseProfile'
+import ProfileUpdatePhone from '../../containers/profile/contact-info/ProfileUpdatePhone'
+import ProfileUpdateName from '../../containers/profile/basic-info/ProfileUpdateName'
+import ProfileUpdatePassword from '../../containers/profile/basic-info/ProfileUpdatePassword'
 
 let baseBreadcrumb = [
     {

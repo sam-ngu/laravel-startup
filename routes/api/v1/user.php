@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\User\UserPasswordController;
 
 Route::group([
     'middleware' => [
@@ -15,6 +16,7 @@ Route::group([
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
     Route::patch('/users/{user}/profile-picture', [UserController::class, 'updateProfilePicture']);
+    Route::patch('/users/{user}/profile/password', [UserPasswordController::class, 'updatePassword']);
 
 
     // for admin to login as user

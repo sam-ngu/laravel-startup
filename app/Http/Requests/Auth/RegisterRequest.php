@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Helpers\Auth\PasswordHelper;
 use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -32,15 +33,7 @@ class RegisterRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:191'],
             'last_name' => ['required', 'string', 'max:191'],
             'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
-            'password' => [
-                'required',
-                'string',
-                'min:8',             // must be at least 10 characters in length
-                'regex:/[a-z]/',      // must contain at least one lowercase letter
-                'regex:/[A-Z]/',      // must contain at least one uppercase letter
-                'regex:/[0-9]/',      // must contain at least one digit
-                'regex:/[@$!%*#?&]/', // must contain a special character
-            ],
+            'password' => PasswordHelper::rules(),
             'g-recaptcha-response' => ['required_if:captcha_status,true', new CaptchaRule()],
         ];
     }

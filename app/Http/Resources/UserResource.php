@@ -15,6 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $avatar_location = $this->avatar_location;
         return [
             'id' => data_get($this, 'id'),
             'first_name' => data_get($this, 'first_name'),
@@ -22,7 +23,7 @@ class UserResource extends JsonResource
             'full_name' => data_get($this, 'full_name'),
             'email' => data_get($this, 'email'),
             'avatar_type' => data_get($this, 'avatar_type'),
-            'avatar_location' => Storage::url(data_get($this, 'avatar_location')),
+            'avatar_location' => !!$avatar_location ? Storage::url(data_get($this, 'avatar_location')) : null,
             'active' => (bool)data_get($this, 'active'),
             'confirmed' => (bool)data_get($this, 'confirmed'),
             'timezone' => (string)data_get($this, 'timezone'),

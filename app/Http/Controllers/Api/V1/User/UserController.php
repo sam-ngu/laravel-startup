@@ -91,6 +91,7 @@ class UserController extends Controller
             'confirmed',
             'permissions'
         ));
+        // only update password if logged in user is admin
         if ($request->password) {
             $result = $repository->updatePassword($user, $request->get('password'));
         }

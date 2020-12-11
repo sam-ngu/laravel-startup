@@ -53,7 +53,7 @@
             }
         },
         mounted() {
-            this.uri = `/api/v1/users/${this.user.id}`
+            this.uri = `/api/v1/users/${this.user.id}/profile/password`
         },
     }
 </script>
