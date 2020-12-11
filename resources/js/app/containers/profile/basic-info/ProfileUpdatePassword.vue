@@ -2,27 +2,19 @@
     <profile-update-layout title="Password">
 
         <template v-slot:body>
-            <div >
                 <v-form v-model="states.is_form_valid" @submit.prevent="save">
 
-                    <v-text-field
-                        @input="edit"
-                        type="password"
+
+                    <text-field-password
                         class="mx-12"
+                        @input="edit"
                         :rules="rules.old_password"
                         label="Old Password"
                         v-model="inputData.old_password"
-                    ></v-text-field>
+                    />
 
-<!--                    <v-text-field-->
-<!--                        @input="edit"-->
-<!--                        type="password"-->
-<!--                        class="mx-12"-->
-<!--                        :rules="rules.password"-->
-<!--                        label="Password"-->
-<!--                        v-model="inputData.password"-->
-<!--                    ></v-text-field>-->
                     <text-field-password
+                        class="mx-12"
                         @input="edit"
                         :rules="rules.password"
                         label="Password"
@@ -30,23 +22,15 @@
                     />
 
                     <text-field-password
+                        class="mx-12"
                         @input="edit"
                         :rules="rules.password_again"
                         label="Password Again"
                         v-model="inputData.password_again"
                     />
-<!--                    <v-text-field-->
-<!--                        @input="edit"-->
-<!--                        type="password"-->
-<!--                        class="mx-12"-->
-<!--                        :rules="rules.password_again"-->
-<!--                        label="Password Again"-->
-<!--                        v-model="inputData.password_again"-->
-<!--                    ></v-text-field>-->
 
                 </v-form>
 
-            </div>
         </template>
 
         <template v-slot:actions>
@@ -65,6 +49,7 @@
     import ProfileUpdateLayout from "../ProfileUpdateLayout";
     import ProfileUpdateMixin from "../ProfileUpdateMixin";
     import TextFieldPassword from "../../../components/TextFieldPassword";
+    import {passwordRules} from "../../../../utils/ValidationHelper";
 
     export default {
         name: "ProfileUpdatePassword",
@@ -85,14 +70,7 @@
                     old_password: [
                         v => !!v || "Required",
                     ],
-                    password: [
-                        v => !!v || "Required",
-                        v => (v && v.length >= 8) || "Password must be at least 8 characters",
-                        v => (v && /[a-z]/.test(v)) || "Password must contain lowercase",
-                        v => (v && /[A-Z]/.test(v)) || "Password must contain uppercase",
-                        v => (v && /[0-9]/.test(v)) || "Password must contain number",
-                        v => (v && /[@$!%*#?&]/.test(v)) || "Password must contain special characters",
-                    ],
+                    password: passwordRules,
                     password_again: [
                         v => !!v || "Required",
                         v => this.inputData.password ? ((v && v === this.inputData.password) || "Passwords do not match!") : true,

@@ -1,7 +1,8 @@
 <template>
     <v-text-field
-        type="password"
-        class="mx-12"
+        :append-icon="states.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append="states.showPassword = !states.showPassword"
+        :type="states.showPassword ? 'text' : 'password'"
         :rules="rules"
         :label="label"
         :value="value"
@@ -11,26 +12,26 @@
 
 <script>
 export default {
-name: 'TextFieldPassword',
-data(){
-    return {}
-},
-props: {
-    label: {
-        type: String,
-        default: ""
+    name: 'TextFieldPassword',
+    data() {
+        return {
+            states: {
+                showPassword: false
+            }
+        }
     },
-    value: "",
-    rules: {
-        type: Array,
-        default: [],
-    }
-},
-computed: {},
-methods:{},
-mounted(){
+    props: {
+        label: {
+            type: String,
+            default: ""
+        },
+        value: "",
+        rules: {
+            type: Array,
+            default: [],
+        }
+    },
 
-},
 }
 </script>
 

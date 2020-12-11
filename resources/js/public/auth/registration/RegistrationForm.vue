@@ -36,21 +36,17 @@
             >
             </v-select>
 
-            <v-text-field
+            <text-field-password
                 label="Password"
-                type="password"
                 v-model="inputData.password"
                 :rules="rules.password"
-            >
-            </v-text-field>
+            />
 
-            <v-text-field
-                label="Password Again"
-                type="password"
+            <text-field-password
                 :rules="rules.password_again"
+                label="Password Again"
                 v-model="inputData.password_confirmation"
-            >
-            </v-text-field>
+            />
 
             <v-checkbox
                 :rules="rules.agreement"
@@ -85,10 +81,12 @@
     import {swalLoader, swalMessage} from "../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
     import VueRecaptcha from 'vue-recaptcha';
+    import TextFieldPassword from "../../../app/components/TextFieldPassword";
+    import {passwordRules} from "../../../utils/ValidationHelper";
 
     export default {
         name: "RegistrationForm",
-        components: {VueRecaptcha},
+        components: {TextFieldPassword, VueRecaptcha},
         data() {
             return {
                 states: {
@@ -114,10 +112,7 @@
                         v => !!v || 'Name is required',
                         v => (v && v.length <= 30) || 'Name must be less than 30 characters'
                     ],
-                    password: [
-                        v => !!v || "Required",
-                        v => (v && v.length >= 8) || "Password must be at least 8 characters"
-                    ],
+                    password: passwordRules,
                     password_again: [
                         v => !!v || "Required",
                         v => this.inputData.password ? ((v && v === this.inputData.password) || "Passwords do not match!") : true,
