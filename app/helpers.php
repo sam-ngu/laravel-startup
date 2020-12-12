@@ -27,6 +27,7 @@ if (! function_exists('include_route_files')) {
                 $it->next();
             }
         } catch (Exception $e) {
+            dump($e);
             echo $e->getMessage();
         }
     }

@@ -16,7 +16,7 @@ class UserPasswordController extends Controller
         // validate password -- eg has num, has symbol, has upper and lower case
 
         // check for expiry
-
+        return '';
 
     }
 }

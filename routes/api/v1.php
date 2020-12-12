@@ -20,7 +20,6 @@ Route::group([
 
     include_route_files(__DIR__ . '/v1/');
 
-
 //
 //
 //    /*User routes*/

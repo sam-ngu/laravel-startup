@@ -15,10 +15,13 @@ Route::group([
     Route::post('/users', [UserController::class, 'store']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
-    Route::patch('/users/{user}/profile/picture', [UserController::class, 'updateProfilePicture']);
-    Route::patch('/users/{user}/profile/password', [UserPasswordController::class, 'updatePassword']);
+
 
 
     // for admin to login as user
 //    Route::post('/users/{user}/login-as', [\App\Http\Controllers\Auth\LoginController::class, 'loginAs']);
 });
+
+// non admin routes
+//Route::patch('/users/{user}/profile/picture', [UserController::class, 'updateProfilePicture']);
+Route::patch('/users/{user}/profile/password', [UserPasswordController::class, 'updatePassword']);
