@@ -62,9 +62,6 @@
         components: {LoggedInItems},
         data() {
             return {
-                states: {
-
-                },
                 dark: true,
                 colour: this.initialColour,
                 menuItems: [
@@ -82,15 +79,11 @@
                 type: String,
                 default: "grey darken-3",
             }
-
         },
         computed: {
             appName(){
                 return "Laravel Startup";
             }
-        },
-        watch: {
-
         },
         methods: {
 
@@ -102,8 +95,6 @@
                 // this.dark = !scrolled;
                 this.colour = scrolled ? this.scrolledColour : this.initialColour
             }
-
-
         },
         mounted() {
             window.addEventListener('scroll', this.changeColour)

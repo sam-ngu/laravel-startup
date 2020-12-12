@@ -117,18 +117,16 @@
         methods: {
             dashboard(){
                 // redirect to dashboard
-                window.location.href = '/dashboard'
+                window.location.href = '/app'
             },
             logout(){
                 // redirect to logout
                 window.location.href = '/logout';
-
             },
             profile(){
                 // redirect to user profile
                 // this.$router.push({name: 'user-profile'});
-                window.location.href = '/dashboard#/profile'
-
+                window.location.href = '/app#/profile';
             },
 
         },
