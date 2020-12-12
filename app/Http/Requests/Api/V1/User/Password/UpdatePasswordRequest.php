@@ -21,7 +21,6 @@ class UpdatePasswordRequest extends FormRequest
         $resourceId = (int)\Illuminate\Support\Facades\Request::segment(4);
         // make sure the user can only change own's password or user is admin
         return auth()->user()->getAuthIdentifier() === $resourceId || auth()->user()->isAdmin();
-
     }
 
     /**
@@ -40,12 +39,11 @@ class UpdatePasswordRequest extends FormRequest
                 [
                     new ChangePassword(),
                     new UnusedPassword($this->user()),
-                    'confirmed'
+                    'confirmed',
                 ],
                 PasswordHelper::changePasswordRules(
                     config('access.users.password_history') ? 'old_password' : null
                 ),
-
             ),
 
         ];

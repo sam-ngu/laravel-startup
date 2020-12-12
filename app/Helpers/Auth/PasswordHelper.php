@@ -3,7 +3,6 @@
 
 namespace App\Helpers\Auth;
 
-
 class PasswordHelper
 {
     public static function rules()
@@ -22,11 +21,12 @@ class PasswordHelper
     public static function changePasswordRules($oldPassword = null)
     {
         $rules = self::rules();
-        if($oldPassword){
+        if ($oldPassword) {
             $rules = array_merge($rules, [
-                'different:' . $oldPassword
+                'different:' . $oldPassword,
             ]);
         }
+
         return $rules;
     }
 }

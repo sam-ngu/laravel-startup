@@ -21,8 +21,9 @@ class ChangePassword implements Rule
     public function passes($attribute, $value)
     {
         $validator = Validator::make([
-            'password' => $value
+            'password' => $value,
         ], PasswordHelper::rules());
+
         return $validator->passes();
 //        $uppercase = preg_match('@[A-Z]@', $value);
 //        $lowercase = preg_match('@[a-z]@', $value);

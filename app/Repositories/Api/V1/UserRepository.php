@@ -153,7 +153,6 @@ class UserRepository extends BaseRepository
 
     public function updatePassword(User $user, $password)
     {
-
         $user->password = $password;
 
         if ($user->save()) {

@@ -29,10 +29,11 @@ abstract class ApiTestCase extends TestCase
 
     protected function loginAsUser($user = false)
     {
-        if(!$user){
+        if (! $user) {
             $user = $this->createUser();
         }
         $this->actingAs($user, 'api');
+
         return $user;
     }
 }

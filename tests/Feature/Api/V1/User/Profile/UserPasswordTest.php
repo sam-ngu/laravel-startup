@@ -3,16 +3,11 @@
 namespace Tests\Feature\Api\V1\User\Profile;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Tests\ApiTestCase;
 
-
 class UserPasswordTest extends ApiTestCase
 {
-
     private function passwordApiUrl(string $userId)
     {
         return '/api/v1/users/' . $userId . '/profile/password';
@@ -66,7 +61,5 @@ class UserPasswordTest extends ApiTestCase
 //        ]);
 //
 //        $response->dump();
-
-
     }
 }

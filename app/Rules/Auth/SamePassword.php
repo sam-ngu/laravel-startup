@@ -2,7 +2,6 @@
 
 namespace App\Rules\Auth;
 
-
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
