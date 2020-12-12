@@ -2,6 +2,6 @@ default:
   suites:
     api:
       paths:
-        - %paths.base%/features/api
+        - "%paths.base%/features/api"
       contexts:
         - ApiContext

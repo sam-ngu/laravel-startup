@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Models\User;
+
 /**
  * Class TestCase.
  */
@@ -10,7 +12,7 @@ abstract class ApiTestCase extends TestCase
     /**
      * Login the given administrator or create the first if none supplied.
      *
-     * @param bool $admin
+     * @param User|bool $admin
      *
      * @return bool|mixed
      */
@@ -23,5 +25,14 @@ abstract class ApiTestCase extends TestCase
         $this->actingAs($admin, 'api');
 
         return $admin;
+    }
+
+    protected function loginAsUser($user = false)
+    {
+        if(!$user){
+            $user = $this->createUser();
+        }
+        $this->actingAs($user, 'api');
+        return $user;
     }
 }

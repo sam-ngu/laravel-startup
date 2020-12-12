@@ -24,9 +24,9 @@
                     <text-field-password
                         class="mx-12"
                         @input="edit"
-                        :rules="rules.password_again"
+                        :rules="rules.password_confirmation"
                         label="Password Again"
-                        v-model="inputData.password_again"
+                        v-model="inputData.password_confirmation"
                     />
 
                 </v-form>
@@ -64,14 +64,14 @@
                 inputData: {
                     old_password: null,
                     password: null,
-                    password_again: null,
+                    password_confirmation: null,
                 },
                 rules: {
                     old_password: [
                         v => !!v || "Required",
                     ],
                     password: passwordRules,
-                    password_again: [
+                    password_confirmation: [
                         v => !!v || "Required",
                         v => this.inputData.password ? ((v && v === this.inputData.password) || "Passwords do not match!") : true,
                     ],

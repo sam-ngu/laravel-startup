@@ -78,6 +78,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "behat": [
+            "vendor/bin/behat"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan ide-helper:generate",

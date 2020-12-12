@@ -85,7 +85,7 @@
 
                     return axios({
                             method: 'patch',
-                            url: `/api/v1/users/${this.user.id}/profile-picture`,
+                            url: `/api/v1/users/${this.user.id}/profile/picture`,
                             data: form,
                             headers:{
                                 'content-type': "multipart/form-data",
