@@ -22,7 +22,10 @@ class ChangePassword implements Rule
     {
         $validator = Validator::make([
             'password' => $value,
-        ], PasswordHelper::rules());
+        ], [
+            'password' => PasswordHelper::rules()
+        ]);
+
 
         return $validator->passes();
 //        $uppercase = preg_match('@[A-Z]@', $value);

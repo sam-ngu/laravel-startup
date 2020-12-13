@@ -8,7 +8,7 @@ class PasswordHelper
     public static function rules()
     {
         return [
-            'required',
+//            'required',
             'string',
             'min:8',             // must be at least 8 characters in length
             'regex:/[a-z]/',      // must contain at least one lowercase letter

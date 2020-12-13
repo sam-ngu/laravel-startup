@@ -37,6 +37,7 @@ class UpdatePasswordRequest extends FormRequest
             ],
             'password' => array_merge(
                 [
+                    'required',
                     new ChangePassword(),
                     new UnusedPassword($this->user()),
                     'confirmed',
