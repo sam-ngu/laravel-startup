@@ -4,10 +4,7 @@ namespace App\Listeners\User;
 
 use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserPasswordChanged;
-use App\Events\Models\User\UserUpdated;
 use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class UserEventSubscriber
 {
@@ -35,9 +32,8 @@ class UserEventSubscriber
             $this->logPasswordHistory($event->user);
         });
 
-        $events->listen(UserPasswordChanged::class, function($event){
+        $events->listen(UserPasswordChanged::class, function ($event) {
             $this->logPasswordHistory($event->user);
         });
-
     }
 }

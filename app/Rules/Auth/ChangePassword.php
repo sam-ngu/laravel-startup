@@ -23,7 +23,7 @@ class ChangePassword implements Rule
         $validator = Validator::make([
             'password' => $value,
         ], [
-            'password' => PasswordHelper::rules()
+            'password' => PasswordHelper::rules(),
         ]);
 
 

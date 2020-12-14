@@ -13,8 +13,9 @@ class UserPasswordController extends Controller
     public function updatePassword(UpdatePasswordRequest $request, User $user, UserRepository $repository)
     {
         $repository->updatePassword($user, $request->password);
+
         return new JsonResponse([
-            'data' => 'updated'
+            'data' => 'updated',
         ]);
     }
 }

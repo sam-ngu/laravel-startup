@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
 use Tests\ApiTestCase;
 
 class UserPasswordTest extends ApiTestCase
@@ -94,11 +93,9 @@ class UserPasswordTest extends ApiTestCase
         // user cant change password for other user
         $response = $this->changePasswordForUser($this->createUser(), 'secret', 'seseseses');
         $response->assertStatus(403);
-
     }
 
     public function test_user_cant_use_old_password()
     {
-
     }
 }

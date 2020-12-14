@@ -53,11 +53,10 @@ include_route_files(__DIR__ . '/auth');
 
 if (\Illuminate\Support\Facades\App::environment('local')) {
     Route::get('/playground', function (\Illuminate\Http\Request $request) {
-
         $validator = Validator::make([
             'password' => '123@32123213',
         ], [
-            'password' => PasswordHelper::rules()
+            'password' => PasswordHelper::rules(),
         ]);
 
 

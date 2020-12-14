@@ -154,7 +154,6 @@ class UserRepository extends BaseRepository
 
     public function updatePassword(User $user, $password)
     {
-
         $user->password = $password;
         $user->password_changed_at = Carbon::now()->toDateTimeString();
 
