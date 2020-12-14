@@ -2,14 +2,22 @@
 
 namespace Tests\Feature\Api\V1\User\Profile;
 
+use App\Events\Models\User\UserPasswordChanged;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Tests\ApiTestCase;
 
 class UserPasswordTest extends ApiTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+//        Event::fake();
+    }
+
     private function passwordApiUrl(string $userId)
     {
         return '/api/v1/users/' . $userId . '/profile/password';
@@ -51,7 +59,7 @@ class UserPasswordTest extends ApiTestCase
         $response = $this->patchJson($this->passwordApiUrl($admin->id), $payloadCopy);
         $response->assertStatus(422);
 
-        // WARNING: Tightly coupled test, not implementing should follow rules, upper, lower, number and symbols
+        // WARNING: Tightly coupled test, not implementing "should follow rules, upper, lower, number and symbols"
 
         // old password not match then fail
         $payloadCopy = $payload;
@@ -63,6 +71,8 @@ class UserPasswordTest extends ApiTestCase
         $response = $this->patchJson($this->passwordApiUrl($admin->id), $payload);
         $response->assertStatus(200);
         $this->assertTrue(Hash::check(data_get($payload, 'password'), $admin->refresh()->password));
+
+//        Event::assertDispatched(UserPasswordChanged::class);
     }
 
     public function test_user_can_change_self_password_only()
@@ -76,14 +86,19 @@ class UserPasswordTest extends ApiTestCase
 
         $newPassword = 'Secrettt12@!#$';
         $response = $this->changePasswordForUser($user, 'secret', $newPassword);
-
+        $response->dump();
         $response->assertStatus(200);
         // check if user password has changed
-//        $this->assertTrue(Hash::check($newPassword, $user->refresh()->password));
+        $this->assertTrue(Hash::check($newPassword, $user->refresh()->password));
 
         // user cant change password for other user
         $response = $this->changePasswordForUser($this->createUser(), 'secret', 'seseseses');
         $response->assertStatus(403);
+
+    }
+
+    public function test_user_cant_use_old_password()
+    {
 
     }
 }

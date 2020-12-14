@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Notifications\User\UserNeedsConfirmation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -153,7 +154,9 @@ class UserRepository extends BaseRepository
 
     public function updatePassword(User $user, $password)
     {
+
         $user->password = $password;
+        $user->password_changed_at = Carbon::now()->toDateTimeString();
 
         if ($user->save()) {
             event(new UserPasswordChanged($user));
