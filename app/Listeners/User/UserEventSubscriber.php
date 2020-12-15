@@ -97,6 +97,5 @@ class UserEventSubscriber
         $events->listen(UserRegistered::class, function ($event) {
             // TODO: send confirmation email to user
         });
-
     }
 }

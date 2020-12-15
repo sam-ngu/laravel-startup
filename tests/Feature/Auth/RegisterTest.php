@@ -17,7 +17,7 @@ class RegisterTest extends ApiTestCase
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
         ]);
     }
 
@@ -41,7 +41,6 @@ class RegisterTest extends ApiTestCase
         $response->assertStatus(200);
 
         Event::assertDispatched(UserRegistered::class);
-
     }
 
     public function test_cant_register_with_existing_username()
@@ -69,9 +68,6 @@ class RegisterTest extends ApiTestCase
         $response = $this
             ->register('laksa', 'laa', 'alalala@alala.coa', 'aa123AA!@$#')
             ->assertStatus(200);
-
-
-
     }
 
     public function test_confirmation_email_is_sent_once_registered()

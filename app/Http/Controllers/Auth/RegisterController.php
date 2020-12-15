@@ -57,9 +57,8 @@ class RegisterController extends Controller
         $user = $repository->create(array_merge(
             $request->only('first_name', 'last_name', 'email', 'password'),
             [
-                'roles' => [config('access.users.default_role')]
+                'roles' => [config('access.users.default_role')],
             ]
-
         ));
 
         // If the user must confirm their email or their account requires approval,
