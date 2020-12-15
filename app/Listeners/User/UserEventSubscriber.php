@@ -4,6 +4,7 @@ namespace App\Listeners\User;
 
 use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserPasswordChanged;
+use App\Events\Models\User\UserRegistered;
 use App\Models\User;
 
 class UserEventSubscriber
@@ -35,5 +36,10 @@ class UserEventSubscriber
         $events->listen(UserPasswordChanged::class, function ($event) {
             $this->logPasswordHistory($event->user);
         });
+
+        $events->listen(UserRegistered::class, function ($event){
+            // TODO: send confirmation email to user
+        });
+
     }
 }

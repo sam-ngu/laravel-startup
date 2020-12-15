@@ -16,6 +16,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class UserRepository.
@@ -44,6 +45,7 @@ class UserRepository extends BaseRepository
             $user = parent::create([
                 'first_name' => data_get($data, 'first_name'),
                 'last_name' => data_get($data, 'last_name'),
+                'uuid' => Uuid::uuid4()->toString(),
                 'email' => data_get($data, 'email'),
                 'password' => data_get($data, 'password'),
                 'active' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
