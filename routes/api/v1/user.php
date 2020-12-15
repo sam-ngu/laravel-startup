@@ -23,5 +23,5 @@ Route::group([
 });
 
 // non admin routes
-//Route::patch('/users/{user}/profile/picture', [UserController::class, 'updateProfilePicture']);
+Route::patch('/users/{user}/profile/picture', [UserController::class, 'updateProfilePicture']);
 Route::patch('/users/{user}/profile/password', [UserPasswordController::class, 'updatePassword']);

@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\V1\User\Profile;
 
 use App\Events\Models\User\UserPasswordChanged;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class UserPasswordTest extends ApiTestCase
     protected function setUp(): void
     {
         parent::setUp();
-//        Event::fake();
+
     }
 
     private function passwordApiUrl(string $userId)
@@ -33,6 +34,7 @@ class UserPasswordTest extends ApiTestCase
 
     public function test_user_must_submit_password_on_valid_rule()
     {
+        Event::fake();
         $admin = $this->loginAsUser();
         // test request must contain old_password, password and password_confirmation
         $payload = [
@@ -71,7 +73,7 @@ class UserPasswordTest extends ApiTestCase
         $response->assertStatus(200);
         $this->assertTrue(Hash::check(data_get($payload, 'password'), $admin->refresh()->password));
 
-//        Event::assertDispatched(UserPasswordChanged::class);
+        Event::assertDispatched(UserPasswordChanged::class);
     }
 
     public function test_user_can_change_self_password_only()
@@ -85,7 +87,7 @@ class UserPasswordTest extends ApiTestCase
 
         $newPassword = 'Secrettt12@!#$';
         $response = $this->changePasswordForUser($user, 'secret', $newPassword);
-        $response->dump();
+
         $response->assertStatus(200);
         // check if user password has changed
         $this->assertTrue(Hash::check($newPassword, $user->refresh()->password));
@@ -97,5 +99,10 @@ class UserPasswordTest extends ApiTestCase
 
     public function test_user_cant_use_old_password()
     {
+        $user = $this->loginAsUser();
+        $password = 'Secretsecret123!@#';
+        $response = $this->changePasswordForUser($user, 'secret', $password);
+        $response = $this->changePasswordForUser($user, $password, $password);
+        $response->assertStatus(422);
     }
 }

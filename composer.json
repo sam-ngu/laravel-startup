@@ -79,7 +79,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "watch-test": [
+        "test:watch": [
             "vendor/bin/phpunit-watcher watch"
         ],
         "behat": [

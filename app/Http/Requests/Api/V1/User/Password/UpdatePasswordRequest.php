@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1\User\Password;
 
 use App\Helpers\Auth\PasswordHelper;
+use App\Helpers\Auth\RequestHelper;
 use App\Rules\Auth\ChangePassword;
 use App\Rules\Auth\SamePassword;
 use App\Rules\Auth\UnusedPassword;
@@ -18,9 +19,7 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        $resourceId = (int)\Illuminate\Support\Facades\Request::segment(4);
-        // make sure the user can only change own's password or user is admin
-        return auth()->user()->getAuthIdentifier() === $resourceId || auth()->user()->isAdmin();
+        return RequestHelper::isCurrentUserAuthorisedToCallResource(4);
     }
 
     /**
