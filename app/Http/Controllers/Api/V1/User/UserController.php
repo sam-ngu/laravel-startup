@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Events\Models\User\UserDeleted;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\User\ChangeProfilePictureRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
@@ -114,7 +115,7 @@ class UserController extends Controller
         return new JsonResponse(null, 204);
     }
 
-    public function updateProfilePicture(Request $request, User $user, UserRepository $repository)
+    public function updateProfilePicture(ChangeProfilePictureRequest $request, User $user, UserRepository $repository)
     {
         $result = $repository->update($user, [
             'avatar_img' => $request->avatar_img,

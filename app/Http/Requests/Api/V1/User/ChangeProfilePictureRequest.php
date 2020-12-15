@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1\User;
 
 use App\Helpers\Auth\RequestHelper;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserChangeProfilePictureRequest extends FormRequest
+class ChangeProfilePictureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
