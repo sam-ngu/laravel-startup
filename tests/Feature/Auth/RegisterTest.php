@@ -6,15 +6,28 @@ use Tests\ApiTestCase;
 
 class RegisterTest extends ApiTestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function test_user_can_login()
     {
-        $response = $this->get('/');
+        
+    }
 
-        $response->assertStatus(200);
+    public function test_cant_register_with_existing_username()
+    {
+        
+    }
+
+    public function test_password_must_follow_rules()
+    {
+        
+    }
+
+    public function test_confirmation_email_is_sent_once_registered()
+    {
+        
+    }
+
+    public function test_()
+    {
+        
     }
 }
