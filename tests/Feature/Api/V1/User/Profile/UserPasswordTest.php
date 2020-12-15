@@ -4,7 +4,6 @@ namespace Tests\Feature\Api\V1\User\Profile;
 
 use App\Events\Models\User\UserPasswordChanged;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +14,6 @@ class UserPasswordTest extends ApiTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
     }
 
     private function passwordApiUrl(string $userId)

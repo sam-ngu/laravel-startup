@@ -25,7 +25,6 @@ class UserChangePictureTest extends ApiTestCase
         ], [
             'content-type' => 'form/multipart',
         ]);
-
     }
 
     public function test_user_can_only_change_profile_pic_for_themselves()
@@ -53,8 +52,4 @@ class UserChangePictureTest extends ApiTestCase
         $response = $this->updateProfilePicture($user);
         $response->assertStatus(401);
     }
-
-
-
-
 }

@@ -3,7 +3,6 @@
 
 namespace App\Helpers\Auth;
 
-
 class RequestHelper
 {
     /** A helper function for request classes, for authorisation
