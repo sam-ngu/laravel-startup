@@ -2,10 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\ApiTestCase;
-use Tests\TestCase;
 
 class LoginTest extends ApiTestCase
 {
@@ -16,7 +13,7 @@ class LoginTest extends ApiTestCase
     {
         return $this->postJson(self::LOGIN_URL, [
             'email' => $username,
-            'password' => $password
+            'password' => $password,
         ]);
     }
 
@@ -59,5 +56,4 @@ class LoginTest extends ApiTestCase
         $response = $this->login('some', '123');
         $response->assertStatus(422);
     }
-    
 }
