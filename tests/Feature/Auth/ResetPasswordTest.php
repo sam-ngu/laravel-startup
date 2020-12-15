@@ -6,15 +6,15 @@ use Tests\ApiTestCase;
 
 class ResetPasswordTest extends ApiTestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function test_user_password_can_be_reset()
     {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
     }
+
+    public function test_reset_confirmation_email_is_sent()
+    {
+
+    }
+
+
 }
