@@ -7,8 +7,9 @@ use App\Events\Models\User\UserProviderRegistered;
 use App\Exceptions\GeneralException;
 use App\Models\SocialAccount;
 use App\Models\User;
+use App\Repositories\Api\V1\UserRepository;
 
-class SocialiteHelper
+class SocialiteService
 {
     /**
      * @param $data
@@ -37,7 +38,7 @@ class SocialiteHelper
             // Get users first name and last name from their full name
             [$firstName, $lastName] = $this->getNameParts($data->getName());
 
-            $user = parent::create([
+            $user = app(UserRepository::class)->create([
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'email' => $email,
@@ -100,5 +101,22 @@ class SocialiteHelper
         }
 
         return [$firstName, $lastName];
+    }
+
+    /**
+     * List of the accepted third party provider types to login with.
+     *
+     * @return array
+     */
+    public function getAcceptedProviders()
+    {
+        return [
+            'bitbucket',
+            'facebook',
+            'google',
+            'github',
+            'linkedin',
+            'twitter',
+        ];
     }
 }

@@ -11,7 +11,7 @@ use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
 use App\Helpers\General\FileHelper;
 use App\Models\User;
-use App\Notifications\User\UserNeedsConfirmation;
+use App\Notifications\User\RegistrationConfirmation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -72,7 +72,7 @@ class UserRepository extends BaseRepository
 
                 //Send confirmation email if requested and account approval is off
                 if (isset($data['confirmation_email']) && $user->confirmed === false && ! config('access.users.requires_approval')) {
-                    $user->notify(new UserNeedsConfirmation($user->confirmation_code));
+                    $user->notify(new RegistrationConfirmation($user->confirmation_code));
                 }
 
                 event(new UserCreated($user));

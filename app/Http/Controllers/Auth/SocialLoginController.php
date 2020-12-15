@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Events\Auth\UserLoggedIn;
 use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Services\Socialite\SocialiteHelper;
+use App\Services\Socialite\SocialiteService;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -24,14 +24,14 @@ class SocialLoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public function login(Request $request, $provider, \App\Helpers\Auth\Socialite $socialiteHelper, SocialiteHelper $socialiteService)
+    public function login(Request $request, $provider, SocialiteService $socialiteService)
     {
         // There's a high probability something will go wrong
         $user = null;
 
         // If the provider is not an acceptable third party than kick back
         throw_if(
-            ! in_array($provider, $socialiteHelper->getAcceptedProviders()),
+            ! in_array($provider, $socialiteService->getAcceptedProviders()),
             GeneralJsonException::class,
             'Not an acceptable provider: ' . $provider
         );
