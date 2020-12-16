@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Models\User\UserConfirmed;
+use App\Exceptions\GeneralJsonException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ConfirmCodeRequest;
+use App\Models\User;
 use App\Notifications\User\RegistrationConfirmation;
 use App\Repositories\Api\V1\UserRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class ConfirmAccountController.
@@ -14,16 +20,30 @@ class ConfirmAccountController extends Controller
 
 
     /**
-     * @param $token
+     * @param $token -- the confirmation code passed from api
      *
      * @return mixed
      * @throws \App\Exceptions\GeneralException
      */
-    public function confirm($token, UserRepository $repository)
+    public function confirm(Request $request, $token, UserRepository $repository)
     {
-        $repository->confirm($token);
+        // find user by confirmationCode
+        $user = User::query()->where('confirmation_code', '=', $token)->first();
 
-        return redirect()->route('frontend.auth.login')->withFlashSuccess(__('exceptions.frontend.auth.confirmation.success'));
+        $codeIsInvalid = $user->confirmation_code !== $token && !($user instanceof User);
+
+        throw_if($codeIsInvalid, GeneralJsonException::class, 'Confirmation Code is invalid');
+
+        throw_if($user->confirmed === 1, GeneralJsonException::class, 'Your account is already confirmed.');
+
+        $user->confirmed = 1;
+        throw_if($user->save(), GeneralJsonException::class, 'Unable to confirm user');
+
+        event(new UserConfirmed($user));
+
+        return new JsonResponse([
+            'data' => 'confirmed'
+        ]);
     }
 
     /**
@@ -34,14 +54,20 @@ class ConfirmAccountController extends Controller
      */
     public function sendConfirmationEmail($uuid)
     {
-        $user = $this->user->findByUuid($uuid);
+        $user = User::query()->where('uuid', '=', $uuid)->first();
+
+        throw_if(!($user instanceof User), GeneralJsonException::class, 'User not found');
 
         if ($user->isConfirmed()) {
-            return redirect()->route('frontend.auth.login')->withFlashSuccess(__('exceptions.frontend.auth.confirmation.already_confirmed'));
+            return new JsonResponse([
+                'data' => 'User already confirmed'
+            ]);
         }
 
         $user->notify(new RegistrationConfirmation($user->confirmation_code));
-
-        return redirect()->route('frontend.auth.login')->withFlashSuccess(__('exceptions.frontend.auth.confirmation.resent'));
+        
+        return new JsonResponse([
+            'data' => 'succsss'
+        ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ConfirmAccountController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -26,6 +27,7 @@ Route::group([
 
 
     if (config('access.users.confirm_email')) {
+
         // verification routes
         Route::get('email/verify', [VerificationController::class, 'show']);
         Route::post('email/resend', [VerificationController::class, 'resend']);
@@ -33,8 +35,8 @@ Route::group([
     } else {
         // TODO: admin to approve user account
         // Confirm Account Routes
-//        Route::get('account/confirm/{token}', [AuthController::class, 'confirm'])->name('account.confirm');
-//        Route::get('account/confirm/resend/{uuid}', [ConfirmAccountController::class, 'sendConfirmationEmail'])->name('account.confirm.resend');
+        Route::get('account/confirm/{token}', [ConfirmAccountController::class, 'confirm'])->name('account.confirm');
+        Route::get('account/confirm/resend/{uuid}', [ConfirmAccountController::class, 'sendConfirmationEmail'])->name('account.confirm.resend');
     }
 
 
