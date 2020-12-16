@@ -2,6 +2,7 @@
 
 namespace App\Events\Auth;
 
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,9 +19,9 @@ class UserLoggedIn
     public $user;
 
     /**
-     * @param $user
+     * @param User|Authenticatable $user
      */
-    public function __construct(Authenticatable $user)
+    public function __construct($user)
     {
         $this->user = $user;
     }

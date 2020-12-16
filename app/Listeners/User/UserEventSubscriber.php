@@ -94,8 +94,5 @@ class UserEventSubscriber
             $this->logPasswordHistory($event->user);
         });
 
-        $events->listen(UserRegistered::class, function ($event) {
-            // TODO: send confirmation email to user
-        });
     }
 }

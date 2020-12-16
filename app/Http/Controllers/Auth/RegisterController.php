@@ -65,7 +65,6 @@ class RegisterController extends Controller
         // create the account but don't log them in.
         if (config('access.users.confirm_email') || config('access.users.requires_approval')) {
             event(new UserRegistered($user));
-
             $message = config('access.users.requires_approval') ?
                 __('exceptions.frontend.auth.confirmation.created_pending') :
                 __('exceptions.frontend.auth.confirmation.created_confirm');

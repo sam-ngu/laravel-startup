@@ -110,13 +110,6 @@ class SocialiteService
      */
     public function getAcceptedProviders()
     {
-        return [
-            'bitbucket',
-            'facebook',
-            'google',
-            'github',
-            'linkedin',
-            'twitter',
-        ];
+        return array_keys(config('services.socialite'));
     }
 }
