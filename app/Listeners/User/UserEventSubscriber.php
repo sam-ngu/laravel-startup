@@ -10,6 +10,9 @@ use App\Events\Models\User\UserPasswordChanged;
 use App\Events\Models\User\UserProviderRegistered;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
+use App\Notifications\User\RegistrationConfirmation;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
 
 class UserEventSubscriber
@@ -24,6 +27,16 @@ class UserEventSubscriber
                 'password' => $user->password, // Password already hashed & saved so just take from model
             ]);
         }
+    }
+
+    private function isUserNotConfirmed(User $user)
+    {
+        return $user->confirmed === false;
+    }
+
+    private function needAccountApproval()
+    {
+        return ! config('access.users.requires_approval');
     }
 
     /**
@@ -62,8 +75,21 @@ class UserEventSubscriber
             \Log::info('User Logged Out: ' . $event->user->full_name);
         });
 
-
         $events->listen(UserRegistered::class, function (UserRegistered $event) {
+
+            if ($this->isUserNotConfirmed($event->user) && !$this->needAccountApproval()) {
+                // to trigger Laravel built in verification
+                event(new Registered($event->user));
+            }
+        });
+
+        $events->listen(UserCreated::class, function (UserCreated $event) {
+            //Send confirmation email if requested and account approval is off
+            if ($this->isUserNotConfirmed($event->user) && !$this->needAccountApproval()) {
+                $event->user->notify(new VerifyEmail());
+
+            }
+            $this->logPasswordHistory($event->user);
         });
 
         $events->listen(UserProviderRegistered::class, function ($event) {
@@ -74,9 +100,6 @@ class UserEventSubscriber
             \Log::info('User Confirmed: '.$event->user->full_name);
         });
 
-        $events->listen(UserCreated::class, function (UserCreated $event) {
-            $this->logPasswordHistory($event->user);
-        });
 
         $events->listen(UserPasswordChanged::class, function ($event) {
             $this->logPasswordHistory($event->user);

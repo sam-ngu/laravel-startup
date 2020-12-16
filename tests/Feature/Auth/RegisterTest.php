@@ -10,13 +10,13 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Tests\ApiTestCase;
-use Tests\Utils\Database\Seeder;
+use Tests\Utils\Database\WithSeeder;
 use Tests\Utils\Traits\WithRegistration;
 
 class RegisterTest extends ApiTestCase
 {
     const REGISTER_URL = '/register';
-    use WithFaker, WithRegistration;
+    use WithFaker, WithRegistration, WithSeeder;
 
     protected function setUp() : void
     {
@@ -27,7 +27,7 @@ class RegisterTest extends ApiTestCase
     public function test_user_can_register()
     {
         Event::fake();
-        Seeder::seed();
+        $this->seed();
         // wrong email format will fail
 
         $response = $this->register('laksa', 'laa', 'laksa', 'Secretsecret123!!!!');
@@ -71,7 +71,7 @@ class RegisterTest extends ApiTestCase
             ->assertStatus(200);
     }
 
-    public function test_confirmation_email_is_sent_once_registered()
+    public function test_verify_email_is_sent_once_registered()
     {
         Notification::fake();
         $email = $this->faker->email;

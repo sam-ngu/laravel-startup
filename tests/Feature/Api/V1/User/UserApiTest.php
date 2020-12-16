@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Tests\ApiTestCase;
+use Tests\Utils\Database\WithSeeder;
 
 class UserApiTest extends ApiTestCase
 {
+    use WithSeeder;
+
     protected $admin;
 
     protected $uri = '/api/v1/users';
@@ -121,7 +124,9 @@ class UserApiTest extends ApiTestCase
 
     public function test_create()
     {
+        $this->seed();
         Event::fake();
+
 //        $fillables = collect((new User)->getFillable());
 
 //        $toFill = $fillables->random();
@@ -131,7 +136,7 @@ class UserApiTest extends ApiTestCase
 
         $response = $this->json('post', $this->uri, $dummy->toArray());
 
-//        $response->dump();
+        $response->dump();
         $result = $response->assertStatus(201)->json('data');
 
         Event::assertDispatched(UserCreated::class);

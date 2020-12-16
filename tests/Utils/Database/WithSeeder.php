@@ -5,9 +5,9 @@ namespace Tests\Utils\Database;
 
 use Illuminate\Support\Facades\Artisan;
 
-class Seeder
+trait WithSeeder
 {
-    public static function seed()
+    public function seed()
     {
         Artisan::call('db:seed');
     }

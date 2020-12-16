@@ -20,14 +20,7 @@ class ConfirmTest extends ApiTestCase
         $this->postJson();
     }
 
-    public function test_user_confirmation()
-    {
-        // register user
 
-        //
-    }
 
-    public function test_confirmation_email_is_sent()
-    {
-    }
+
 }

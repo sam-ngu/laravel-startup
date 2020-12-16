@@ -41,10 +41,6 @@ return [
                 'default' => [1],
             ],
         ],
-        'confirmation_code' => [
-            'type' => 'string',
-            'attributes' => ['nullable'],
-        ],
         'confirmed' => [
             'type' => 'boolean',
             'attributes' => [

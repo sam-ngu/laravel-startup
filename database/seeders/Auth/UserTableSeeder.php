@@ -28,7 +28,6 @@ class UserTableSeeder extends Seeder
             'last_name' => 'Istrator',
             'email' => 'admin@admin.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 
@@ -37,7 +36,6 @@ class UserTableSeeder extends Seeder
             'last_name' => 'User',
             'email' => 'executive@executive.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 
@@ -46,7 +44,6 @@ class UserTableSeeder extends Seeder
             'last_name' => 'User',
             'email' => 'user@user.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 

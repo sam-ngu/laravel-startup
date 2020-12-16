@@ -49,7 +49,6 @@ class UserRepository extends BaseRepository
                 'email' => data_get($data, 'email'),
                 'password' => data_get($data, 'password'),
                 'active' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
-                'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
             ]);
 
@@ -68,12 +67,6 @@ class UserRepository extends BaseRepository
                 // Add selected roles/permissions
                 $user->syncRoles(data_get($data, 'roles'));
                 $user->syncPermissions(data_get($data, 'permissions'));
-
-
-                //Send confirmation email if requested and account approval is off
-                if (isset($data['confirmation_email']) && $user->confirmed === false && ! config('access.users.requires_approval')) {
-                    $user->notify(new RegistrationConfirmation($user->confirmation_code));
-                }
 
                 event(new UserCreated($user));
 
