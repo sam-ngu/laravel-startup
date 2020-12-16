@@ -6,7 +6,6 @@ use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
 use App\Notifications\User\RegistrationConfirmation;
-use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
@@ -91,6 +90,4 @@ class RegisterTest extends ApiTestCase
 
         Notification::assertSentTo($user, RegistrationConfirmation::class);
     }
-
-
 }

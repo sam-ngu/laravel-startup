@@ -93,6 +93,5 @@ class UserEventSubscriber
         $events->listen(UserPasswordChanged::class, function ($event) {
             $this->logPasswordHistory($event->user);
         });
-
     }
 }
