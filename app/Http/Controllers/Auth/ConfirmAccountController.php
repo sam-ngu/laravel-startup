@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Events\Models\User\UserConfirmed;
 use App\Exceptions\GeneralJsonException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ConfirmCodeRequest;
 use App\Models\User;
 use App\Notifications\User\RegistrationConfirmation;
 use App\Repositories\Api\V1\UserRepository;
@@ -30,7 +29,7 @@ class ConfirmAccountController extends Controller
         // find user by confirmationCode
         $user = User::query()->where('confirmation_code', '=', $token)->first();
 
-        $codeIsInvalid = $user->confirmation_code !== $token && !($user instanceof User);
+        $codeIsInvalid = $user->confirmation_code !== $token && ! ($user instanceof User);
 
         throw_if($codeIsInvalid, GeneralJsonException::class, 'Confirmation Code is invalid');
 
@@ -42,7 +41,7 @@ class ConfirmAccountController extends Controller
         event(new UserConfirmed($user));
 
         return new JsonResponse([
-            'data' => 'confirmed'
+            'data' => 'confirmed',
         ]);
     }
 
@@ -56,18 +55,18 @@ class ConfirmAccountController extends Controller
     {
         $user = User::query()->where('uuid', '=', $uuid)->first();
 
-        throw_if(!($user instanceof User), GeneralJsonException::class, 'User not found');
+        throw_if(! ($user instanceof User), GeneralJsonException::class, 'User not found');
 
         if ($user->isConfirmed()) {
             return new JsonResponse([
-                'data' => 'User already confirmed'
+                'data' => 'User already confirmed',
             ]);
         }
 
         $user->notify(new RegistrationConfirmation($user->confirmation_code));
 
         return new JsonResponse([
-            'data' => 'succsss'
+            'data' => 'succsss',
         ]);
     }
 }

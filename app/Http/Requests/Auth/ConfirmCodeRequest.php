@@ -5,7 +5,6 @@ namespace App\Http\Requests\Auth;
 use App\Rules\Auth\ConfirmationCodeExists;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ConfirmCodeRequest extends FormRequest
 {

@@ -10,7 +10,6 @@ use App\Events\Models\User\UserPasswordChanged;
 use App\Events\Models\User\UserProviderRegistered;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
-use App\Notifications\User\RegistrationConfirmation;
 use Illuminate\Support\Carbon;
 
 class UserEventSubscriber
@@ -65,7 +64,6 @@ class UserEventSubscriber
 
 
         $events->listen(UserRegistered::class, function (UserRegistered $event) {
-
         });
 
         $events->listen(UserProviderRegistered::class, function ($event) {

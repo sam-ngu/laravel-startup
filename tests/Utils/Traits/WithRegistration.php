@@ -3,7 +3,6 @@
 
 namespace Tests\Utils\Traits;
 
-
 trait WithRegistration
 {
     protected function register(string $firstName, string $lastName, string $email, string $password)

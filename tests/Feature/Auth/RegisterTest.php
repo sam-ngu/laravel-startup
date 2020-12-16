@@ -6,7 +6,6 @@ use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;

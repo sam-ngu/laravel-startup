@@ -2,10 +2,8 @@
 
 namespace App\Rules\Auth;
 
-use App\Exceptions\GeneralJsonException;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 
 class ConfirmationCodeExists implements Rule
 {
@@ -34,7 +32,7 @@ class ConfirmationCodeExists implements Rule
 
         $hasUserAlreadyConfirmed = $user->confirmed === 1;
 
-        return ($user instanceof User) && !$hasUserAlreadyConfirmed;
+        return ($user instanceof User) && ! $hasUserAlreadyConfirmed;
     }
 
     /**

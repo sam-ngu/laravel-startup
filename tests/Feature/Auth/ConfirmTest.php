@@ -13,7 +13,6 @@ class ConfirmTest extends ApiTestCase
 
     private function confirmUrl()
     {
-        
     }
 
     private function confirm()
@@ -26,15 +25,9 @@ class ConfirmTest extends ApiTestCase
         // register user
 
         //
-
-
     }
 
     public function test_confirmation_email_is_sent()
     {
-
-
     }
-
-
 }
