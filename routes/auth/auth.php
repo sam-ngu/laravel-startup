@@ -33,10 +33,12 @@ Route::group([
         Route::post('email/resend', [VerificationController::class, 'resend']);
         Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']);
     } else {
-        // TODO: admin to approve user account
-        // Confirm Account Routes
-        Route::get('account/confirm/{token}', [ConfirmAccountController::class, 'confirm'])->name('account.confirm');
-        Route::get('account/confirm/resend/{uuid}', [ConfirmAccountController::class, 'sendConfirmationEmail'])->name('account.confirm.resend');
+        // TODO: create admin approve user account routes
+
+
+        // Confirm Account Routes: not needed? taken care by laravel
+//        Route::get('account/confirm/{token}', [ConfirmAccountController::class, 'confirm'])->name('account.confirm');
+//        Route::get('account/confirm/resend/{uuid}', [ConfirmAccountController::class, 'sendConfirmationEmail'])->name('account.confirm.resend');
     }
 
 

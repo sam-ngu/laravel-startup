@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Request;
 
 /**
- * Class ConfirmAccountController.
+ * Class ConfirmAccountController.  THIS CLASS IS DEPRECATED, handled by laravel auth
  */
 class ConfirmAccountController extends Controller
 {
@@ -65,7 +65,7 @@ class ConfirmAccountController extends Controller
         }
 
         $user->notify(new RegistrationConfirmation($user->confirmation_code));
-        
+
         return new JsonResponse([
             'data' => 'succsss'
         ]);

@@ -11,21 +11,14 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Tests\ApiTestCase;
 use Tests\Utils\Database\Seeder;
+use Tests\Utils\Traits\WithRegistration;
 
 class RegisterTest extends ApiTestCase
 {
     const REGISTER_URL = '/register';
-    use WithFaker;
+    use WithFaker, WithRegistration;
 
-    private function register(string $firstName, string $lastName, string $email, string $password)
-    {
-        return $this->postJson(self::REGISTER_URL, [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password' => $password,
-        ]);
-    }
+
 
     protected function setUp() : void
     {
