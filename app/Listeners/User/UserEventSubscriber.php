@@ -65,17 +65,7 @@ class UserEventSubscriber
 
 
         $events->listen(UserRegistered::class, function (UserRegistered $event) {
-            /*
-             * If users have to confirm their email and this is not a social account,
-             * and the account does not require admin approval
-             * send the confirmation email
-             *
-             * If this is a social account they are confirmed through the social provider by default
-             */
-            // Pretty much only if account approval is off, confirm email is on, and this isn't a social account.
-            if (config('access.users.confirm_email')) {
-                $event->user->notify(new RegistrationConfirmation($event->user->confirmation_code));
-            }
+
         });
 
         $events->listen(UserProviderRegistered::class, function ($event) {

@@ -29,9 +29,9 @@ Route::group([
     if (config('access.users.confirm_email')) {
 
         // verification routes
-        Route::get('email/verify', [VerificationController::class, 'show']);
-        Route::post('email/resend', [VerificationController::class, 'resend']);
-        Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']);
+        Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+        Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+        Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
     } else {
         // TODO: create admin approve user account routes
 
