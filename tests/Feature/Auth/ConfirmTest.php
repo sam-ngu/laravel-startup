@@ -19,8 +19,4 @@ class ConfirmTest extends ApiTestCase
     {
         $this->postJson();
     }
-
-
-
-
 }

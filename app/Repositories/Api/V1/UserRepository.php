@@ -11,7 +11,6 @@ use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
 use App\Helpers\General\FileHelper;
 use App\Models\User;
-use App\Notifications\User\RegistrationConfirmation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;

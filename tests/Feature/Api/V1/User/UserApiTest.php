@@ -8,8 +8,6 @@ use App\Events\Models\User\UserUpdated;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
@@ -30,7 +28,6 @@ class UserApiTest extends ApiTestCase
     {
         parent::setUp();
         $this->admin = $this->loginAsAdmin();
-
     }
 
 
@@ -132,8 +129,8 @@ class UserApiTest extends ApiTestCase
 
         $dummy = User::factory()->make();
 
-        $response = $this->json('post', $this->uri, array_merge($dummy->toArray(),[
-            'roles' => [config('access.users.default_role')]
+        $response = $this->json('post', $this->uri, array_merge($dummy->toArray(), [
+            'roles' => [config('access.users.default_role')],
         ]));
 
         $result = $response->assertStatus(201)->json('data');
@@ -149,9 +146,9 @@ class UserApiTest extends ApiTestCase
         $dummy = User::factory()->create();
         $dummy2 = User::factory()->make();
 
-        $fillables = collect((new User)->getFillable())->filter(fn($fillable) => !in_array($fillable, ['uuid', 'password']) );
+        $fillables = collect((new User)->getFillable())->filter(fn ($fillable) => ! in_array($fillable, ['uuid', 'password']));
 
-        $fillables->each(function ($fillable) use ($dummy, $dummy2){
+        $fillables->each(function ($fillable) use ($dummy, $dummy2) {
             $response = $this->json('patch', $this->uri . '/' . $dummy->id, [
                 $fillable => data_get($dummy2, $fillable),
             ]);
@@ -161,7 +158,6 @@ class UserApiTest extends ApiTestCase
 
             $this->assertEquals(data_get($dummy2, $fillable), data_get($dummy->refresh(), $fillable));
         });
-
     }
 
 

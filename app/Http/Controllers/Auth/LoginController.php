@@ -83,17 +83,18 @@ class LoginController extends Controller
     public function logout(Request $request, TokenRepository $tokenRepository)
     {
         // TODO: complete this invalidate current logged in user
-        if(auth()->check()){
+        if (auth()->check()) {
             $tokenRepository->revokeAccessToken();
             auth()->user()->token()->revoke();
+
             return new JsonResponse([
-                'data' => 'success'
+                'data' => 'success',
             ]);
         }
-        return new JsonResponse([
-            'error' => 'Logout Unsuccessful. Something went wrong.'
-        ], 500);
 
+        return new JsonResponse([
+            'error' => 'Logout Unsuccessful. Something went wrong.',
+        ], 500);
     }
 
     public function loginAs(Request $request, User $user)

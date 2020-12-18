@@ -3,7 +3,6 @@
 namespace Tests;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Config;
 
 /**
  * Class TestCase.

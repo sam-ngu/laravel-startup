@@ -10,7 +10,6 @@ use App\Events\Models\User\UserPasswordChanged;
 use App\Events\Models\User\UserProviderRegistered;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
-use App\Notifications\User\RegistrationConfirmation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
@@ -76,8 +75,7 @@ class UserEventSubscriber
         });
 
         $events->listen(UserRegistered::class, function (UserRegistered $event) {
-
-            if ($this->isUserNotConfirmed($event->user) && !$this->needAccountApproval()) {
+            if ($this->isUserNotConfirmed($event->user) && ! $this->needAccountApproval()) {
                 // to trigger Laravel built in verification
                 event(new Registered($event->user));
             }
@@ -85,9 +83,8 @@ class UserEventSubscriber
 
         $events->listen(UserCreated::class, function (UserCreated $event) {
             //Send confirmation email if requested and account approval is off
-            if ($this->isUserNotConfirmed($event->user) && !$this->needAccountApproval()) {
+            if ($this->isUserNotConfirmed($event->user) && ! $this->needAccountApproval()) {
                 $event->user->notify(new VerifyEmail());
-
             }
             $this->logPasswordHistory($event->user);
         });
