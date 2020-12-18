@@ -112,7 +112,7 @@ class UserController extends Controller
 
         event(new UserDeleted($user));
 
-        return new JsonResponse(null, 204);
+        return new JsonResponse(['data' => 'success'], 200);
     }
 
     public function updateProfilePicture(ChangeProfilePictureRequest $request, User $user, UserRepository $repository)

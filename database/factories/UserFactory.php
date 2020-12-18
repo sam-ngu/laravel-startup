@@ -31,7 +31,6 @@ class UserFactory extends Factory
             'password' => 'secret',
             'password_changed_at' => null,
             'remember_token' => Str::random(10),
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'active' => 1,
             'confirmed' => 1,
         ];

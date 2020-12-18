@@ -3,12 +3,18 @@
 namespace Tests;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class TestCase.
  */
 abstract class ApiTestCase extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     /**
      * Login the given administrator or create the first if none supplied.
      *

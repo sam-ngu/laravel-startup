@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Laravel\Passport\TokenRepository;
 
 class LoginController extends Controller
 {
@@ -76,6 +78,22 @@ class LoginController extends Controller
                 ],
             ], 200)
             : redirect()->intended($this->redirectPath());
+    }
+
+    public function logout(Request $request, TokenRepository $tokenRepository)
+    {
+        // TODO: complete this invalidate current logged in user
+        if(auth()->check()){
+            $tokenRepository->revokeAccessToken();
+            auth()->user()->token()->revoke();
+            return new JsonResponse([
+                'data' => 'success'
+            ]);
+        }
+        return new JsonResponse([
+            'error' => 'Logout Unsuccessful. Something went wrong.'
+        ], 500);
+
     }
 
     public function loginAs(Request $request, User $user)
