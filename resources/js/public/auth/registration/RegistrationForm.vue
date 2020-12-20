@@ -10,31 +10,28 @@
                 label="First Name"
                 v-model="inputData.first_name"
                 :rules="rules.name"
-            >
-            </v-text-field>
+            />
 
             <v-text-field
                 label="Last Name"
                 v-model="inputData.last_name"
                 :rules="rules.name"
-            >
-            </v-text-field>
+            />
+
 
             <v-text-field
                 label="Email Address"
                 type="email"
                 v-model="inputData.email"
                 :rules="rules.email"
-            >
-            </v-text-field>
+            />
 
             <v-select
                 label="Where did you hear about us?"
                 :items="sourceList"
                 v-model="inputData.source"
                 :rules="rules.source"
-            >
-            </v-select>
+            />
 
             <text-field-password
                 label="Password"
@@ -67,10 +64,16 @@
                            @verify="onVerify"
                            @expired="onExpired"
                            size="invisible"
-
+            />
+            <v-btn
+                label="submit"
+                color="primary"
+                block
+                :disabled="!states.is_form_valid || !states.read_agreement"
+                @click="submitForm"
             >
-            </vue-recaptcha>
-            <v-btn label="submit" color="primary" block :disabled="!states.is_form_valid || !states.read_agreement" @click="submitForm">Submit</v-btn>
+                Submit
+            </v-btn>
         </div>
 
     </v-card>
@@ -177,7 +180,7 @@
 
             },
             onExpired: function () {
-                console.log('Expired')
+                console.log('Expired');
             },
             resetRecaptcha () {
                 this.$refs.recaptcha.reset() // Direct call reset method

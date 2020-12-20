@@ -85,7 +85,7 @@
                 if(!this.$refs.form.validate())
                     return swalMessage('error', 'Please complete the form');
                 swalLoader();
-                let uri = '/password/email';
+                let uri = '/reset-password';
 
                 return axios.post(uri, this.inputData)
                     .then((response) => {

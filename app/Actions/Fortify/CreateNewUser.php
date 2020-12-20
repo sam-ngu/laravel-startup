@@ -2,7 +2,10 @@
 
 namespace App\Actions\Fortify;
 
+use App\Helpers\Auth\PasswordHelper;
 use App\Models\User;
+use App\Repositories\Api\V1\UserRepository;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -29,13 +32,18 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'password' => $this->passwordRules(),
+            'password' => PasswordHelper::rules(),
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-        ]);
+        $repository = new UserRepository();
+
+        return $repository->create(array_merge(
+            Arr::only($input, ['name', 'email', 'password']),
+            [
+                'roles' => [config('access.users.default_role')],
+            ]
+        ));
+
+
     }
 }

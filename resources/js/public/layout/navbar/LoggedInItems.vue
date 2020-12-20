@@ -121,7 +121,10 @@
             },
             logout(){
                 // redirect to logout
-                window.location.href = '/logout';
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/';
+                    })
             },
             profile(){
                 // redirect to user profile
