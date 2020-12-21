@@ -24,7 +24,7 @@
                     <base-avatar
                         :avatar-location="user.avatar_location"
                         :size="45"
-                        :name="user.full_name || ''"></base-avatar>
+                        :name="user.name || ''"></base-avatar>
                 </v-list-item-action>
 
             </v-list-item>
@@ -84,7 +84,7 @@
                 return [
                     {
                         title: "Name",
-                        subtitle: this.user.full_name,
+                        subtitle: this.user.name,
                         actionIcon: "mdi-chevron-right",
                         action: this.editName,
                         disabled: false,

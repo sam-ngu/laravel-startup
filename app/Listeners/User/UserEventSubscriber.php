@@ -67,11 +67,11 @@ class UserEventSubscriber
 
             $event->user->save();
 
-            \Log::info('User Logged In: ' . $event->user->full_name);
+            \Log::info('User Logged In: ' . $event->user->name);
         });
 
         $events->listen(UserLoggedOut::class, function (UserLoggedOut $event) {
-            \Log::info('User Logged Out: ' . $event->user->full_name);
+            \Log::info('User Logged Out: ' . $event->user->name);
         });
 
 //        $events->listen(UserRegistered::class, function (UserRegistered $event) {
@@ -90,11 +90,11 @@ class UserEventSubscriber
         });
 
         $events->listen(UserProviderRegistered::class, function ($event) {
-            \Log::info('User Provider Registered: '.$event->user->full_name);
+            \Log::info('User Provider Registered: '.$event->user->name);
         });
 
         $events->listen(UserConfirmed::class, function ($event) {
-            \Log::info('User Confirmed: '.$event->user->full_name);
+            \Log::info('User Confirmed: '.$event->user->name);
         });
 
 

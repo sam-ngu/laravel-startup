@@ -10,13 +10,13 @@
                                 <div v-on="{...tooltip, ...menu}">
                                     <base-avatar
                                         class="pt-2"
-                                        :name="user.full_name"
+                                        :name="user.name"
                                         :size="40"
                                         :avatar-location="user.avatar_location"
                                     />
                                 </div>
                             </template>
-                            <span>{{user.full_name}}</span>
+                            <span>{{user.name}}</span>
                         </v-tooltip>
                 </template>
 
@@ -54,7 +54,7 @@
 
                 <v-list-item-content >
                     <v-list-item-title >
-                        {{user.full_name}}
+                        {{user.name}}
                     </v-list-item-title>
 
                 </v-list-item-content>

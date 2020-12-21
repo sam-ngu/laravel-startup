@@ -124,7 +124,7 @@ class LoginController extends Controller
 
         // Add new session variables
         session(['admin_user_id' => $request->user()->id]);
-        session(['admin_user_name' => $request->user()->full_name]);
+        session(['admin_user_name' => $request->user()->name]);
         session(['temp_user_id' => $user->id]);
 
         // Login user

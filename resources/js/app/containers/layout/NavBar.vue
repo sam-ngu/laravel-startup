@@ -70,7 +70,10 @@
                 isSidebarOpened.value = !isSidebarOpened.value;
             },
             logout(){
-                window.location.href = '/logout';
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/logout';
+                    })
             },
         },
 

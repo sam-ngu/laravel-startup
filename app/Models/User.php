@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -17,6 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable,
         HasFactory,
+        TwoFactorAuthenticatable,
         UserMethod,
         HasRoles,
         SoftDeletes,

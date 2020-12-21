@@ -96,7 +96,11 @@
                         return axios.post(uri, this.inputData);
                     })
                     .then((response) => {
-                        window.location = response.data.data.redirect;
+                        if(response.data.two_factor){
+                            // show qr code challenge page
+                        }else {
+                            window.location = '/app';
+                        }
                         // console.log(redirect)
                         // console.trace("login redirect");
                     })
