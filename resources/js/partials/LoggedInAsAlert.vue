@@ -6,7 +6,7 @@
         type="info"
         outlined
     >
-        You are currently logged in as {{ session.user.first_name + ' ' + session.user.last_name }}.
+        You are currently logged in as {{ session.user.name }}.
         <a class="accent--text" href="/logout-as">Re-Login as {{session.admin_user_name}}</a>.
     </v-alert>
 </template>

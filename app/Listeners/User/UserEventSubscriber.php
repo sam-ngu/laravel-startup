@@ -74,12 +74,12 @@ class UserEventSubscriber
             \Log::info('User Logged Out: ' . $event->user->full_name);
         });
 
-        $events->listen(UserRegistered::class, function (UserRegistered $event) {
-            if ($this->isUserNotConfirmed($event->user) && ! $this->needAccountApproval()) {
-                // to trigger Laravel built in verification
-                event(new Registered($event->user));
-            }
-        });
+//        $events->listen(UserRegistered::class, function (UserRegistered $event) {
+//            if ($this->isUserNotConfirmed($event->user) && ! $this->needAccountApproval()) {
+//                // to trigger Laravel built in verification
+//                event(new Registered($event->user));
+//            }
+//        });
 
         $events->listen(UserCreated::class, function (UserCreated $event) {
             //Send confirmation email if requested and account approval is off

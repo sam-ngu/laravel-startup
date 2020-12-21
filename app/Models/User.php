@@ -88,6 +88,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function toSearchableArray()
     {
-        return $this->only(['id', 'first_name', 'last_name']);
+        return $this->only(['id', 'name']);
     }
 }

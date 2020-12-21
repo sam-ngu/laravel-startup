@@ -79,6 +79,9 @@
         props: {},
         computed: {},
         methods: {
+            getCsrfToken(){
+                return axios.get('/sanctum/csrf-cookie');
+            },
             submitForm(){
                 if(!this.$refs.form.validate()){
                     swalMessage("error", "Please complete the form");
@@ -88,14 +91,15 @@
 
                 let uri = "/login";
 
-                axios.post(uri, this.inputData)
-                    .then(function(response){
-                        console.log({response});
+                this.getCsrfToken()
+                    .then((response) => {
+                        return axios.post(uri, this.inputData);
+                    })
+                    .then((response) => {
                         window.location = response.data.data.redirect;
                         // console.log(redirect)
                         // console.trace("login redirect");
-
-                    }.bind(this))
+                    })
                     .catch((response) => {
                         // if(response.)
                         response = response.response;
@@ -108,8 +112,7 @@
                             return swalMessage('error', payload)
                         }
                         axiosErrorCallback(response, response.data.message)
-                    })
-
+                    });
             },
         },
         mounted() {

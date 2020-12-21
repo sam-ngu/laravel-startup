@@ -39,9 +39,8 @@ class LoginTest extends ApiTestCase
 
         $this->assertTrue(auth()->check());
 
-        $response = $this->getJson(self::LOGOUT_URL);
+        $response = $this->postJson(self::LOGOUT_URL);
 
-        $response->dump();
         $response->assertStatus(204);
 
         // test if user is still logged in

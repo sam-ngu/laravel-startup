@@ -75,7 +75,11 @@
                 this.$store.commit('app/setSidebar', true);
             },
             logout(){
-                window.location.href = '/logout';
+                
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/';
+                    })
             },
             control(){
                 this.$router.push({

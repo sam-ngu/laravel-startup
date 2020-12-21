@@ -23,19 +23,19 @@ class PermissionRoleTableSeeder extends Seeder
     {
         $this->disableForeignKeys();
 
-        function createRoleAttribute($roleName)
+        $createRoleAttribute = function($roleName)
         {
             return [
                 'name' => $roleName,
-                'guard_name' => 'api',
+                'guard_name' => 'web',
             ];
         };
 
         // Create Roles
-        $admin = Role::create(createRoleAttribute(config('access.users.admin_role')));
+        $admin = Role::create($createRoleAttribute(config('access.users.admin_role')));
 
-        $executive = Role::create(createRoleAttribute('executive'));
-        $user = Role::create(createRoleAttribute(config('access.users.default_role')));
+        $executive = Role::create($createRoleAttribute('executive'));
+        $user = Role::create($createRoleAttribute(config('access.users.default_role')));
 
         // Create Permissions
         $permissions = ['view backend'];

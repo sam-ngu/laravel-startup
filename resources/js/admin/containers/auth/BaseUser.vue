@@ -37,13 +37,8 @@ export default {
             ],
             resourceFields: [
                 {
-                    label: 'First Name',
-                    key: 'first_name',
-                    type: TextField,
-                },
-                {
-                    label: 'Last Name',
-                    key: 'last_name',
+                    label: 'Name',
+                    key: 'name',
                     type: TextField,
                 },
                 {

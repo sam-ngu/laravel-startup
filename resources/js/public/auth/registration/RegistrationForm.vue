@@ -7,14 +7,8 @@
         </v-card-title>
         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
             <v-text-field
-                label="First Name"
-                v-model="inputData.first_name"
-                :rules="rules.name"
-            />
-
-            <v-text-field
-                label="Last Name"
-                v-model="inputData.last_name"
+                label="Name"
+                v-model="inputData.name"
                 :rules="rules.name"
             />
 
@@ -103,8 +97,7 @@
                     'Other'
                 ],
                 inputData: {
-                    first_name: null,
-                    last_name: null,
+                    name: null,
                     email: null,
                     password: null,
                     password_confirmation: null,
@@ -168,14 +161,12 @@
                 let uri = "/register";
 
                 axios.post(uri, this.inputData)
-                    .then(function(response){
-
-                        let redirect = response.data.redirect;
+                    .then((response) => {
                         swalMessage("success", response.data.data)
                             .then(function (response) {
-                                window.location = redirect;
+                                window.location = '/app';
                             });
-                    }.bind(this))
+                    })
                     .catch(axiosErrorCallback)
 
             },
@@ -186,9 +177,7 @@
                 this.$refs.recaptcha.reset() // Direct call reset method
             }
         },
-        mounted() {
 
-        },
     }
 </script>
 

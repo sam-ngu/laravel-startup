@@ -36,11 +36,10 @@ class SocialiteService
             throw_if(! config('access.registration'), GeneralException::class, __('exceptions.frontend.auth.registration_disabled'));
 
             // Get users first name and last name from their full name
-            [$firstName, $lastName] = $this->getNameParts($data->getName());
+//            [$firstName, $lastName] = $this->getNameParts($data->getName());
 
             $user = app(UserRepository::class)->create([
-                'first_name' => $firstName,
-                'last_name' => $lastName,
+                'name' => $data->getName(),
                 'email' => $email,
                 'active' => 1,
                 'confirmed' => 1,

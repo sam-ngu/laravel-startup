@@ -55,7 +55,7 @@ class RegisterController extends Controller
         abort_unless(config('access.registration'), 404);
 
         $user = $repository->create(array_merge(
-            $request->only('first_name', 'last_name', 'email', 'password'),
+            $request->only('name', 'email', 'password'),
             [
                 'roles' => [config('access.users.default_role')],
             ]
