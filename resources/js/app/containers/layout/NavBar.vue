@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import {useAppStateStore} from "../../../hook/app-state-store";
+    import {useAppStateStore} from "../../store/app-state-store";
 
     const {isSidebarOpened} = useAppStateStore();
 

@@ -8,30 +8,57 @@
             floating
             @input="($event)=>{ setSidebarOpened($event) }"
     >
-        <v-list inset>
+        <v-list>
 
             <sidebar-list-tile to="/" title="Dashboard" icon="mdi-home"/>
 
             <sidebar-list-tile :to="{name: 'user-profile'}" title="My Profile" icon="mdi-account-circle"/>
 
         </v-list>
+
+        <template v-slot:append>
+            <v-list nav>
+
+                    <v-list-item>
+                        <v-list-item-icon>
+                            <base-avatar :size="45" :name="user.name"/>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-btn text color="primary">Logout <v-icon right>mdi-exit-to-app</v-icon></v-btn>
+                        </v-list-item-content>
+                    </v-list-item>
+
+
+            </v-list>
+        </template>
+
     </v-navigation-drawer>
 </template>
 
 <script>
     import SidebarListTile from "./SidebarListTile";
-    import {useAppStateStore} from "../../../../hook/app-state-store";
+    import {useAppStateStore} from "../../../store/app-state-store";
+    import BaseAvatar from "../../../../partials/BaseAvatar";
+    import {computed} from "@vue/composition-api";
+    import {useAuthStore} from "../../../store/auth-store";
 
     const {isSidebarOpened} = useAppStateStore();
+    const {getUser} = useAuthStore();
 
     export default {
         name: "sidebar",
-        components: {SidebarListTile},
+        components: {BaseAvatar, SidebarListTile},
         setup(){
             function setSidebarOpened(value){
                 isSidebarOpened.value = value;
             }
+
+            const user = computed(() => {
+                return getUser();
+            });
+
             return {
+                user,
                 setSidebarOpened,
                 showSidebar: isSidebarOpened
             }
