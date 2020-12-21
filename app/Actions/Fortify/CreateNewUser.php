@@ -42,7 +42,5 @@ class CreateNewUser implements CreatesNewUsers
                 'roles' => [config('access.users.default_role')],
             ]
         ));
-
-
     }
 }

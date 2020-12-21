@@ -23,8 +23,7 @@ class PermissionRoleTableSeeder extends Seeder
     {
         $this->disableForeignKeys();
 
-        $createRoleAttribute = function($roleName)
-        {
+        $createRoleAttribute = function ($roleName) {
             return [
                 'name' => $roleName,
                 'guard_name' => 'web',
