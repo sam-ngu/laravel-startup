@@ -7,16 +7,6 @@
                 tooltip="Back"
                 @click="back"
             />
-<!--            <v-tooltip bottom>-->
-<!--                <template v-slot:activator="{on}">-->
-
-<!--                    <v-btn v-on="on"  @click="back" icon>-->
-<!--                        <v-icon color="grey darken-4">mdi-keyboard-backspace</v-icon>-->
-<!--                    </v-btn>-->
-<!--                </template>-->
-<!--                <span>Back</span>-->
-<!--            </v-tooltip>-->
-
             <h3 class=" my-auto text-capitalize" v-text="title"></h3>
         </v-row>
 
@@ -30,8 +20,6 @@
                         <slot name="body">
 
                         </slot>
-
-
                     </v-card-text>
 
                     <v-card-actions>

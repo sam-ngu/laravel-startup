@@ -1,10 +1,5 @@
 <template>
     <v-card>
-        <!--photo-->
-        <!--name-->
-        <!--birthday-->
-        <!--password-->
-
         <v-card-title>
             <h1 class="title">Profile</h1>
         </v-card-title>

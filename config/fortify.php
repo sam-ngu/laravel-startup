@@ -137,6 +137,7 @@ return [
 //        Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
+            // makes user to reente password in order to enable 2fa
             'confirmPassword' => true,
         ]),
     ],

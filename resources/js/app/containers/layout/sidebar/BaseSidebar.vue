@@ -24,7 +24,7 @@
                             <base-avatar :size="45" :name="user.name"/>
                         </v-list-item-icon>
                         <v-list-item-content>
-                            <v-btn text color="primary">Logout <v-icon right>mdi-exit-to-app</v-icon></v-btn>
+                            <v-btn @click="logout" text color="primary">Logout <v-icon right>mdi-exit-to-app</v-icon></v-btn>
                         </v-list-item-content>
                     </v-list-item>
 
@@ -57,7 +57,14 @@
                 return getUser();
             });
 
+            const logout = function (){
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/';
+                    })
+            }
             return {
+                logout,
                 user,
                 setSidebarOpened,
                 showSidebar: isSidebarOpened
