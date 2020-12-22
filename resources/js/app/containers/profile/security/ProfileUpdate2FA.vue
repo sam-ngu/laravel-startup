@@ -54,7 +54,15 @@ export default {
     },
     methods: {
         save() {
-            openConfirmPasswordDialog();
+            openConfirmPasswordDialog()
+                .then((response) => {
+                    console.log('heyy');
+                    console.log({response})
+                })
+                .catch((error) => {
+
+                });
+
             // let method;
             //
             // if (this.inputData.enabled) {

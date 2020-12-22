@@ -47,7 +47,7 @@
 import TextFieldPassword from "../../app/components/TextFieldPassword";
 
 import {reactive, ref} from '@vue/composition-api';
-import {useConfirmPassword} from "../../utils/auth/confirm-password";
+import {useConfirmPassword, useConfirmPasswordPromise} from "../../utils/auth/confirm-password";
 import ButtonTooltip from "../ButtonTooltip";
 
 export default {
@@ -57,20 +57,29 @@ export default {
 
         const {isConfirmPasswordDialogOpened, closeConfirmPasswordDialog} = useConfirmPassword();
 
+        const {confirmPasswordPromise} = useConfirmPasswordPromise();
+
         const inputData = reactive({
             password: ''
         });
 
-        const errors = ref({})
+        const errors = ref({});
 
         const confirmPassword = () => {
             return axios.post('/user/confirm-password', {
                 password: inputData.password
             }).then((response) => {
                 closeConfirmPasswordDialog();
-                return true;
+
+                // resolve the dialog promise
+                console.log(confirmPasswordPromise);
+                confirmPasswordPromise.resolve(true);
+
+
             }).catch((error) => {
                 errors.value = error.response.data.errors;
+
+                confirmPasswordPromise.reject(errors.value);
             })
         }
 
