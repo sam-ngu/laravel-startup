@@ -1,6 +1,7 @@
 require('../bootstrap');
 
 import Vue from 'vue';
+import './../install-composition-api';
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 import upperFirst from 'lodash/upperFirst';
@@ -8,11 +9,9 @@ import camelCase from 'lodash/camelCase';
 import vuetifyopt from "../vuetifyopt";
 import store from "./vuex-store/store";
 import routes from "./routes/routes";
-import VueCompositionAPI from '@vue/composition-api'
 window.Vue = Vue;
 
 
-Vue.use(VueCompositionAPI);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 

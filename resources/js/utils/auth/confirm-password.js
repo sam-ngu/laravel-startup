@@ -1,4 +1,4 @@
-import appRoutes from "../../app/routes/routes";
+import '../../install-composition-api';
 import {ref} from '@vue/composition-api';
 
 
