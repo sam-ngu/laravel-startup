@@ -28,7 +28,7 @@ export default {
         value: "",
         rules: {
             type: Array,
-            default: [],
+            default: () => [],
         }
     },
 

@@ -29,8 +29,10 @@
 <script>
 import ProfileUpdateLayout from "../ProfileUpdateLayout";
 import {useAuthStore} from "../../../store/auth-store";
+import {useConfirmPassword} from "../../../../utils/auth/confirm-password";
 
 const {getUser} = useAuthStore();
+const {openConfirmPasswordDialog, closeConfirmPasswordDialog} = useConfirmPassword();
 
 export default {
     name: 'ProfileUpdate2FA',
@@ -52,29 +54,32 @@ export default {
     },
     methods: {
         save() {
-            let method;
-
-            if (this.inputData.enabled) {
-                method = 'POST';
-            } else {
-                method = 'DELETE';
-            }
-
-            axios({
-                method,
-                url: '/user/two-factor-authentication'
-            }).then((response) => {
-
-            })
+            openConfirmPasswordDialog();
+            // let method;
+            //
+            // if (this.inputData.enabled) {
+            //     method = 'POST';
+            // } else {
+            //     method = 'DELETE';
+            // }
+            //
+            // axios({
+            //     method,
+            //     url: '/user/two-factor-authentication'
+            // }).then((response) => {
+            //
+            // })
         },
         confirmPassword(){
-            
+
         },
         showQrCode(){
-            return axios.get('/user/two-factor-qr-code')
-                .then((response) => {
-                    this.qrCode = response.data.svg;
-                })
+            openConfirmPasswordDialog();
+
+            // return axios.get('/user/two-factor-qr-code')
+            //     .then((response) => {
+            //         this.qrCode = response.data.svg;
+            //     })
         }
     },
     mounted() {
