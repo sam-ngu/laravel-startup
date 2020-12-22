@@ -5,11 +5,14 @@
             <div>
                 <v-form v-model="states.is_form_valid" @submit.prevent="save">
 
-                    <v-btn @click="showQrCode" color="primary" >
+                    <v-btn @click="showQrCode" color="primary">
                         {{ enabled ? 'Disable' : 'Enable' }}
                     </v-btn>
 
-                    <img  :src="qrCode" alt="qrcode">
+                    <div v-html="qrCode">
+
+                    </div>
+                    
 
                 </v-form>
 
@@ -48,7 +51,7 @@ export default {
     },
     props: {},
     computed: {
-        user(){
+        user() {
             return getUser();
         }
     },
@@ -78,11 +81,32 @@ export default {
             //
             // })
         },
-        confirmPassword(){
+        confirmPassword() {
 
         },
-        showQrCode(){
-            openConfirmPasswordDialog();
+        async showQrCode() {
+            // const response = await axios.get('/user/confirmed-password-status')
+            //
+            // if (!response.confirmed){
+            //
+            // }
+
+
+            openConfirmPasswordDialog()
+                .then((response) => {
+                    console.log('heyy');
+                    console.log({response})
+                    if(response){
+                        return axios.get('/user/two-factor-qr-code');
+                    }
+                    throw new Error('Failed to retrieve QR code..');
+                })
+                .then((response) => {
+                    this.qrCode = response.data.svg;
+                })
+                .catch((error) => {
+
+                });
 
             // return axios.get('/user/two-factor-qr-code')
             //     .then((response) => {

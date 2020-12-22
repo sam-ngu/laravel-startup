@@ -72,7 +72,6 @@ export default {
                 closeConfirmPasswordDialog();
 
                 // resolve the dialog promise
-                console.log(confirmPasswordPromise);
                 confirmPasswordPromise.resolve(true);
 
 

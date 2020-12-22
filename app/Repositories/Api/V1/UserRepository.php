@@ -15,6 +15,7 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -40,6 +41,7 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data): User
     {
+
         return DB::transaction(function () use ($data) {
             $user = parent::create([
                 'name' => data_get($data, 'name'),
@@ -49,7 +51,8 @@ class UserRepository extends BaseRepository
                 'active' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
                 'confirmed' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
             ]);
-
+            // generate 2fa secret
+            app(EnableTwoFactorAuthentication::class)($user);
             // See if adding any additional permissions
             if (! isset($data['permissions']) || ! count($data['permissions'])) {
                 $data['permissions'] = [];
