@@ -22,7 +22,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
         return [
             'uuid' => Str::uuid()->toString(),
             'name' => $this->faker->name,

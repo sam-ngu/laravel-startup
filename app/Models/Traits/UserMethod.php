@@ -160,6 +160,6 @@ trait UserMethod
 
     public function twoFactorAuthEnabled()
     {
-        return !is_null($this->two_factor_secret);
+        return ! is_null($this->two_factor_secret);
     }
 }
