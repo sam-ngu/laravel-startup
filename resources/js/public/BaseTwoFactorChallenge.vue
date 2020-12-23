@@ -16,7 +16,9 @@
                     </v-card-title>
 
                     <v-card-subtitle class="mt-2">
-                        <p v-if="!states.useRecoveryCodes" class="text-center">To secure your account, please enter the verification code from your Authenticator App.</p>
+                        <p v-if="!states.useRecoveryCodes" class="text-center">
+                            To secure your account, please enter the verification code from your Authenticator App.
+                        </p>
                         <p v-else class="text-center">Please enter one of your recovery codes.</p>
                     </v-card-subtitle>
 
