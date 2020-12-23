@@ -16,7 +16,8 @@
                     </v-card-title>
 
                     <v-card-subtitle class="mt-2">
-                        <p class="text-center">To secure your account, please enter the verification code from your Authenticator App.</p>
+                        <p v-if="!states.useRecoveryCodes" class="text-center">To secure your account, please enter the verification code from your Authenticator App.</p>
+                        <p v-else class="text-center">Please enter one of your recovery codes.</p>
                     </v-card-subtitle>
 
 
@@ -24,12 +25,24 @@
                         <v-form v-model="states.is_form_valid" @submit.prevent="submit">
 
                             <v-text-field
+                                v-if="!states.useRecoveryCodes"
+                                label="Verification Code"
+                                type="number"
                                 outlined
                                 :rules="rules.verification"
                                 maxlength="6"
                                 counter="6"
-                            >
-                            </v-text-field>
+                                v-model="inputData.code"
+                            />
+
+                            <v-text-field
+                                v-else
+                                label="Recovery Code"
+                                outlined
+                                :rules="rules.required"
+                                v-model="inputData.recovery_code"
+                            />
+
                         </v-form>
                     </v-card-text>
 
@@ -42,8 +55,8 @@
                     </v-card-actions>
 
                     <v-card-actions >
-                        <v-btn text block>
-                            Enter recovery code instead
+                        <v-btn text block @click="toggleRecoveryCode">
+                            {{ states.useRecoveryCodes ? 'Use Verification Code' : 'Enter recovery code instead' }}
                         </v-btn>
                     </v-card-actions>
 
@@ -65,25 +78,44 @@ export default {
     data() {
         return {
             states: {
-                is_form_valid: false
+                is_form_valid: false,
+                useRecoveryCodes: false,
             },
             rules: {
-                verification: [
+                required: [
                     v => !!v || 'Required',
+                ],
+                verification: [
                     v => v && v.length === 6 || 'Please enter a 6-digit verification code.'
                 ]
+            },
+            inputData: {
+                code: "",
+                recovery_code: "",
             }
         }
     },
     props: {},
     computed: {},
     methods: {
+        toggleRecoveryCode(){
+            this.states.useRecoveryCodes = !this.states.useRecoveryCodes;
+        },
         submit(){
-            axios.post('/two-factor-verification', {
 
-            }).then((response) => {
-                // redirect to app page
-            })
+            let payload;
+
+            if (this.states.useRecoveryCodes){
+                payload = {recovery_code: this.inputData.recovery_code}
+            }else {
+                payload = {code: this.inputData.code}
+            }
+
+            axios.post('/two-factor-challenge', payload)
+                .then((response) => {
+                    // redirect to app page
+                    window.location = '/app';
+                })
         }
     },
     mounted() {

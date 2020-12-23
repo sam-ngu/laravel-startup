@@ -72,7 +72,7 @@
             logout(){
                 axios.post('/logout')
                     .then(() => {
-                        window.location.href = '/logout';
+                        window.location.href = '/';
                     })
             },
         },

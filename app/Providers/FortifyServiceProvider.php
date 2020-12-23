@@ -31,6 +31,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView('public.auth.login');
         Fortify::registerView('public.auth.register');
         Fortify::twoFactorChallengeView('public.auth.two-factor-challenge');
+        Fortify::requestPasswordResetLinkView('public.auth.passwords.forgot');
+        Fortify::resetPasswordView('public.auth.passwords.reset');
 
 
         Fortify::createUsersUsing(CreateNewUser::class);

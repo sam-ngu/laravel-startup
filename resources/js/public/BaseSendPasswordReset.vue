@@ -2,12 +2,8 @@
     <layout-master>
 
         <div style="height: 100%">
-
             <v-container align-content-center fill-height>
-
                 <v-row align="center" justify="center" fill-height>
-
-
                     <v-card style="width: 400px">
                         <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
 
@@ -40,10 +36,7 @@
                                 </v-row>
                             </v-card-actions>
                         </v-form>
-
                     </v-card>
-
-
                 </v-row>
 
             </v-container>
@@ -85,7 +78,7 @@
                 if(!this.$refs.form.validate())
                     return swalMessage('error', 'Please complete the form');
                 swalLoader();
-                let uri = '/reset-password';
+                let uri = '/forgot-password';
 
                 return axios.post(uri, this.inputData)
                     .then((response) => {

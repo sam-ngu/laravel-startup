@@ -39,7 +39,7 @@
         </div>
 
         <div>
-            <h6><a href="/password/reset">Forgot your password?</a> </h6>
+            <h6><a href="/forgot-password">Forgot your password?</a> </h6>
             <h6><a href="/register">Don't have an account? Register here</a> </h6>
         </div>
 

@@ -54,6 +54,8 @@
                     <h5 class="body-1">You'll need these backup codes if you ever lose your device:</h5>
 
                     <p v-for="code in recoveryCodes" :key="code">{{ code }}</p>
+
+                    <v-btn color="primary" text @click="regenerateCodes">Regenerate codes</v-btn>
                 </article>
             </v-form>
         </template>
@@ -111,6 +113,12 @@ export default {
                         this.showQrCode();
                     }
                 })
+        },
+        async regenerateCodes(){
+            this.qrCode = '';
+            this.recoveryCodes = [];
+            await axios.post('/user/two-factor-recovery-codes');
+            this.showQrCode();
         },
         showQrCode(){
             this.states.isLoading = true;
