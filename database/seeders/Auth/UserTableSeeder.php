@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder
             'confirmed' => true,
         ]);
 
-        app(EnableTwoFactorAuthentication::class)($admin);
+//        app(EnableTwoFactorAuthentication::class)($admin);
 
         $executive = User::factory()->create([
             'name' => 'Backend',
@@ -47,8 +47,8 @@ class UserTableSeeder extends Seeder
             'confirmed' => true,
         ]);
 
-        app(EnableTwoFactorAuthentication::class)($executive);
-        app(EnableTwoFactorAuthentication::class)($user);
+//        app(EnableTwoFactorAuthentication::class)($executive);
+//        app(EnableTwoFactorAuthentication::class)($user);
 
         $this->enableForeignKeys();
     }

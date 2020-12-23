@@ -98,6 +98,7 @@
                     .then((response) => {
                         if(response.data.two_factor){
                             // show qr code challenge page
+                            window.location = '/two-factor-challenge';
                         }else {
                             window.location = '/app';
                         }

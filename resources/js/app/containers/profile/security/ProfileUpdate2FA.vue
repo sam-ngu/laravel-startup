@@ -1,30 +1,50 @@
 <template>
-    <profile-update-layout title="2 Factor Authentication">
+    <profile-update-layout  title="2 Factor Authentication">
 
         <template v-slot:body>
             <div>
                 <v-form v-model="states.is_form_valid" @submit.prevent="save">
 
-                    <v-btn @click="showQrCode" color="primary">
-                        {{ enabled ? 'Disable' : 'Enable' }}
-                    </v-btn>
+                    <article>
+                        <v-list
+                            two-line
+                            subheader
+                        >
+                            <v-list-item>
+                                <v-list-item-content>
+                                    <v-list-item-title>
+                                        <li :class="{
+                                            'success--text': enabled,
+                                            'error--text': !enabled,
+                                        }">
+                                            {{ enabled ? 'Enabled' : 'Disabled' }}
+                                        </li>
 
-                    <div v-html="qrCode">
+                                    </v-list-item-title>
+                                </v-list-item-content>
 
-                    </div>
-                    
+                                <v-list-item-action>
+                                    <v-btn outlined @click="toggle2FA" color="primary">
+                                        {{ enabled ? 'Disable' : 'Enable' }}
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                    </article>
 
+                    <article v-if="enabled">
+                        <h1>Open a Two Factor Authenticator app and scan the following QR Code</h1>
+                        <div class="text-center" v-html="qrCode"></div>
+
+                        <h5>You'll need these backup codes if you ever lose your device.</h5>
+
+                        <p v-for="code in recoveryCodes" :key="code">{{code}}</p>
+                    </article>
                 </v-form>
-
             </div>
         </template>
 
         <template v-slot:actions>
-            <div class="ml-auto">
-                <v-btn color="primary" :disabled="!states.hasEdited || !states.is_form_valid" text @click="save">
-                    Save
-                </v-btn>
-            </div>
         </template>
     </profile-update-layout>
 </template>
@@ -45,8 +65,9 @@ export default {
             states: {
                 is_form_valid: true,
             },
-            enabled: this.user?.two_factor_enabled,
+            enabled: undefined,
             qrCode: "",
+            recoveryCodes: [],
         }
     },
     props: {},
@@ -84,25 +105,36 @@ export default {
         confirmPassword() {
 
         },
-        async showQrCode() {
+        getRecoveryCodes(){
+            return axios.get('/user/two-factor-recovery-codes');
+        },
+        async toggle2FA() {
             // const response = await axios.get('/user/confirmed-password-status')
             //
             // if (!response.confirmed){
             //
             // }
 
-
             openConfirmPasswordDialog()
                 .then((response) => {
                     console.log('heyy');
                     console.log({response})
                     if(response){
-                        return axios.get('/user/two-factor-qr-code');
+                        // enable 2fa
+                        return axios.post('/user/two-factor-authentication')
                     }
                     throw new Error('Failed to retrieve QR code..');
                 })
                 .then((response) => {
-                    this.qrCode = response.data.svg;
+                    return Promise.all([
+                        axios.get('/user/two-factor-qr-code'),
+                        this.getRecoveryCodes(),
+                    ]);
+                })
+                .then((responses) => {
+                    this.qrCode = responses[0].data.svg;
+                    console.log(responses[1]);
+                    this.recoveryCodes = responses[1].data;
                 })
                 .catch((error) => {
 
@@ -115,6 +147,7 @@ export default {
         }
     },
     mounted() {
+        this.enabled = this.user.two_factor_enabled;
 
     },
 }

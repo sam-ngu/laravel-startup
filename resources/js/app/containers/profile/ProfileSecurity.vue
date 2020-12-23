@@ -45,22 +45,23 @@ export default {
     name: 'ProfileSecurity',
     data() {
         return {
-            listItems: [
-                {
-                    title: "2 Factor Authentication",
-                    subtitle: this.user?.two_fa_enabled ? 'Enabled' : 'Disabled',
-                    actionIcon: "mdi-chevron-right",
-                    action: this.edit2Fa(),
-                    disabled: false
-                },
-
-            ]
         }
     },
     props: {},
     computed: {
         user(){
             return getUser();
+        },
+        listItems(){
+            return [
+                {
+                    title: "2 Factor Authentication",
+                    subtitle: this.user?.two_fa_enabled ? 'Enabled' : 'Disabled',
+                    actionIcon: "mdi-chevron-right",
+                    action: this.edit2Fa,
+                    disabled: false
+                },
+            ]
         }
     },
     methods: {

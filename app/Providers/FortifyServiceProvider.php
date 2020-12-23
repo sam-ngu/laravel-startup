@@ -30,6 +30,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::loginView('public.auth.login');
         Fortify::registerView('public.auth.register');
+        Fortify::twoFactorChallengeView('public.auth.two-factor-challenge');
 
 
         Fortify::createUsersUsing(CreateNewUser::class);

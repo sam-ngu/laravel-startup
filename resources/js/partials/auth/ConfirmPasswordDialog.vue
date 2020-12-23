@@ -26,7 +26,7 @@
                 <v-btn
                     color="grey darken-1"
                     text
-                    @click="closeConfirmPasswordDialog"
+                    @click="closeDialog"
                 >
                     Cancel
                 </v-btn>
@@ -73,8 +73,6 @@ export default {
 
                 // resolve the dialog promise
                 confirmPasswordPromise.resolve(true);
-
-
             }).catch((error) => {
                 errors.value = error.response.data.errors;
 
@@ -82,12 +80,17 @@ export default {
             })
         }
 
+        const closeDialog = () => {
+            confirmPasswordPromise.resolve(false);
+            closeConfirmPasswordDialog();
+        }
+
         return {
             errors,
             confirmPassword,
             inputData,
             isConfirmPasswordDialogOpened,
-            closeConfirmPasswordDialog,
+            closeDialog,
         }
     },
     props: {},

@@ -8,11 +8,11 @@ let baseBreadcrumb = [
     {
         text: 'My Profile',
         disabled: true,
-        href: '/dashboard/#/profile',
+        href: '/app/#/profile',
     },
 ];
 
-const profile = [
+export const profile = [
     {
         path: '/profile',
         component: BaseProfile,
@@ -80,5 +80,4 @@ const profile = [
 
 ];
 
-export {profile}
 

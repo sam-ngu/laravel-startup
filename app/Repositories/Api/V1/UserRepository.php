@@ -52,7 +52,7 @@ class UserRepository extends BaseRepository
                 'confirmed' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
             ]);
             // generate 2fa secret
-            app(EnableTwoFactorAuthentication::class)($user);
+//            app(EnableTwoFactorAuthentication::class)($user);
             // See if adding any additional permissions
             if (! isset($data['permissions']) || ! count($data['permissions'])) {
                 $data['permissions'] = [];
