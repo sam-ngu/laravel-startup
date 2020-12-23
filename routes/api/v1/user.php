@@ -25,7 +25,6 @@ Route::group([
 
     //For when admin is logged in as user from backend
     Route::get('/users/logout-as', [LoginController::class, 'logoutAs'])->name('logout-as');
-
 });
 
 // non admin routes
