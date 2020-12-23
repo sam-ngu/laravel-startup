@@ -10,6 +10,7 @@
             </v-card-title>
             <v-card-text>
                 <text-field-password
+                    label="Password"
                     v-model="inputData.password"
                 />
                 <ul class="error--text">
@@ -65,12 +66,16 @@ export default {
 
         const errors = ref({});
 
+        const clearInput = () => {
+            inputData.password = '';
+            errors.value = {};
+        }
         const confirmPassword = () => {
             return axios.post('/user/confirm-password', {
                 password: inputData.password
             }).then((response) => {
                 closeConfirmPasswordDialog();
-
+                clearInput();
                 // resolve the dialog promise
                 confirmPasswordPromise.resolve(true);
             }).catch((error) => {
@@ -83,6 +88,7 @@ export default {
         const closeDialog = () => {
             confirmPasswordPromise.resolve(false);
             closeConfirmPasswordDialog();
+            clearInput();
         }
 
         return {

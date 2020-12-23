@@ -1,51 +1,68 @@
 <template>
-    <profile-update-layout  title="2 Factor Authentication">
+    <profile-update-layout title="2 Factor Authentication">
 
         <template v-slot:body>
-            <div>
-                <v-form v-model="states.is_form_valid" @submit.prevent="save">
+            <v-form v-model="states.is_form_valid" @submit.prevent="() => {}">
+                <article>
+                    <v-list
+                        two-line
+                        subheader
+                    >
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title class="display-1" :class="{
+                                    'success--text': enabled,
+                                    'error--text': !enabled,
+                                }">
 
-                    <article>
-                        <v-list
-                            two-line
-                            subheader
-                        >
-                            <v-list-item>
-                                <v-list-item-content>
-                                    <v-list-item-title>
-                                        <li :class="{
-                                            'success--text': enabled,
-                                            'error--text': !enabled,
-                                        }">
-                                            {{ enabled ? 'Enabled' : 'Disabled' }}
-                                        </li>
+                                        {{ enabled ? 'Enabled' : 'Disabled' }}
 
-                                    </v-list-item-title>
-                                </v-list-item-content>
 
-                                <v-list-item-action>
-                                    <v-btn outlined @click="toggle2FA" color="primary">
+                                </v-list-item-title>
+                            </v-list-item-content>
+
+                            <v-list-item-action>
+
+                                <v-row>
+                                    <v-btn
+                                        :disabled="!!qrCode"
+                                        v-if="enabled"
+                                        outlined
+                                        @click="update2Fa"
+                                        color="primary"
+                                    >
+                                        Update
+                                    </v-btn>
+
+                                    <v-btn class="ml-2" outlined @click="toggle2FA" color="primary">
                                         {{ enabled ? 'Disable' : 'Enable' }}
                                     </v-btn>
-                                </v-list-item-action>
-                            </v-list-item>
-                        </v-list>
-                    </article>
+                                </v-row>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </article>
 
-                    <article v-if="enabled">
-                        <h1>Open a Two Factor Authenticator app and scan the following QR Code</h1>
-                        <div class="text-center" v-html="qrCode"></div>
+                <article style="position: relative; height: 300px" v-if="states.isLoading">
+                    <base-loader/>
+                </article>
+                <article class="text-center" v-if="enabled && qrCode">
 
-                        <h5>You'll need these backup codes if you ever lose your device.</h5>
+                    <h1>Scan the following QR Code in your Authenticator App.</h1>
+                    <div  class="my-12 text-center" v-html="qrCode"></div>
 
-                        <p v-for="code in recoveryCodes" :key="code">{{code}}</p>
-                    </article>
-                </v-form>
-            </div>
+                    <h5 class="body-1">You'll need these backup codes if you ever lose your device:</h5>
+
+                    <p v-for="code in recoveryCodes" :key="code">{{ code }}</p>
+                </article>
+            </v-form>
         </template>
 
         <template v-slot:actions>
+
         </template>
+
+
     </profile-update-layout>
 </template>
 
@@ -53,19 +70,20 @@
 import ProfileUpdateLayout from "../ProfileUpdateLayout";
 import {useAuthStore} from "../../../store/auth-store";
 import {useConfirmPassword} from "../../../../utils/auth/confirm-password";
+import BaseLoader from "../../../../admin/components/crud-resource/partials/BaseLoader";
 
-const {getUser} = useAuthStore();
+const {getUser, setUserTwoFactorEnabled} = useAuthStore();
 const {openConfirmPasswordDialog, closeConfirmPasswordDialog} = useConfirmPassword();
 
 export default {
     name: 'ProfileUpdate2FA',
-    components: {ProfileUpdateLayout},
+    components: {BaseLoader, ProfileUpdateLayout},
     data() {
         return {
             states: {
                 is_form_valid: true,
+                isLoading: false,
             },
-            enabled: undefined,
             qrCode: "",
             recoveryCodes: [],
         }
@@ -74,70 +92,67 @@ export default {
     computed: {
         user() {
             return getUser();
+        },
+
+        enabled() {
+            return this.user?.two_fa_enabled;
         }
+
     },
     methods: {
-        save() {
-            openConfirmPasswordDialog()
-                .then((response) => {
-                    console.log('heyy');
-                    console.log({response})
-                })
-                .catch((error) => {
-
-                });
-
-            // let method;
-            //
-            // if (this.inputData.enabled) {
-            //     method = 'POST';
-            // } else {
-            //     method = 'DELETE';
-            // }
-            //
-            // axios({
-            //     method,
-            //     url: '/user/two-factor-authentication'
-            // }).then((response) => {
-            //
-            // })
-        },
-        confirmPassword() {
-
-        },
-        getRecoveryCodes(){
+        getRecoveryCodes() {
             return axios.get('/user/two-factor-recovery-codes');
         },
+        update2Fa(){
+            openConfirmPasswordDialog()
+                .then((response) => {
+                    console.log({response})
+                    if(response){
+                        this.showQrCode();
+                    }
+                })
+        },
+        showQrCode(){
+            this.states.isLoading = true;
+            return Promise.all([
+                axios.get('/user/two-factor-qr-code'),
+                this.getRecoveryCodes(),
+            ]).then((responses) => {
+                this.qrCode = responses[0].data.svg;
+                this.recoveryCodes = responses[1].data;
+                setUserTwoFactorEnabled(true)
+                this.states.isLoading = false;
+
+            });
+        },
+        enable2FA() {
+            return axios.post('/user/two-factor-authentication')
+                .then((response) => {
+                    this.showQrCode();
+                });
+        },
+        disable2FA(){
+            axios.delete('/user/two-factor-authentication')
+                .then(()=> {
+                    setUserTwoFactorEnabled(false);
+                })
+        },
         async toggle2FA() {
-            // const response = await axios.get('/user/confirmed-password-status')
-            //
-            // if (!response.confirmed){
-            //
-            // }
 
             openConfirmPasswordDialog()
                 .then((response) => {
-                    console.log('heyy');
-                    console.log({response})
-                    if(response){
-                        // enable 2fa
-                        return axios.post('/user/two-factor-authentication')
+                    if (!response) {
+                        return;
                     }
-                    throw new Error('Failed to retrieve QR code..');
-                })
-                .then((response) => {
-                    return Promise.all([
-                        axios.get('/user/two-factor-qr-code'),
-                        this.getRecoveryCodes(),
-                    ]);
-                })
-                .then((responses) => {
-                    this.qrCode = responses[0].data.svg;
-                    console.log(responses[1]);
-                    this.recoveryCodes = responses[1].data;
+                    // enable 2fa
+                    if(!this.enabled){
+                        this.enable2FA();
+                    }else{
+                        this.disable2FA();
+                    }
                 })
                 .catch((error) => {
-
+                    console.log(error);
                 });
 
             // return axios.get('/user/two-factor-qr-code')
@@ -147,7 +162,7 @@ export default {
         }
     },
     mounted() {
-        this.enabled = this.user.two_factor_enabled;
+
 
     },
 }
