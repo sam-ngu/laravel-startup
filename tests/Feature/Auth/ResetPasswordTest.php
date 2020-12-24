@@ -8,7 +8,6 @@ use Tests\ApiTestCase;
 
 class ResetPasswordTest extends ApiTestCase
 {
-
     const FORGOT_PASSWORD_URL = '/forgot-password';
 
     public function test_forgot_password_email_is_sent()
@@ -21,5 +20,4 @@ class ResetPasswordTest extends ApiTestCase
         $response->assertStatus(200);
         Notification::assertSentTo($user, UserNeedsPasswordReset::class);
     }
-
 }

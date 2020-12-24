@@ -122,11 +122,12 @@ class LoginController extends Controller
         // Login user
         auth('web')->loginUsingId($user->id);
 
-        if($request->wantsJson()){
+        if ($request->wantsJson()) {
             return new JsonResponse([
-                'data' => 'success'
+                'data' => 'success',
             ]);
         }
+
         return redirect()->route('home');
     }
 

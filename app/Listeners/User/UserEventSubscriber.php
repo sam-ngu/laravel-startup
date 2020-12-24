@@ -2,18 +2,14 @@
 
 namespace App\Listeners\User;
 
-use App\Events\Auth\UserLoggedIn;
-use App\Events\Auth\UserLoggedOut;
 use App\Events\Models\User\UserConfirmed;
 use App\Events\Models\User\UserCreated;
 use App\Events\Models\User\UserPasswordChanged;
 use App\Events\Models\User\UserProviderRegistered;
-use App\Events\Models\User\UserRegistered;
 use App\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
 
@@ -50,7 +46,6 @@ class UserEventSubscriber
     public function subscribe($events)
     {
         $events->listen(Login::class, function (Login $event) {
-
             $ip_address = request()->getClientIp();
 
             // Update the logging in users time & IP
@@ -98,11 +93,8 @@ class UserEventSubscriber
             $this->logPasswordHistory($event->user);
         });
 
-        $events->listen(PasswordReset::class, function ($event){
+        $events->listen(PasswordReset::class, function ($event) {
 //            $this->logPasswordHistory($event->user);
-
         });
-
-
     }
 }

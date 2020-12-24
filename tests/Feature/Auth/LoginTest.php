@@ -51,7 +51,6 @@ class LoginTest extends ApiTestCase
         $this->assertNotNull($user->last_login_ip);
         $this->assertNotNull($user->last_login_at);
         $this->assertNotNull($user->timezone);
-
     }
 
     public function test_user_can_logout()

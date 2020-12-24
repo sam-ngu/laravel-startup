@@ -12,17 +12,17 @@ class LoginUser
     {
         $user = User::where('email', $request->email)->first();
 
-        if(!$user){
+        if (! $user) {
             return false;
         }
 
         // check confirmed
-        if(!$user->confirmed){
+        if (! $user->confirmed) {
             return false;
         }
 
         // check active
-        if(!$user->active){
+        if (! $user->active) {
             return false;
         }
 

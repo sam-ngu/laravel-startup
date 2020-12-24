@@ -27,7 +27,7 @@ class PasswordUpdateTest extends ApiTestCase
     {
         Event::fake();
         // login as user
-        $user  = $this->loginAsUser();
+        $user = $this->loginAsUser();
         $oldPassword = $user->password;
         $password = 'Secretsecret123!';
 
@@ -40,7 +40,6 @@ class PasswordUpdateTest extends ApiTestCase
         $this->assertTrue(Hash::check($password, $user->password));
 
         Event::assertDispatched(UserPasswordChanged::class);
-
     }
 
 
@@ -78,5 +77,4 @@ class PasswordUpdateTest extends ApiTestCase
         $response = $this->changePassword($user, 'secret', 'awad!@#12313ADAS');
         $response->assertStatus(401);
     }
-
 }
