@@ -9,8 +9,14 @@ const getUser = function (){
     return getSession().user;
 }
 
-const setUserTwoFactorEnabled = (isEnabled) => {
+const setUser = function (user){
     store.commit('auth/setCurrentUser', {
+        ...user
+    })
+}
+
+const setUserTwoFactorEnabled = (isEnabled) => {
+    setUser({
         ...getUser(),
         two_fa_enabled: isEnabled
     })
@@ -20,6 +26,7 @@ const setUserTwoFactorEnabled = (isEnabled) => {
 function useAuthStore(){
 
     return {
+        setUser,
         getUser,
         getSession,
         setUserTwoFactorEnabled,

@@ -47,7 +47,7 @@ export default {
                         axios.post(uri, {two_factor: false})
                             .then((response) => {
                                 swalMessage('success');
-                                resource.two_fa_enabled = false; 
+                                resource.two_fa_enabled = false;
                             }).catch(axiosErrorCallback)
                     },
                     disabled: false,

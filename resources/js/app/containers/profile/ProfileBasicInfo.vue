@@ -63,6 +63,10 @@
 <script>
     import BaseAvatar from "../../../partials/BaseAvatar";
     import ProfileUpdatePicture from "./basic-info/ProfileUpdatePicture";
+    import {useAuthStore} from "../../store/auth-store";
+
+    const {getUser} = useAuthStore();
+
     export default {
         name: "ProfileBasicInfo",
         components: {ProfileUpdatePicture, BaseAvatar},
@@ -94,7 +98,7 @@
                 ]
             },
             user(){
-                return this.$store.getters['auth/session'].user;
+                return getUser();
             }
         },
         methods: {

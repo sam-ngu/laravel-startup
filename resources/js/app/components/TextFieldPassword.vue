@@ -8,7 +8,6 @@
         :rules="rules"
         :label="label"
         :value="value"
-        @change="input"
         @input="input"
     ></v-text-field>
 </template>

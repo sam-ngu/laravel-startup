@@ -23,6 +23,7 @@
 
                     <text-field-password
                         class="mx-12"
+                        @change="save"
                         @input="edit"
                         :rules="rules.password_confirmation"
                         label="Password Again"

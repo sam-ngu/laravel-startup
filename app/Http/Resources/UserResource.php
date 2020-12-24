@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'name' => data_get($this, 'name'),
             'email' => data_get($this, 'email'),
             'two_fa_enabled' => $this->twoFactorAuthEnabled(),
+            'password_changed_at' => $this->password_changed_at,
             'avatar_type' => data_get($this, 'avatar_type'),
             'avatar_location' => ! ! $avatar_location ? Storage::url(data_get($this, 'avatar_location')) : null,
             'active' => (bool)data_get($this, 'active'),
