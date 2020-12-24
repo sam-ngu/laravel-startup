@@ -4,8 +4,8 @@
         <template v-slot:body>
                 <v-form v-model="states.is_form_valid" @submit.prevent="save">
 
-
                     <text-field-password
+                        autofocus
                         class="mx-12"
                         @input="edit"
                         :rules="rules.old_password"

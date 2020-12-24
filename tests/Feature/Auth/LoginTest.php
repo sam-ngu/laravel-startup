@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
 use Tests\ApiTestCase;
 
 class LoginTest extends ApiTestCase
@@ -25,11 +27,31 @@ class LoginTest extends ApiTestCase
 
     public function test_user_can_login()
     {
+        Event::fake();
         $user = $this->createUser();
 
         $response = $this->login($user->email, 'secret');
 
         $response->assertStatus(200);
+
+        Event::assertDispatched(Login::class);
+    }
+
+    public function test_user_ip_and_timezone_are_logged()
+    {
+        $user = $this->createUser();
+
+        $this->assertNull($user->last_login_ip);
+        $this->assertNull($user->last_login_at);
+        $this->assertNull($user->timezone);
+
+        $response = $this->login($user->email, 'secret');
+
+        $user->refresh();
+        $this->assertNotNull($user->last_login_ip);
+        $this->assertNotNull($user->last_login_at);
+        $this->assertNotNull($user->timezone);
+
     }
 
     public function test_user_can_logout()

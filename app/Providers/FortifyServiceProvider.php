@@ -35,6 +35,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetPasswordView('public.auth.passwords.reset');
 
 
+
         Fortify::createUsersUsing(CreateNewUser::class);
 //        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

@@ -10,6 +10,9 @@ use App\Events\Models\User\UserPasswordChanged;
 use App\Events\Models\User\UserProviderRegistered;
 use App\Events\Models\User\UserRegistered;
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
@@ -46,7 +49,8 @@ class UserEventSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen(UserLoggedIn::class, function (UserLoggedIn $event) {
+        $events->listen(Login::class, function (Login $event) {
+
             $ip_address = request()->getClientIp();
 
             // Update the logging in users time & IP
@@ -64,22 +68,15 @@ class UserEventSubscriber
                     'timezone' => $geoip['timezone'],
                 ]);
             }
-
-            $event->user->save();
+            $saved = $event->user->save();
 
             \Log::info('User Logged In: ' . $event->user->name);
         });
 
-        $events->listen(UserLoggedOut::class, function (UserLoggedOut $event) {
+        $events->listen(Logout::class, function (Logout $event) {
             \Log::info('User Logged Out: ' . $event->user->name);
         });
 
-//        $events->listen(UserRegistered::class, function (UserRegistered $event) {
-//            if ($this->isUserNotConfirmed($event->user) && ! $this->needAccountApproval()) {
-//                // to trigger Laravel built in verification
-//                event(new Registered($event->user));
-//            }
-//        });
 
         $events->listen(UserCreated::class, function (UserCreated $event) {
             //Send confirmation email if requested and account approval is off
@@ -97,9 +94,15 @@ class UserEventSubscriber
             \Log::info('User Confirmed: '.$event->user->name);
         });
 
-
         $events->listen(UserPasswordChanged::class, function ($event) {
             $this->logPasswordHistory($event->user);
         });
+
+        $events->listen(PasswordReset::class, function ($event){
+//            $this->logPasswordHistory($event->user);
+
+        });
+
+
     }
 }
