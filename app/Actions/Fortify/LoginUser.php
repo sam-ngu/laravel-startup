@@ -17,7 +17,7 @@ class LoginUser
             return false;
         }
 
-        if (!Hash::check($request->password, $user->password)) {
+        if (! Hash::check($request->password, $user->password)) {
             return false;
         }
 
@@ -30,7 +30,5 @@ class LoginUser
         if (! $user->active) {
             throw new GeneralJsonException('Deactivated account');
         }
-
-
     }
 }
