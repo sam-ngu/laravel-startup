@@ -110,7 +110,7 @@
 
         computed:{
             isAdmin(){
-                return this.session.user?.roles.findIndex((role) => role.name === 'administrator') !== -1
+                return this.session.user?.roles?.findIndex((role) => role.name === 'administrator') !== -1
             },
             session(){
                 return this.$store.getters['auth/session']
