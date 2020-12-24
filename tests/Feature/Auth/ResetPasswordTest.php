@@ -3,11 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Notifications\User\UserNeedsPasswordReset;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\ApiTestCase;
 

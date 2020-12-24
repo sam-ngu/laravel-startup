@@ -18,15 +18,15 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
-
-    /**
-     * Display the form to request a password reset link.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function showLinkRequestForm()
-    {
-        return view('public.auth.passwords.email');
-    }
+//    use SendsPasswordResetEmails;
+//
+//    /**
+//     * Display the form to request a password reset link.
+//     *
+//     * @return \Illuminate\View\View
+//     */
+//    public function showLinkRequestForm()
+//    {
+//        return view('public.auth.passwords.email');
+//    }
 }
