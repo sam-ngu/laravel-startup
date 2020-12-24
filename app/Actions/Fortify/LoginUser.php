@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Exceptions\GeneralJsonException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,18 +17,20 @@ class LoginUser
             return false;
         }
 
+        if (!Hash::check($request->password, $user->password)) {
+            return false;
+        }
+
         // check confirmed
         if (! $user->confirmed) {
-            return false;
+            throw new GeneralJsonException('Unconfirmed account');
         }
 
         // check active
         if (! $user->active) {
-            return false;
+            throw new GeneralJsonException('Deactivated account');
         }
 
-        if (Hash::check($request->password, $user->password)) {
-            return $user;
-        }
+
     }
 }
