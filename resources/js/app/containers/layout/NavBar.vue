@@ -42,6 +42,7 @@
 </template>
 
 <script>
+    import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
     import {useAppStateStore} from "../../store/app-state-store";
 
     const {isSidebarOpened} = useAppStateStore();
@@ -74,6 +75,7 @@
                     .then(() => {
                         window.location.href = '/';
                     })
+                    .catch(axiosErrorCallback)
             },
         },
 

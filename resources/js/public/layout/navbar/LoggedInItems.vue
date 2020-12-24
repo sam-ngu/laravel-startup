@@ -88,6 +88,7 @@
 <script>
     import BaseAvatar from "../../../partials/BaseAvatar";
     import ViewportHelperMixin from "../../../utils/mixins/ViewportHelperMixin";
+    import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
 
     export default {
         name: "LoggedInItems",
@@ -125,6 +126,7 @@
                     .then(() => {
                         window.location.href = '/';
                     })
+                    .catch(axiosErrorCallback)
             },
             profile(){
                 // redirect to user profile

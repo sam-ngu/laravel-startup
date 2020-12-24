@@ -73,7 +73,7 @@ import ProfileUpdateLayout from "../ProfileUpdateLayout";
 import {useAuthStore} from "../../../store/auth-store";
 import {useConfirmPassword} from "../../../../utils/auth/confirm-password";
 import BaseLoader from "../../../../admin/components/crud-resource/partials/BaseLoader";
-
+import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 const {getUser, setUserTwoFactorEnabled} = useAuthStore();
 const {openConfirmPasswordDialog, closeConfirmPasswordDialog} = useConfirmPassword();
 
@@ -114,11 +114,13 @@ export default {
                     }
                 })
         },
-        async regenerateCodes(){
+        regenerateCodes(){
             this.qrCode = '';
             this.recoveryCodes = [];
-            await axios.post('/user/two-factor-recovery-codes');
-            this.showQrCode();
+            return axios.post('/user/two-factor-recovery-codes')
+                .then(this.showQrCode)
+                .catch(axiosErrorCallback);
+
         },
         showQrCode(){
             this.states.isLoading = true;
@@ -131,19 +133,21 @@ export default {
                 setUserTwoFactorEnabled(true)
                 this.states.isLoading = false;
 
-            });
+            }).catch(axiosErrorCallback);
         },
         enable2FA() {
             return axios.post('/user/two-factor-authentication')
                 .then((response) => {
                     this.showQrCode();
-                });
+                })
+                .catch(axiosErrorCallback);
         },
         disable2FA(){
             axios.delete('/user/two-factor-authentication')
                 .then(()=> {
                     setUserTwoFactorEnabled(false);
                 })
+                .catch(axiosErrorCallback);
         },
         async toggle2FA() {
 
@@ -160,7 +164,7 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
 
             // return axios.get('/user/two-factor-qr-code')

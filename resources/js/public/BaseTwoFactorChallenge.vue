@@ -74,6 +74,8 @@
 
 <script>
 import LayoutMaster from "../public/layout/LayoutMaster";
+import {axiosErrorCallback} from "../utils/swal/AxiosHelper";
+
 export default {
     name: 'TwoFactorChallenge',
     components: {LayoutMaster},
@@ -118,6 +120,7 @@ export default {
                     // redirect to app page
                     window.location = '/app';
                 })
+                .catch(axiosErrorCallback)
         }
     },
     mounted() {

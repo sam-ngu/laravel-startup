@@ -130,7 +130,6 @@ class LoginController extends Controller
         session(['temp_user_id' => $user->id]);
 
         // Login user
-//        auth()->login($user);
         auth('web')->loginUsingId($user->id);
 
         // Redirect to frontend

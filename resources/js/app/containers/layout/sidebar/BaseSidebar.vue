@@ -42,6 +42,7 @@ import {useAppStateStore} from "../../../store/app-state-store";
 import BaseAvatar from "../../../../partials/BaseAvatar";
 import {computed} from "@vue/composition-api";
 import {useAuthStore} from "../../../store/auth-store";
+import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
 
 const {isSidebarOpened} = useAppStateStore();
 const {getUser} = useAuthStore();
@@ -63,6 +64,8 @@ export default {
                 .then(() => {
                     window.location.href = '/';
                 })
+                .catch(axiosErrorCallback)
+
         }
         return {
             logout,
