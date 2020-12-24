@@ -127,9 +127,6 @@ class LoginTest extends ApiTestCase
         $user->confirmed = true;
         $user->save();
         $response = $this->login($user->email, 'secret')->assertStatus(200);
-
-
-
     }
 
     public function test_only_active_user_can_login()
