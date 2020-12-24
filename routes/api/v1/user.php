@@ -22,7 +22,6 @@ Route::group([
 
     // for admin to login as user
     Route::post('/users/{user}/login-as', [LoginController::class, 'loginAs']);
-
 });
 
 //For when admin is logged in as user from backend
