@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import {useAppStateStore} from "../store/app-state-store";
+    const { isSidebarOpened, setSidebarOpened } = useAppStateStore();
 
     export default {
         name: "navbar",
@@ -72,10 +74,10 @@
 
             },
             openSidebar(){
-                this.$store.commit('app/setSidebar', true);
+                setSidebarOpened(true)
             },
             logout(){
-                
+
                 axios.post('/logout')
                     .then(() => {
                         window.location.href = '/';

@@ -16,6 +16,7 @@ import TextField from "../../components/crud-resource/fields/TextField";
 import DateField from "../../components/crud-resource/fields/DateField";
 import {emailValidator} from "../../../utils/ValidationHelper"
 import HasManyField from "../../components/crud-resource/fields/HasManyField";
+import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -26,11 +27,12 @@ export default {
                     label: 'Login As User',
                     show: true,
                     onclick: (resource) => {
-                        window.location.href = '/login-as/' + resource.id;
-                        // axios.post('/login-as/' + resource.id)
-                        //     .then((response) => {
-                        //
-                        //     })
+                        const uri = `/api/v1/users/${resource.id}/login-as`
+                        axios.post(uri)
+                            .then(() => {
+                                window.location.href = '/';
+                            }).catch(axiosErrorCallback);
+
                     },
                     disabled: false
                 },

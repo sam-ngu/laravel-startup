@@ -1,12 +1,12 @@
 <template>
     <v-navigation-drawer
-            app
-            hide-overlay
-            clipped
-            fixed
-            :value="showSidebar"
-            floating
-            @input="($event)=>{ setSidebarOpened($event) }"
+        app
+        hide-overlay
+        clipped
+        fixed
+        :value="showSidebar"
+        floating
+        @input="($event)=>{ setSidebarOpened($event) }"
     >
         <v-list>
 
@@ -19,15 +19,16 @@
         <template v-slot:append>
             <v-list nav>
 
-                    <v-list-item>
-                        <v-list-item-icon>
-                            <base-avatar :size="45" :name="user.name"/>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-btn @click="logout" text color="primary">Logout <v-icon right>mdi-exit-to-app</v-icon></v-btn>
-                        </v-list-item-content>
-                    </v-list-item>
-
+                <v-list-item>
+                    <v-list-item-icon>
+                        <base-avatar :size="45" :name="user.name"/>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-btn @click="logout" text color="primary">Logout
+                            <v-icon right>mdi-exit-to-app</v-icon>
+                        </v-btn>
+                    </v-list-item-content>
+                </v-list-item>
 
             </v-list>
         </template>
@@ -36,41 +37,41 @@
 </template>
 
 <script>
-    import SidebarListTile from "./SidebarListTile";
-    import {useAppStateStore} from "../../../store/app-state-store";
-    import BaseAvatar from "../../../../partials/BaseAvatar";
-    import {computed} from "@vue/composition-api";
-    import {useAuthStore} from "../../../store/auth-store";
+import SidebarListTile from "./SidebarListTile";
+import {useAppStateStore} from "../../../store/app-state-store";
+import BaseAvatar from "../../../../partials/BaseAvatar";
+import {computed} from "@vue/composition-api";
+import {useAuthStore} from "../../../store/auth-store";
 
-    const {isSidebarOpened} = useAppStateStore();
-    const {getUser} = useAuthStore();
+const {isSidebarOpened} = useAppStateStore();
+const {getUser} = useAuthStore();
 
-    export default {
-        name: "sidebar",
-        components: {BaseAvatar, SidebarListTile},
-        setup(){
-            function setSidebarOpened(value){
-                isSidebarOpened.value = value;
-            }
+export default {
+    name: "sidebar",
+    components: {BaseAvatar, SidebarListTile},
+    setup() {
+        function setSidebarOpened(value) {
+            isSidebarOpened.value = value;
+        }
 
-            const user = computed(() => {
-                return getUser();
-            });
+        const user = computed(() => {
+            return getUser();
+        });
 
-            const logout = function (){
-                axios.post('/logout')
-                    .then(() => {
-                        window.location.href = '/';
-                    })
-            }
-            return {
-                logout,
-                user,
-                setSidebarOpened,
-                showSidebar: isSidebarOpened
-            }
-        },
-    }
+        const logout = function () {
+            axios.post('/logout')
+                .then(() => {
+                    window.location.href = '/';
+                })
+        }
+        return {
+            logout,
+            user,
+            setSidebarOpened,
+            showSidebar: isSidebarOpened
+        }
+    },
+}
 
 
 </script>

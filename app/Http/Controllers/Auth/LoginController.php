@@ -109,7 +109,9 @@ class LoginController extends Controller
             session(['temp_user_id' => $user->id]);
 
             // Login.
-            auth()->loginUsingId($user->id);
+            auth()->guard()->setUser($user);
+
+//            auth()->loginUsingId($user->id);
 
             // Redirect.
             return redirect()->route('home');
@@ -128,7 +130,8 @@ class LoginController extends Controller
         session(['temp_user_id' => $user->id]);
 
         // Login user
-        auth()->loginUsingId($user->id);
+//        auth()->login($user);
+        auth('web')->loginUsingId($user->id);
 
         // Redirect to frontend
         return redirect()->route('home');
@@ -152,7 +155,8 @@ class LoginController extends Controller
             app()->make(Auth::class)->flushTempSession();
 
             // Re-login admin
-            auth()->loginUsingId((int) $admin_id);
+//            auth()->setUser(User::query()->find((int) $admin_id));
+            auth('web')->loginUsingId((int) $admin_id);
 
             // Redirect to backend user page
             return redirect()->route('admin');
@@ -160,7 +164,7 @@ class LoginController extends Controller
             app()->make(Auth::class)->flushTempSession();
 
             // Otherwise logout and redirect to login
-            auth()->logout();
+            auth('web')->logout();
 
             return redirect()->route('login');
         }

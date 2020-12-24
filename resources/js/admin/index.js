@@ -7,7 +7,7 @@ import './../bootstrap'
 import BaseAdmin from './BaseAdmin.vue'
 import routes from './routes/routes'
 import vuetifyopt from "../vuetifyopt";
-import store from "./store/store";
+import store from "./vuex-store/store";
 window.Vue = Vue;
 
 Vue.config.productionTip = false;

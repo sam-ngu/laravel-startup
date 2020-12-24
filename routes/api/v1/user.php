@@ -23,9 +23,10 @@ Route::group([
     // for admin to login as user
     Route::post('/users/{user}/login-as', [LoginController::class, 'loginAs']);
 
-    //For when admin is logged in as user from backend
-    Route::get('/users/logout-as', [LoginController::class, 'logoutAs'])->name('logout-as');
 });
+
+//For when admin is logged in as user from backend
+Route::get('/user-logout-as', [LoginController::class, 'logoutAs'])->name('logout-as');
 
 // non admin routes
 Route::patch('/users/{user}/profile/picture', [UserController::class, 'updateProfilePicture']);

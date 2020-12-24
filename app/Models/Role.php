@@ -32,7 +32,7 @@ class Role extends \Spatie\Permission\Models\Role
     public function users(): BelongsToMany
     {
         return $this->morphedByMany(
-            User::class,
+            config('auth.providers.users.model'),
             'model',
             config('permission.table_names.model_has_roles'),
             'role_id',
