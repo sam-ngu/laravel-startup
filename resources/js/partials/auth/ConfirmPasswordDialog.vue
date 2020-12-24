@@ -11,7 +11,9 @@
             <v-card-text>
                 <text-field-password
                     label="Password"
+                    autofocus
                     v-model="inputData.password"
+                    @change="confirmPassword"
                 />
                 <ul class="error--text">
                     <li v-for="(messages, field) in errors" :key="field">
