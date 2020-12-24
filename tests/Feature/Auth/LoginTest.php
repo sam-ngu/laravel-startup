@@ -8,11 +8,11 @@ class LoginTest extends ApiTestCase
 {
     const LOGIN_URL = '/login';
     const LOGOUT_URL = '/logout';
-    const LOGOUT_AS_URL = '/logout-as';
+    const LOGOUT_AS_URL = '/api/v1/user-logout-as';
 
     private function loginAsUrl(string $userId)
     {
-        return '/login-as/' . $userId;
+        return '/api/v1/users/' . $userId . '/login-as';
     }
 
     private function login(string $username, string $password)
@@ -62,15 +62,14 @@ class LoginTest extends ApiTestCase
         $response->assertStatus(422);
     }
 
-    public function test_only_user_cant_login_as_others()
+    public function test_user_cant_login_as_others()
     {
         $user = $this->createUser();
         $this->login($user->email, 'secret');
 
         $user2 = $this->createUser();
-        $response = $this->getJson($this->loginAsUrl($user2->id));
-
-        $response->assertStatus(302);
+        $response = $this->postJson($this->loginAsUrl($user2->id));
+        $response->assertStatus(403);
     }
 
     public function test_admin_can_login_as_others()
@@ -80,13 +79,16 @@ class LoginTest extends ApiTestCase
         $admin = $this->createAdmin();
         $this->login($admin->email, 'secret');
 
-        $response = $this->getJson($this->loginAsUrl($user->id));
+        $response = $this->postJson($this->loginAsUrl($user->id));
+
+        $response->assertStatus(200);
 
         $this->assertSame($admin->id, session()->get('admin_user_id'));
         $this->assertSame($user->id, session()->get('temp_user_id'));
 
         // admin can logout
         $response = $this->getJson(self::LOGOUT_AS_URL);
+        $response->assertStatus(302);
         $this->assertNull(session()->get('admin_user_id'));
         $this->assertNull(session()->get('admin_user_name'));
         $this->assertNull(session()->get('temp_user_id'));

@@ -132,7 +132,11 @@ class LoginController extends Controller
         // Login user
         auth('web')->loginUsingId($user->id);
 
-        // Redirect to frontend
+        if($request->wantsJson()){
+            return new JsonResponse([
+                'data' => 'success'
+            ]);
+        }
         return redirect()->route('home');
     }
 
