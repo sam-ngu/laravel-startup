@@ -114,4 +114,35 @@ class LoginTest extends ApiTestCase
         $this->assertNull(session()->get('admin_user_name'));
         $this->assertNull(session()->get('temp_user_id'));
     }
+
+    public function test_only_confirmed_user_can_log_in()
+    {
+        $user = $this->createUser(['confirmed' => false]);
+
+        $this->loginAsUser($user);
+
+        $response = $this->login($user->email, 'secret');
+        $response->assertStatus(422);
+
+        $user->confirmed = true;
+        $user->save();
+        $response = $this->login($user->email, 'secret')->assertStatus(200);
+
+
+
+    }
+
+    public function test_only_active_user_can_login()
+    {
+        $user = $this->createUser(['active' => false]);
+
+        $this->loginAsUser($user);
+
+        $response = $this->login($user->email, 'secret');
+        $response->assertStatus(422);
+
+        $user->active = true;
+        $user->save();
+        $response = $this->login($user->email, 'secret')->assertStatus(200);
+    }
 }
