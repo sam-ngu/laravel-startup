@@ -11,11 +11,11 @@ use App\Exceptions\GeneralException;
 use App\Exceptions\GeneralJsonException;
 use App\Helpers\General\FileHelper;
 use App\Models\User;
-use App\Notifications\User\RegistrationConfirmation;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -43,16 +43,15 @@ class UserRepository extends BaseRepository
     {
         return DB::transaction(function () use ($data) {
             $user = parent::create([
-                'first_name' => data_get($data, 'first_name'),
-                'last_name' => data_get($data, 'last_name'),
+                'name' => data_get($data, 'name'),
                 'uuid' => Uuid::uuid4()->toString(),
                 'email' => data_get($data, 'email'),
                 'password' => data_get($data, 'password'),
                 'active' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
-                'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => filter_var(data_get($data, 'active'), FILTER_VALIDATE_BOOLEAN),
             ]);
-
+            // generate 2fa secret
+//            app(EnableTwoFactorAuthentication::class)($user);
             // See if adding any additional permissions
             if (! isset($data['permissions']) || ! count($data['permissions'])) {
                 $data['permissions'] = [];
@@ -60,20 +59,11 @@ class UserRepository extends BaseRepository
 
             /** @var User $user */
             if ($user) {
-                // User must have at least one role
-                if (! count(data_get($data, 'roles', []))) {
-                    throw new GeneralJsonException('Role needed');
-                }
 
                 // Add selected roles/permissions
-                $user->syncRoles(data_get($data, 'roles'));
+                // fallback role to default
+                $user->syncRoles(data_get($data, 'roles', [config('access.users.default_role')]));
                 $user->syncPermissions(data_get($data, 'permissions'));
-
-
-                //Send confirmation email if requested and account approval is off
-                if (isset($data['confirmation_email']) && $user->confirmed === false && ! config('access.users.requires_approval')) {
-                    $user->notify(new RegistrationConfirmation($user->confirmation_code));
-                }
 
                 event(new UserCreated($user));
 
@@ -102,14 +92,13 @@ class UserRepository extends BaseRepository
 
         return DB::transaction(function () use ($user, $data) {
             if ($user->update([
-                'first_name' => data_get($data, 'first_name') ?? data_get($user, 'first_name'),
-                'last_name' => data_get($data, 'last_name') ?? data_get($user, 'last_name'),
+                'name' => data_get($data, 'name') ?? data_get($user, 'name'),
                 'email' => data_get($data, 'email') ?? data_get($user, 'email'),
             ])) {
                 if ($avatar = data_get($data, 'avatar_img')) {
                     $user->avatar_location = Arr::first(FileHelper::imageProcessor([$avatar]));
                     $user->save();
-                    throw_if(! $user->save(), GeneralJsonException::class, 'Unable to save user: ' . $user->first_name);
+                    throw_if(! $user->save(), GeneralJsonException::class, 'Unable to save user: ' . $user->name);
                 }
 
                 $toConfirmUser = ! $user->isConfirmed() && filter_var(data_get($data, 'confirmed', $user->confirmed), FILTER_VALIDATE_BOOLEAN);

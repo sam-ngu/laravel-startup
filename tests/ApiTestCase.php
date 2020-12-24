@@ -9,6 +9,11 @@ use App\Models\User;
  */
 abstract class ApiTestCase extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     /**
      * Login the given administrator or create the first if none supplied.
      *
@@ -22,7 +27,7 @@ abstract class ApiTestCase extends TestCase
             $admin = $this->createAdmin();
         }
 
-        $this->actingAs($admin, 'api');
+        $this->actingAs($admin, 'web');
 
         return $admin;
     }
@@ -32,7 +37,7 @@ abstract class ApiTestCase extends TestCase
         if (! $user) {
             $user = $this->createUser();
         }
-        $this->actingAs($user, 'api');
+        $this->actingAs($user, 'web');
 
         return $user;
     }

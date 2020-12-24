@@ -1,10 +1,5 @@
 <template>
     <v-card>
-        <!--photo-->
-        <!--name-->
-        <!--            birthday-->
-        <!--password-->
-
         <v-card-title>
             <h1 class="title">Contact Info</h1>
         </v-card-title>
@@ -36,14 +31,10 @@
             </v-list-item>
 
         </v-list>
-
-
-
     </v-card>
 </template>
 
 <script>
-
     export default {
         name: "ProfileContactInfo",
         data() {

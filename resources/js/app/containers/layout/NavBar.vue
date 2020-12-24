@@ -42,7 +42,8 @@
 </template>
 
 <script>
-    import {useAppStateStore} from "../../../hook/app-state-store";
+    import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
+    import {useAppStateStore} from "../../store/app-state-store";
 
     const {isSidebarOpened} = useAppStateStore();
 
@@ -70,7 +71,11 @@
                 isSidebarOpened.value = !isSidebarOpened.value;
             },
             logout(){
-                window.location.href = '/logout';
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/';
+                    })
+                    .catch(axiosErrorCallback)
             },
         },
 

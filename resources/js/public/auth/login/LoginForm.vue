@@ -39,7 +39,7 @@
         </div>
 
         <div>
-            <h6><a href="/password/reset">Forgot your password?</a> </h6>
+            <h6><a href="/forgot-password">Forgot your password?</a> </h6>
             <h6><a href="/register">Don't have an account? Register here</a> </h6>
         </div>
 
@@ -79,6 +79,9 @@
         props: {},
         computed: {},
         methods: {
+            getCsrfToken(){
+                return axios.get('/sanctum/csrf-cookie');
+            },
             submitForm(){
                 if(!this.$refs.form.validate()){
                     swalMessage("error", "Please complete the form");
@@ -88,14 +91,20 @@
 
                 let uri = "/login";
 
-                axios.post(uri, this.inputData)
-                    .then(function(response){
-                        console.log({response});
-                        window.location = response.data.data.redirect;
+                this.getCsrfToken()
+                    .then((response) => {
+                        return axios.post(uri, this.inputData);
+                    })
+                    .then((response) => {
+                        if(response.data.two_factor){
+                            // show qr code challenge page
+                            window.location = '/two-factor-challenge';
+                        }else {
+                            window.location = '/app';
+                        }
                         // console.log(redirect)
                         // console.trace("login redirect");
-
-                    }.bind(this))
+                    })
                     .catch((response) => {
                         // if(response.)
                         response = response.response;
@@ -108,8 +117,7 @@
                             return swalMessage('error', payload)
                         }
                         axiosErrorCallback(response, response.data.message)
-                    })
-
+                    });
             },
         },
         mounted() {

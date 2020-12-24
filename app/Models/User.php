@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -18,12 +18,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable,
         HasFactory,
+        TwoFactorAuthenticatable,
         UserMethod,
         HasRoles,
         SoftDeletes,
         UserAttribute,
-        Searchable,
-        HasApiTokens;
+        Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,14 +31,16 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
         'uuid',
         'active',
-        'confirmation_code',
         'confirmed',
         'email',
         'password',
+        'two_factor_secret',
+        'timezone',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**
@@ -92,6 +94,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function toSearchableArray()
     {
-        return $this->only(['id', 'first_name', 'last_name']);
+        return $this->only(['id', 'name']);
     }
 }

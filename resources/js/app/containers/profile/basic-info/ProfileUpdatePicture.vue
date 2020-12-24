@@ -2,8 +2,8 @@
 
     <v-dialog max-width="500px" persistent v-model="states.show">
 
-        <v-card>
-            <v-card-title >
+        <v-card >
+            <v-card-title>
                 <h3>
                     Select Profile Photo
                 </h3>
@@ -18,9 +18,10 @@
 
             </v-card-title>
 
-            <v-card-text>
+            <v-card-text style="min-height: 200px">
                 <!--drag and drop area-->
-                <image-uploader @image-added="addImgToData" v-model="inputData.image_raw"/>
+                <image-uploader v-if="!states.isLoading" @image-added="addImgToData" v-model="inputData.image_raw"/>
+                <base-loader v-else/>
 
             </v-card-text>
 
@@ -35,80 +36,84 @@
 
 </template>
 <script>
-    import ImageUploader from "../../../../partials/ImageUploader";
-    import {swalConfirm, swalLoader, swalTimer} from "../../../../utils/swal/SwalHelper";
-    import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
-    import ButtonTooltip from "../../../../partials/ButtonTooltip";
+import ImageUploader from "../../../../partials/ImageUploader";
+import {swalConfirm, swalLoader, swalTimer} from "../../../../utils/swal/SwalHelper";
+import {axiosErrorCallback} from "../../../../utils/swal/AxiosHelper";
+import ButtonTooltip from "../../../../partials/ButtonTooltip";
+import {useAuthStore} from "../../../store/auth-store";
+import BaseLoader from "../../../../admin/components/crud-resource/partials/BaseLoader";
 
+const {getUser, setUser} = useAuthStore();
 
-
-
-    export default {
-        name: "ProfileUpdatePicture",
-        components: {ButtonTooltip, ImageUploader},
-        data() {
-            return {
-                states: {
-                    show: false
-                },
-                inputData: {
-                    image_raw: null,
-                    avatar_location: null,
-                },
-            }
-        },
-        props: {
-
-        },
-        computed: {
-            user(){
-                return this.$store.getters['auth/session'].user;
-            }
-        },
-        methods: {
-            close(){
-                this.$emit('close')
+export default {
+    name: "ProfileUpdatePicture",
+    components: {BaseLoader, ButtonTooltip, ImageUploader},
+    data() {
+        return {
+            states: {
+                show: false,
+                isLoading: false,
             },
-            addImgToData(formData){
-                this.inputData.avatar_location = formData;
+            inputData: {
+                image_raw: null,
+                avatar_location: null,
             },
-            submit(){
-                swalConfirm("", () => {
-                    swalLoader()
-
-                    // put everything to form data
-                    let form = new FormData();
-                    this.inputData.avatar_location.forEach(function(ii){
-                        form.append("avatar_img",ii);
-                    });
-                    form.set('avatar_type', 'storage');
-
-                    return axios({
-                            method: 'patch',
-                            url: `/api/v1/users/${this.user.id}/profile/picture`,
-                            data: form,
-                            headers:{
-                                'content-type': "multipart/form-data",
-                            }
-                        })
-                        .then(function (response) {
-                            // EventBus.$emit('fetch-session-required');
-                            swalTimer('success', 500)
-                                .then(function () {
-                                    this.close()
-                                }.bind(this));
-                        }.bind(this))
-                        .catch(axiosErrorCallback)
-                    }
-                );
-            }
+        }
+    },
+    props: {},
+    computed: {
+        user() {
+            return getUser();
+        }
+    },
+    methods: {
+        close() {
+            this.$emit('close')
         },
-        mounted() {
-            this.states.show = true;
-            this.inputData.image_raw = this.user.avatar_location;
-
+        addImgToData(formData) {
+            this.inputData.avatar_location = formData;
         },
-    }
+        submit() {
+            this.states.isLoading = true;
+
+            // put everything to form data
+            let form = new FormData();
+            this.inputData.avatar_location.forEach(function (ii) {
+                form.append("avatar_img", ii);
+            });
+            form.set('avatar_type', 'storage');
+
+            return axios({
+                method: 'patch',
+                url: `/api/v1/users/${this.user.id}/profile/picture`,
+                data: form,
+                headers: {
+                    'content-type': "multipart/form-data",
+                }
+            })
+                .then(function (response) {
+                    this.states.isLoading = false;
+                    setUser({
+                        ...getUser(),
+                        avatar_location: response.data.data.avatar_location,
+                    })
+                    this.close();
+                }.bind(this))
+                .catch(axiosErrorCallback)
+
+            // swalConfirm("", () => {
+            //     swalLoader()
+            //
+            //     }
+            // );
+        }
+    },
+    mounted() {
+        this.states.show = true;
+        this.inputData.image_raw = this.user.avatar_location;
+
+    },
+}
 </script>
 
 <style scoped>

@@ -17,7 +17,8 @@ Route::group([
     'namespace' => 'Api',
     'as' => 'api.',
     'middleware' => [
-        'auth:api',
+//        'auth:api',
+        'auth:sanctum',
         \App\Http\Middleware\ParseFormData::class,
     ],
 ], function () {

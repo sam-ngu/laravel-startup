@@ -32,6 +32,7 @@ Route::group([
 
 Route::group([
     'middleware' => [
+
         \App\Http\Middleware\Authenticate::class,
         // admin only
     ],

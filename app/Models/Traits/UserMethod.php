@@ -157,4 +157,9 @@ trait UserMethod
 
         throw new GeneralJsonException(__('exceptions.backend.access.users.mark_error'));
     }
+
+    public function twoFactorAuthEnabled()
+    {
+        return ! is_null($this->two_factor_secret);
+    }
 }

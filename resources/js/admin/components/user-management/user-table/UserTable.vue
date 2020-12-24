@@ -18,10 +18,9 @@
                                         show: true,
                                     }
                                 }">
-                        {{ props.item.last_name }}
+                        {{ props.item.name }}
                     </router-link>
                 </td>
-                <td class="px-2 text-left">{{ props.item.first_name }}</td>
                 <td class="px-2 text-left">{{ props.item.email }}</td>
                 <td class="px-2 text-left">
                     <v-chip text-color="white" :color="props.item.confirmed_label ? 'green' : 'red'">
@@ -51,13 +50,12 @@
             return {
                 headers: [
                     {
-                        text: 'Last Name',
+                        text: 'Name',
                         align: 'left',
                         sortable: true,
-                        value: 'last_name',
+                        value: 'name',
                         class: "px-2"
                     },
-                    { text: 'First Name', value: 'first_name', sortable: true, class: "px-2" },
                     { text: 'E-mail', value: 'email', sortable: true, class: "px-2" },
                     { text: 'Confirmed', value: 'confirmed', sortable: false, class: "px-2" },
                     { text: 'Roles', value: 'roles', sortable: false, class: "px-2"},

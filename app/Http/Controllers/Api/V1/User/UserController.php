@@ -49,8 +49,7 @@ class UserController extends Controller
     public function store(Request $request, UserRepository $repository)
     {
         $result = $repository->create($request->only(
-            'first_name',
-            'last_name',
+            'name',
             'email',
             'password',
             'active',
@@ -84,8 +83,7 @@ class UserController extends Controller
     public function update(Request $request, User $user, UserRepository $repository)
     {
         $result = $repository->update($user, $request->only(
-            'first_name',
-            'last_name',
+            'name',
             'email',
             'roles',
             'active',
@@ -112,7 +110,7 @@ class UserController extends Controller
 
         event(new UserDeleted($user));
 
-        return new JsonResponse(null, 204);
+        return new JsonResponse(['data' => 'success'], 200);
     }
 
     public function updateProfilePicture(ChangeProfilePictureRequest $request, User $user, UserRepository $repository)

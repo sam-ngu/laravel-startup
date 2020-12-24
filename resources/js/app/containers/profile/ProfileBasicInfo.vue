@@ -1,10 +1,5 @@
 <template>
     <v-card>
-        <!--photo-->
-        <!--name-->
-        <!--birthday-->
-        <!--password-->
-
         <v-card-title>
             <h1 class="title">Profile</h1>
         </v-card-title>
@@ -24,7 +19,7 @@
                     <base-avatar
                         :avatar-location="user.avatar_location"
                         :size="45"
-                        :name="user.full_name || ''"></base-avatar>
+                        :name="user.name || ''"></base-avatar>
                 </v-list-item-action>
 
             </v-list-item>
@@ -68,6 +63,10 @@
 <script>
     import BaseAvatar from "../../../partials/BaseAvatar";
     import ProfileUpdatePicture from "./basic-info/ProfileUpdatePicture";
+    import {useAuthStore} from "../../store/auth-store";
+
+    const {getUser} = useAuthStore();
+
     export default {
         name: "ProfileBasicInfo",
         components: {ProfileUpdatePicture, BaseAvatar},
@@ -84,7 +83,7 @@
                 return [
                     {
                         title: "Name",
-                        subtitle: this.user.full_name,
+                        subtitle: this.user.name,
                         actionIcon: "mdi-chevron-right",
                         action: this.editName,
                         disabled: false,
@@ -99,7 +98,7 @@
                 ]
             },
             user(){
-                return this.$store.getters['auth/session'].user;
+                return getUser();
             }
         },
         methods: {

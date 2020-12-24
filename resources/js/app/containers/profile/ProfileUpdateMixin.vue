@@ -9,7 +9,7 @@
             return {
                 inputData: {
                     phone: null,
-                    first_name: null,
+                    name: null,
                     last_name: null,
                     old_password: null,
                     password: null,

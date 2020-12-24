@@ -18,10 +18,9 @@
                                         show: true,
                                     }
                                 }">
-                        {{ props.item.last_name }}
+                        {{ props.item.name }}
                     </router-link>
                 </td>
-                <td class="px-2 text-left">{{ props.item.first_name }}</td>
                 <td class="px-2 text-left">{{ props.item.email }}</td>
                 <td class="px-2 text-left">
                     <v-chip text-color="white" :color="props.item.confirmed_label ? 'green' : 'red'">

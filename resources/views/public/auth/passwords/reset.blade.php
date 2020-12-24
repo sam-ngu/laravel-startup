@@ -6,6 +6,6 @@
 
 @section('content')
 
-<base-password-reset/>
+<base-password-reset reset-token="{{request()->route('token')}}" />
 
 @endsection

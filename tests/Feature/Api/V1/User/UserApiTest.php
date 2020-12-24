@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Tests\ApiTestCase;
+use Tests\Utils\Database\WithSeeder;
 
 class UserApiTest extends ApiTestCase
 {
+    use WithSeeder;
+
     protected $admin;
 
     protected $uri = '/api/v1/users';
@@ -121,22 +124,18 @@ class UserApiTest extends ApiTestCase
 
     public function test_create()
     {
+        $this->seed();
         Event::fake();
-//        $fillables = collect((new User)->getFillable());
 
-//        $toFill = $fillables->random();
-//
         $dummy = User::factory()->make();
 
+        $response = $this->json('post', $this->uri, array_merge($dummy->toArray(), [
+            'roles' => [config('access.users.default_role')],
+        ]));
 
-        $response = $this->json('post', $this->uri, $dummy->toArray());
-
-//        $response->dump();
         $result = $response->assertStatus(201)->json('data');
 
         Event::assertDispatched(UserCreated::class);
-
-//        $this->assertTrue(data_get($result, $toFill) === data_get($dummy, $toFill));
     }
 
 
@@ -147,18 +146,18 @@ class UserApiTest extends ApiTestCase
         $dummy = User::factory()->create();
         $dummy2 = User::factory()->make();
 
-        $fillables = collect((new User)->getFillable());
-        $toUpdate = $fillables->random();
+        $fillables = collect((new User)->getFillable())->filter(fn ($fillable) => ! in_array($fillable, ['uuid', 'password']));
 
-        $response = $this->json('patch', $this->uri . '/' . $dummy->id, [
-            $toUpdate => data_get($dummy2, $toUpdate),
-        ]);
+        $fillables->each(function ($fillable) use ($dummy, $dummy2) {
+            $response = $this->json('patch', $this->uri . '/' . $dummy->id, [
+                $fillable => data_get($dummy2, $fillable),
+            ]);
 
-        $result = $response->assertStatus(200)->json('data');
+            $result = $response->assertStatus(200)->json('data');
+            Event::assertDispatched(UserUpdated::class);
 
-        Event::assertDispatched(UserUpdated::class);
-
-        $this->assertEquals(data_get($dummy2, $toUpdate), data_get($dummy->refresh(), $toUpdate));
+            $this->assertEquals(data_get($dummy2, $fillable), data_get($dummy->refresh(), $fillable));
+        });
     }
 
 
@@ -168,9 +167,8 @@ class UserApiTest extends ApiTestCase
 
         $dummy = User::factory()->create();
         $response = $this->json('delete', $this->uri . '/' . $dummy->id);
-
+        $response->assertStatus(200);
         $result = $response->json('data');
-
         $this->expectException(ModelNotFoundException::class);
 
         User::query()->findOrFail($dummy->id);

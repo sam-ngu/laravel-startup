@@ -7,7 +7,7 @@ use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-/**
+/** DEPRECATED as of 20/12/2020 -- using fortify
  * Class RegisterRequest.
  */
 class RegisterRequest extends FormRequest

@@ -3,7 +3,6 @@
 namespace App\Events\Models\User;
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Queue\SerializesModels;
 
 /**
@@ -24,6 +23,5 @@ class UserRegistered
     public function __construct(User $user)
     {
         $this->user = $user;
-        event(new Registered($user));
     }
 }

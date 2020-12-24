@@ -48,6 +48,9 @@
 </template>
 
 <script>
+    import {useAppStateStore} from "../store/app-state-store";
+    const { isSidebarOpened, setSidebarOpened } = useAppStateStore();
+    import {axiosErrorCallback} from "../../utils/swal/AxiosHelper";
 
     export default {
         name: "navbar",
@@ -72,10 +75,15 @@
 
             },
             openSidebar(){
-                this.$store.commit('app/setSidebar', true);
+                setSidebarOpened(true)
             },
             logout(){
-                window.location.href = '/logout';
+
+                axios.post('/logout')
+                    .then(() => {
+                        window.location.href = '/';
+                    })
+                    .catch(axiosErrorCallback)
             },
             control(){
                 this.$router.push({

@@ -6,17 +6,11 @@
             <v-form ref="form" v-model="states.is_form_valid" @submit.prevent="submitForm">
                 <v-text-field
                     label="First Name"
-                    v-model="inputData.first_name"
+                    v-model="inputData.name"
                     :rules="rules.name"
                 >
                 </v-text-field>
 
-                <v-text-field
-                    label="Last Name"
-                    v-model="inputData.last_name"
-                    :rules="rules.name"
-                >
-                </v-text-field>
 
                 <v-text-field
                     label="Email Address"
@@ -114,8 +108,7 @@
                     is_form_valid: false
                 },
                 inputData: {
-                    first_name: null,
-                    last_name: null,
+                    name: null,
                     email: null,
                     password: null,
                     active: true,

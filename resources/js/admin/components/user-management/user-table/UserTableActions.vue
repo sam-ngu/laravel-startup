@@ -58,7 +58,7 @@
             listItems(){
                 return [
                     {
-                        title: "Log in as " + this.user.first_name + ' ' + this.user.last_name,
+                        title: "Log in as " + this.user.name,
                         action: this.logInAsUser,
                         disabled: MessageBus.getSession().user.id === this.user.id,
                         show: !this.isDeleted,

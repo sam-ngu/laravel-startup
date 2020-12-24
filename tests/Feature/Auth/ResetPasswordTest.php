@@ -2,15 +2,22 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Notifications\User\UserNeedsPasswordReset;
+use Illuminate\Support\Facades\Notification;
 use Tests\ApiTestCase;
 
 class ResetPasswordTest extends ApiTestCase
 {
-    public function test_user_password_can_be_reset()
-    {
-    }
+    const FORGOT_PASSWORD_URL = '/forgot-password';
 
-    public function test_reset_confirmation_email_is_sent()
+    public function test_forgot_password_email_is_sent()
     {
+        Notification::fake();
+        $user = $this->createUser();
+        $response = $this->postJson(self::FORGOT_PASSWORD_URL, [
+            'email' => $user->email,
+        ]);
+        $response->assertStatus(200);
+        Notification::assertSentTo($user, UserNeedsPasswordReset::class);
     }
 }

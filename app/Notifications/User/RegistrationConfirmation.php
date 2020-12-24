@@ -7,6 +7,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
+ * This class is DEPRECATED since 17 Dec 2020: confirmation logic handled by Laravel auth
  * Class UserNeedsConfirmation.
  */
 class RegistrationConfirmation extends Notification

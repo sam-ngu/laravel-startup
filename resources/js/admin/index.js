@@ -1,19 +1,18 @@
 
 import Vue from 'vue'
+import '../install-composition-api';
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
 import './../bootstrap'
 import BaseAdmin from './BaseAdmin.vue'
 import routes from './routes/routes'
 import vuetifyopt from "../vuetifyopt";
-import store from "./store/store";
-import VueCompositionAPI from '@vue/composition-api'
+import store from "./vuex-store/store";
 window.Vue = Vue;
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(Vuetify);
-Vue.use(VueCompositionAPI);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

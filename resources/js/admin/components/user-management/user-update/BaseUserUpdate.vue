@@ -1,7 +1,7 @@
 <template>
     <collapsible-sidebar v-model="show" @dismiss-sidebar="back">
         <template slot="header">
-            {{data.first_name}} {{data.last_name}}
+            {{data.name}}
         </template>
 
         <template slot="content">
