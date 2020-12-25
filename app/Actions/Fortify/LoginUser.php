@@ -30,6 +30,7 @@ class LoginUser
         if (! $user->active) {
             throw new GeneralJsonException('Deactivated account');
         }
+
         return $user;
     }
 }
