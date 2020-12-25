@@ -27,7 +27,7 @@ class GeneralJsonException extends Exception
      */
     public function render($request)
     {
-        return JsonResponse::create([
+        return new JsonResponse([
             'errors' => [
                 'message' => $this->getMessage(),
             ],

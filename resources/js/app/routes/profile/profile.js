@@ -1,17 +1,18 @@
-import BaseProfile from '../../components/dashboard/profile/BaseProfile'
-import ProfileUpdatePhone from '../../components/dashboard/profile/contact-info/ProfileUpdatePhone'
-import ProfileUpdateName from '../../components/dashboard/profile/basic-info/ProfileUpdateName'
-import ProfileUpdatePassword from '../../components/dashboard/profile/basic-info/ProfileUpdatePassword'
+import BaseProfile from '../../containers/profile/BaseProfile'
+import ProfileUpdatePhone from '../../containers/profile/contact-info/ProfileUpdatePhone'
+import ProfileUpdateName from '../../containers/profile/basic-info/ProfileUpdateName'
+import ProfileUpdatePassword from '../../containers/profile/basic-info/ProfileUpdatePassword'
+import ProfileUpdate2FA from "../../containers/profile/security/ProfileUpdate2FA";
 
 let baseBreadcrumb = [
     {
         text: 'My Profile',
         disabled: true,
-        href: '/dashboard/#/profile',
+        href: '/app/#/profile',
     },
 ];
 
-const profile = [
+export const profile = [
     {
         path: '/profile',
         component: BaseProfile,
@@ -63,8 +64,20 @@ const profile = [
             })
         }
     },
+    {
+        path: '/profile/2fa',
+        name: 'user-profile-2fa',
+        component: ProfileUpdate2FA,
+        props: true,
+        meta: {
+            breadcrumb: baseBreadcrumb.concat({
+                text: "2 Factor Authentication",
+                disabled: true,
+                href: '',
+            })
+        }
+    },
 
 ];
 
-export {profile}
 

@@ -60,16 +60,6 @@ trait UserAttribute
 //        return 'N/A';
     }
 
-    /**
-     * @return string
-     */
-    public function getFullNameAttribute()
-    {
-        return $this->last_name
-            ? $this->first_name.' '.$this->last_name
-            : $this->first_name;
-    }
-
 
     /**
      * @return string

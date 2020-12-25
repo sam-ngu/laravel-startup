@@ -7,7 +7,7 @@
             <v-card-title>
                 <v-row justify="space-start">
                     <v-col>
-                        <base-avatar :size="htmlAttr.avatarSize" :name="data.first_name" :avatar-location="data.avatar_location" />
+                        <base-avatar :size="htmlAttr.avatarSize" :name="data.name" :avatar-location="data.avatar_location" />
                     </v-col>
 
                     <v-col>
@@ -51,7 +51,7 @@
                 <v-text-field
                     @change="onEdit"
                     label="First Name"
-                    v-model="inputData.first_name"
+                    v-model="inputData.name"
                     :rules="rules.name"
                 >
                 </v-text-field>
@@ -176,8 +176,7 @@
                     ],
                 },
                 inputData: {
-                    first_name: this.data.first_name,
-                    last_name: this.data.last_name,
+                    name: this.data.name,
                     email: this.data.email,
                     password: null,
                     active: this.data.active,

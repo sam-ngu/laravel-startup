@@ -89,7 +89,12 @@ export default {
             },
         }
     },
-    props: {},
+    props: {
+        resetToken: {
+            type: String,
+            required: true,
+        }
+    },
     computed: {},
     methods: {
         submitForm(){
@@ -97,14 +102,13 @@ export default {
                 swalMessage("error", "Please complete the form");
                 return
             }
-            const uri = '/password/reset';
-            const token = window.location.pathname.split('/')[3]
-            axios.post(uri, { ...this.inputData, token})
+            const uri = '/reset-password';
+
+            axios.post(uri, { ...this.inputData, token: this.resetToken })
                 .then(function(response){
-                    let redirect = response.data.redirect;
                     swalMessage("success", response.data.data)
                         .then(function (response) {
-                            window.location = redirect;
+                            window.location = '/login';
                         });
                 }.bind(this))
                 .catch((response) => {

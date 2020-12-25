@@ -16,6 +16,9 @@ import TextField from "../../components/crud-resource/fields/TextField";
 import DateField from "../../components/crud-resource/fields/DateField";
 import {emailValidator} from "../../../utils/ValidationHelper"
 import HasManyField from "../../components/crud-resource/fields/HasManyField";
+import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
+import {swalLoader, swalMessage} from "../../../utils/swal/SwalHelper";
+
 export default {
     name: "BaseUser",
     components: {BaseResource},
@@ -26,24 +29,34 @@ export default {
                     label: 'Login As User',
                     show: true,
                     onclick: (resource) => {
-                        window.location.href = '/login-as/' + resource.id;
-                        // axios.post('/login-as/' + resource.id)
-                        //     .then((response) => {
-                        //
-                        //     })
+                        const uri = `/api/v1/users/${resource.id}/login-as`
+                        axios.post(uri)
+                            .then(() => {
+                                window.location.href = '/';
+                            }).catch(axiosErrorCallback);
+
                     },
                     disabled: false
                 },
+                {
+                    label: 'Disable 2FA',
+                    show: (resource) => resource.two_fa_enabled,
+                    onclick: (resource) => {
+                        swalLoader();
+                        const uri = `/api/v1/users/${resource.id}/two-factor`;
+                        axios.post(uri, {two_factor: false})
+                            .then((response) => {
+                                swalMessage('success');
+                                resource.two_fa_enabled = false;
+                            }).catch(axiosErrorCallback)
+                    },
+                    disabled: false,
+                }
             ],
             resourceFields: [
                 {
-                    label: 'First Name',
-                    key: 'first_name',
-                    type: TextField,
-                },
-                {
-                    label: 'Last Name',
-                    key: 'last_name',
+                    label: 'Name',
+                    key: 'name',
                     type: TextField,
                 },
                 {

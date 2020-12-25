@@ -1,9 +1,11 @@
 <?php
 
 
+use App\Helpers\Auth\PasswordHelper;
 use App\Http\Controllers\App\AppController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,7 @@ Route::group([
 
 Route::group([
     'middleware' => [
+
         \App\Http\Middleware\Authenticate::class,
         // admin only
     ],
@@ -50,7 +53,14 @@ include_route_files(__DIR__ . '/auth');
 //Route::get('/home', 'HomeController@index')->name('home');
 
 if (\Illuminate\Support\Facades\App::environment('local')) {
-    Route::get('/playground', function () {
+    Route::get('/playground', function (\Illuminate\Http\Request $request) {
+        $validator = Validator::make([
+            'password' => '123@32123213',
+        ], [
+            'password' => PasswordHelper::rules(),
+        ]);
+
+
         $user = User::query()->find(1);
 
         /** @var User $user */

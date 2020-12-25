@@ -2,10 +2,10 @@
 
 namespace Tests;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Spatie\Permission\Models\Permission;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -22,10 +22,15 @@ abstract class TestCase extends BaseTestCase
             return $role;
         }
 
-        $adminRole = factory(Role::class)->create(['name' => config('access.users.admin_role')]);
-        $adminRole->givePermissionTo(factory(Permission::class)->create(['name' => 'view backend']));
+        $adminRole = Role::factory()->create(['name' => config('access.users.admin_role')]);
+        $adminRole->givePermissionTo(Permission::factory()->create(['name' => 'view backend']));
 
         return $adminRole;
+    }
+
+    protected function createUser(array $attributes = [])
+    {
+        return User::factory()->create($attributes);
     }
 
     /**
@@ -38,7 +43,7 @@ abstract class TestCase extends BaseTestCase
     protected function createAdmin(array $attributes = [])
     {
         $adminRole = $this->getAdminRole();
-        $admin = User::factory()->create($attributes);
+        $admin = $this->createUser($attributes);
         $admin->assignRole($adminRole);
 
         return $admin;

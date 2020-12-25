@@ -1,8 +1,11 @@
 /* Get App params nad helper functions*/
 import Vue from 'vue'
+import {ref} from "@vue/composition-api";
 import {swalMessage} from "./swal/SwalHelper";
 
-export const MessageBus = new Vue({
+
+
+const MessageBus = new Vue({
     data(){
         return {
             session: {},
@@ -33,8 +36,9 @@ export const MessageBus = new Vue({
                         return this.session.user = null;
 
                     let errors = response.data.data.error;
-                    if ((typeof errors) === "string")
+                    if ((typeof errors) === "string"){
                         errors = {errors};
+                    }
                     swal.close();
                     swalMessage("error", errors);
                 }.bind(this))

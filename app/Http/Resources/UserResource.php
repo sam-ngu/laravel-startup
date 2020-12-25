@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class UserResource extends JsonResource
 {
@@ -14,14 +15,16 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        $avatar_location = $this->avatar_location;
+
         return [
             'id' => data_get($this, 'id'),
-            'first_name' => data_get($this, 'first_name'),
-            'last_name' => data_get($this, 'last_name'),
-            'full_name' => data_get($this, 'full_name'),
+            'name' => data_get($this, 'name'),
             'email' => data_get($this, 'email'),
+            'two_fa_enabled' => $this->twoFactorAuthEnabled(),
+            'password_changed_at' => $this->password_changed_at,
             'avatar_type' => data_get($this, 'avatar_type'),
-            'avatar_location' => data_get($this, 'avatar_location'),
+            'avatar_location' => ! ! $avatar_location ? Storage::url(data_get($this, 'avatar_location')) : null,
             'active' => (bool)data_get($this, 'active'),
             'confirmed' => (bool)data_get($this, 'confirmed'),
             'timezone' => (string)data_get($this, 'timezone'),

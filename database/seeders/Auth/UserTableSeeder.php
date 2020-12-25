@@ -5,6 +5,7 @@ namespace Database\Seeders\Auth;
 use App\Models\User;
 use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
+use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 
 /**
  * Class UserTableSeeder.
@@ -24,31 +25,30 @@ class UserTableSeeder extends Seeder
 
         // Add the master administrator, user id of 1
         $admin = User::factory()->create([
-            'first_name' => 'Admin',
-            'last_name' => 'Istrator',
+            'name' => 'Administrator',
             'email' => 'admin@admin.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 
-        User::factory()->create([
-            'first_name' => 'Backend',
-            'last_name' => 'User',
+//        app(EnableTwoFactorAuthentication::class)($admin);
+
+        $executive = User::factory()->create([
+            'name' => 'Backend',
             'email' => 'executive@executive.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
 
-        User::factory()->create([
-            'first_name' => 'Default',
-            'last_name' => 'User',
+        $user = User::factory()->create([
+            'name' => 'Default',
             'email' => 'user@user.com',
             'password' => 'secret',
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
         ]);
+
+//        app(EnableTwoFactorAuthentication::class)($executive);
+//        app(EnableTwoFactorAuthentication::class)($user);
 
         $this->enableForeignKeys();
     }

@@ -51,8 +51,6 @@ export default {
   },
   watch: {
       '$route'(){
-
-          console.log('aaeaea')
           if(this.$route.name === `${this.resourceName.toLowerCase()}-management`){
               this.$router.push({name: this.resourceName.toLowerCase() + '-table'});
           }

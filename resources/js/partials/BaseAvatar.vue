@@ -17,7 +17,7 @@
             },
             name: {
                 type: String,
-                required: true
+                default: "User"
             },
             avatarLocation: {
                 type: String,

@@ -8,75 +8,83 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
 
-    use AuthenticatesUsers;
+//    use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except(['logout', 'loginAs', 'logoutAs']);
-    }
-
-    /**
-     * Show the application's login form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function showLoginForm()
-    {
-        return view('public.auth.login');
-    }
-
-    /**
-     * Send the response after the user was authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    protected function sendLoginResponse(Request $request)
-    {
-        $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
-
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new Response([
-                'data' => [
-                    'redirect' => '/app',
-                ],
-            ], 200)
-            : redirect()->intended($this->redirectPath());
-    }
+//    /**
+//     * Where to redirect users after login.
+//     *
+//     * @var string
+//     */
+//    protected $redirectTo = RouteServiceProvider::HOME;
+//
+//    /**
+//     * Create a new controller instance.
+//     *
+//     * @return void
+//     */
+//    public function __construct()
+//    {
+//        $this->middleware('guest')->except(['logout', 'loginAs', 'logoutAs']);
+//    }
+//
+//    /**
+//     * Show the application's login form.
+//     *
+//     * @return \Illuminate\View\View
+//     */
+//    public function showLoginForm()
+//    {
+//        return view('public.auth.login');
+//    }
+//
+//    /**
+//     * Send the response after the user was authenticated.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @return \Illuminate\Http\Response
+//     */
+//    protected function sendLoginResponse(Request $request)
+//    {
+//        $request->session()->regenerate();
+//
+//        $this->clearLoginAttempts($request);
+//
+//        if ($response = $this->authenticated($request, $this->guard()->user())) {
+//            return $response;
+//        }
+//
+//        return $request->wantsJson()
+//            ? new Response([
+//                'data' => [
+//                    'redirect' => '/app',
+//                ],
+//            ], 200)
+//            : redirect()->intended($this->redirectPath());
+//    }
+//
+//    public function logout(Request $request, TokenRepository $tokenRepository)
+//    {
+//        // TODO: complete this invalidate current logged in user
+//        if (auth()->check()) {
+//            $tokenRepository->revokeAccessToken();
+//            auth()->user()->token()->revoke();
+//
+//            return new JsonResponse([
+//                'data' => 'success',
+//            ]);
+//        }
+//
+//        return new JsonResponse([
+//            'error' => 'Logout Unsuccessful. Something went wrong.',
+//        ], 500);
+//    }
 
     public function loginAs(Request $request, User $user)
     {
@@ -91,7 +99,9 @@ class LoginController extends Controller
             session(['temp_user_id' => $user->id]);
 
             // Login.
-            auth()->loginUsingId($user->id);
+            auth()->guard()->setUser($user);
+
+//            auth()->loginUsingId($user->id);
 
             // Redirect.
             return redirect()->route('home');
@@ -106,13 +116,18 @@ class LoginController extends Controller
 
         // Add new session variables
         session(['admin_user_id' => $request->user()->id]);
-        session(['admin_user_name' => $request->user()->full_name]);
+        session(['admin_user_name' => $request->user()->name]);
         session(['temp_user_id' => $user->id]);
 
         // Login user
-        auth()->loginUsingId($user->id);
+        auth('web')->loginUsingId($user->id);
 
-        // Redirect to frontend
+        if ($request->wantsJson()) {
+            return new JsonResponse([
+                'data' => 'success',
+            ]);
+        }
+
         return redirect()->route('home');
     }
 
@@ -134,7 +149,8 @@ class LoginController extends Controller
             app()->make(Auth::class)->flushTempSession();
 
             // Re-login admin
-            auth()->loginUsingId((int) $admin_id);
+//            auth()->setUser(User::query()->find((int) $admin_id));
+            auth('web')->loginUsingId((int) $admin_id);
 
             // Redirect to backend user page
             return redirect()->route('admin');
@@ -142,7 +158,7 @@ class LoginController extends Controller
             app()->make(Auth::class)->flushTempSession();
 
             // Otherwise logout and redirect to login
-            auth()->logout();
+            auth('web')->logout();
 
             return redirect()->route('login');
         }

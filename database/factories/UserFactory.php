@@ -24,14 +24,12 @@ class UserFactory extends Factory
     {
         return [
             'uuid' => Str::uuid()->toString(),
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
+            'name' => $this->faker->name,
             'email' => $this->faker->safeEmail,
             'email_verified_at' => now(),
             'password' => 'secret',
             'password_changed_at' => null,
             'remember_token' => Str::random(10),
-            'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'active' => 1,
             'confirmed' => 1,
         ];

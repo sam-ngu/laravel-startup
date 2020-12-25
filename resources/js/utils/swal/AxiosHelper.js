@@ -9,7 +9,9 @@ const axiosErrorCallback = (response, afterCallback) => {
         errors = {errors};
     swal.close();
     swalMessage("error", errors);
-    afterCallback(response)
+    if (_.isFunction(afterCallback)){
+        afterCallback(response)
+    }
 };
 
 export {axiosErrorCallback}

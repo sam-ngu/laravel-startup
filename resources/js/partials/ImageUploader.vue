@@ -11,22 +11,17 @@
                 :src="imageUrl || undefined"
             >
 
-                <div class="text-center">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{on}">
-                            <div v-on="on">
-                                <v-btn
-                                    icon
-                                    color="primary"
-                                    @click="pickFile"
-                                >
-                                    <v-icon>photo_camera</v-icon>
-                                </v-btn>
-                            </div>
-                        </template>
-                        <span>Upload a pic</span> <!--tooltip not working inside v-img?-->
-                    </v-tooltip>
-
+                <div class="mx-auto text-center" :style="{
+                    width: 'fit-content',
+                    opacity: !!imageUrl ? 0.1 : 1,
+                }">
+                    <button-tooltip
+                        :small="false"
+                        :size="250"
+                        tooltip="Upload a pic"
+                        icon="mdi-camera"
+                        @click="pickFile"
+                    />
                     <div v-if="!value" v-text="'Insert an image'"></div>
                 </div>
 
@@ -48,8 +43,10 @@
 </template>
 
 <script>
+    import ButtonTooltip from "./ButtonTooltip";
     export default {
         name: "ImageUploader",
+        components: {ButtonTooltip},
         data() {
             return {
                 states: {
@@ -120,23 +117,12 @@
 
             },
 
-            hideImage(){
-                return new Promise(function(resolve, reject){
-                    setTimeout(function(){
-                        this.states.showImage = false;
-                        resolve();
-                    }.bind(this));
-                }.bind(this));
+            async hideImage(){
+                this.states.showImage = false;
             },
-            showImage(){
-                return new Promise(function(resolve, reject){
-                    setTimeout(function(){
-                        this.states.showImage = true;
-                        resolve();
-                    }.bind(this));
-                }.bind(this));
+            async showImage(){
+                this.states.showImage = true;
             },
-
 
             // TODO: implement security filter in the future
             inputFilter(newFile, oldFile, prevent) {
@@ -192,10 +178,10 @@
             }
         },
         mounted() {
-            setTimeout(function () {
+            setTimeout( () => {
                 // set imageurl at a later time otherwise it will be empty, as this component is mounted first
                 this.imageUrl = this.value;
-            }.bind(this), 1000)
+            }, 1000)
 
         },
     }

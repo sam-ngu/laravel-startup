@@ -2,7 +2,9 @@
 
 namespace App\Rules\Auth;
 
+use App\Helpers\Auth\PasswordHelper;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ChangePassword.
@@ -18,11 +20,18 @@ class ChangePassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        $uppercase = preg_match('@[A-Z]@', $value);
-        $lowercase = preg_match('@[a-z]@', $value);
-        $number = preg_match('@\d@', $value);
+        $validator = Validator::make([
+            'password' => $value,
+        ], [
+            'password' => PasswordHelper::rules(),
+        ]);
 
-        return $uppercase && $lowercase && $number && \strlen($value) >= 8;
+
+        return $validator->passes();
+//        $uppercase = preg_match('@[A-Z]@', $value);
+//        $lowercase = preg_match('@[a-z]@', $value);
+//        $number = preg_match('@\d@', $value);
+//        return $uppercase && $lowercase && $number && \strlen($value) >= 8;
     }
 
     /**

@@ -12,8 +12,15 @@
                     :icon="!!icon"
                     :disabled="disabled"
                     :to="to"
+                    :style="{
+                        width: size + 'px',
+                        height: size + 'px',
+                    }"
                 >
-                    <v-icon v-if="icon">{{icon}}</v-icon>
+                    <v-icon
+                        :size="size"
+                        v-if="icon"
+                    >{{icon}}</v-icon>
                     {{btnText}}
                 </v-btn>
             </div>
@@ -45,9 +52,14 @@
                 type: Boolean,
                 default: true,
             },
+
             btnText: {
                 type: String,
                 default: null
+            },
+            size:{
+                type: Number,
+                default: undefined,
             },
             disabled: {
                 type: Boolean,

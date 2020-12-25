@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Events\Models\User\UserDeleted;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\User\ChangeProfilePictureRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Api\V1\UserRepository;
@@ -48,8 +49,7 @@ class UserController extends Controller
     public function store(Request $request, UserRepository $repository)
     {
         $result = $repository->create($request->only(
-            'first_name',
-            'last_name',
+            'name',
             'email',
             'password',
             'active',
@@ -83,14 +83,14 @@ class UserController extends Controller
     public function update(Request $request, User $user, UserRepository $repository)
     {
         $result = $repository->update($user, $request->only(
-            'first_name',
-            'last_name',
+            'name',
             'email',
             'roles',
             'active',
             'confirmed',
             'permissions'
         ));
+        // only update password if logged in user is admin
         if ($request->password) {
             $result = $repository->updatePassword($user, $request->get('password'));
         }
@@ -110,6 +110,15 @@ class UserController extends Controller
 
         event(new UserDeleted($user));
 
-        return new JsonResponse(null, 204);
+        return new JsonResponse(['data' => 'success'], 200);
+    }
+
+    public function updateProfilePicture(ChangeProfilePictureRequest $request, User $user, UserRepository $repository)
+    {
+        $result = $repository->update($user, [
+            'avatar_img' => $request->avatar_img,
+        ]);
+
+        return (new UserResource($result))->response();
     }
 }

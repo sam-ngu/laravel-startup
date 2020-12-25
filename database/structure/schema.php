@@ -6,13 +6,9 @@ return [
         'uuid' => [
             'type' => 'uuid',
         ],
-        'first_name' => [
+        'name' => [
             'type' => 'string',
-            'attributes' => ['nullable'],
-        ],
-        'last_name' => [
-            'type' => 'string',
-            'attributes' => ['nullable'],
+
         ],
         'email' => [
             'type' => 'string',
@@ -40,10 +36,6 @@ return [
                 'unsigned',
                 'default' => [1],
             ],
-        ],
-        'confirmation_code' => [
-            'type' => 'string',
-            'attributes' => ['nullable'],
         ],
         'confirmed' => [
             'type' => 'boolean',
