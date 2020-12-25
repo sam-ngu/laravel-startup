@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginUser
 {
-    public function login(Request $request)
+    public static function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -30,5 +30,6 @@ class LoginUser
         if (! $user->active) {
             throw new GeneralJsonException('Deactivated account');
         }
+        return $user;
     }
 }
