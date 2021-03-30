@@ -90,7 +90,6 @@ const swalLoader = (info) => {
         }
     }).then(function (result) {
         if(result.value){ //confirm
-
             return;
         }
     });
@@ -109,13 +108,15 @@ const swalConfirm = (html="", confirmCallback, rejectCallback) => {
         cancelButtonText: 'No'
     }).then(function (result) {
         if(result.value){ //confirm
-            if(confirmCallback)
+            if(confirmCallback){
                 confirmCallback();
+            }
             return;
         }
         if(result.dismiss === swal.DismissReason.cancel){ //cancel
-            if(rejectCallback)
+            if(rejectCallback){
                 rejectCallback();
+            }
             return;
         }
     });

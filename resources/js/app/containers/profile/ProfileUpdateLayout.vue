@@ -13,7 +13,7 @@
         <v-divider></v-divider>
 
         <v-row justify="center" align="center">
-            <v-col xs12>
+            <v-col cols="12">
                 <v-card >
 
                     <v-card-text>

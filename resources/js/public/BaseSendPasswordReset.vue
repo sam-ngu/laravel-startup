@@ -81,9 +81,8 @@
                 let uri = '/forgot-password';
 
                 return axios.post(uri, this.inputData)
-                    .then((response) => {
-                        swalMessage('success', response.data.message)
-                    })
+                    .then((response) => swalMessage('success', response.data.message))
+                    .then(() => window.location.href = '/')
                     .catch(response => axiosErrorCallback(response, response.response.data.error))
             }
         },

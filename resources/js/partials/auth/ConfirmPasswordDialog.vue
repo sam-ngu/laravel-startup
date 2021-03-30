@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import TextFieldPassword from "../../app/components/TextFieldPassword";
+import TextFieldPassword from "../TextFieldPassword";
 
 import {reactive, ref} from '@vue/composition-api';
 import {useConfirmPassword, useConfirmPasswordPromise} from "../../utils/auth/confirm-password";
