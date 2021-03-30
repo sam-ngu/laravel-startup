@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 
+// DEPRECATED -- using Fortify
 class ConfirmPasswordController extends Controller
 {
 //    /*

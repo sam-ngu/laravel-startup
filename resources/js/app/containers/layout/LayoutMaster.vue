@@ -4,7 +4,7 @@
 
         <sidebar v-if="!disableSidebar"></sidebar>
 
-        <navbar v-if="!disableSidebar" @toggled-sidebar="showSidebar=!showSidebar"></navbar>
+        <navbar v-if="!disableSidebar" ></navbar>
 
         <v-main>
             <slot></slot>

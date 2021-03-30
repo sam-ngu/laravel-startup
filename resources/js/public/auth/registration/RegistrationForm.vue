@@ -78,7 +78,7 @@
     import {swalLoader, swalMessage} from "../../../utils/swal/SwalHelper";
     import {axiosErrorCallback} from "../../../utils/swal/AxiosHelper";
     import VueRecaptcha from 'vue-recaptcha';
-    import TextFieldPassword from "../../../app/components/TextFieldPassword";
+    import TextFieldPassword from "../../../partials/TextFieldPassword";
     import {passwordRules} from "../../../utils/ValidationHelper";
 
     export default {
