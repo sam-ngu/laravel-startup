@@ -3,7 +3,6 @@
 
 namespace App\Helpers\Routes;
 
-
 class RouteHelper
 {
     /**
