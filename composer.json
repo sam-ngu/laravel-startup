@@ -29,7 +29,7 @@
         "torann/geoip": "^3.0"
     },
     "require-dev": {
-        "acadea/boilerplate-generator": "dev-feature/readme",
+        "acadea/boilerplate-generator": "*",
         "barryvdh/laravel-ide-helper": "^2.7",
         "behat/behat": "^3.8",
         "facade/ignition": "^2.3.6",

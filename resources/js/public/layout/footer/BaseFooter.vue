@@ -85,7 +85,7 @@
         },
         computed: {
             year(){
-                return '\u00A9' + moment().format('YYYY');
+                return '\u00A9' + (new Date()).getFullYear();
             }
         }
     }

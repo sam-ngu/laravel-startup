@@ -23,7 +23,6 @@ mix.js('resources/js/public/index.js', 'js/public.js')
     .extract([
         'axios',
         'lodash',
-        'moment',
         'sweetalert2'
     ]);
 

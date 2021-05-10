@@ -1,8 +1,6 @@
 window._ = require('lodash');
 import swal from 'sweetalert2';
-import moment from "moment"
 window.swal = swal;
-window.moment = moment
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
