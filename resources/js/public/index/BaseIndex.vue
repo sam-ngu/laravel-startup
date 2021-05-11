@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Laravel Startup</h1>
+        <h1>{{ appName }}</h1>
     </div>
 </template>
 
@@ -16,7 +16,9 @@
 
         },
         computed: {
-
+          appName(){
+            return process.env.MIX_APP_NAME;
+          }
         }
     }
 </script>

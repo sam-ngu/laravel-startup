@@ -26,20 +26,16 @@
             <v-row justify="center">
                 <v-col>
                     <v-btn href="https://www.facebook.com/" icon dark>
-                        <v-icon>fab fa-facebook-square</v-icon>
+                        <v-icon>mdi-facebook</v-icon>
                     </v-btn>
                 </v-col>
 
                 <v-col
                     black
-                    lighten-2
-                    py-4
-                    text-center
-                    white--text
-                    xs12
-                    class="text-center"
+                    col="12"
+                    class="text-center white--text"
                 >
-                    {{year}} — <strong>Boilerplate</strong>. All rights reserved.
+                    {{year}} — <strong>{{ appName }}</strong>. All rights reserved.
                 </v-col>
             </v-row>
         </v-container>
@@ -86,7 +82,10 @@
         computed: {
             year(){
                 return '\u00A9' + (new Date()).getFullYear();
-            }
+            },
+          appName(){
+              return process.env.MIX_APP_NAME;
+          }
         }
     }
 </script>

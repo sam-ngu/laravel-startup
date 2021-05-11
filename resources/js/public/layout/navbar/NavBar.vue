@@ -82,7 +82,7 @@
         },
         computed: {
             appName(){
-                return "Laravel Startup";
+              return process.env.MIX_APP_NAME;
             }
         },
         methods: {
