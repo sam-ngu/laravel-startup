@@ -41,9 +41,7 @@ Route::group([
 });
 
 
-
-
-include_route_files(__DIR__ . '/auth');
+\App\Helpers\Routes\RouteHelper::includeRouteFiles(__DIR__ . '/auth');
 
 //\Illuminate\Support\Facades\Auth::routes();
 
